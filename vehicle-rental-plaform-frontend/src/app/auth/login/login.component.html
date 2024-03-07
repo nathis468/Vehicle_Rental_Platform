@@ -1,0 +1,21 @@
+<div class="example-container">
+    <form class="form" [formGroup]="login" (ngSubmit)="onSubmit()">
+        <mat-label class="heading">Login Form</mat-label>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Email" formControlName="email" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Password" formControlName="password" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary">Login</button>
+        
+        <div>New User ? <a routerLink="/register">Register</a></div>
+    </form>
+</div>

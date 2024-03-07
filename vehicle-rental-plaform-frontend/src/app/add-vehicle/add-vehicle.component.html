@@ -1,0 +1,70 @@
+<div class="example-container">
+    <form class="form" [formGroup]="addVehicle" (ngSubmit)="onSubmit()">
+        <mat-label class="heading">Add New Vehicle</mat-label>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Car Model Name *" formControlName="carModel" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Seating  Capacity *" formControlName="seatingCapacity" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Mileage *" formControlName="mileage" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Fuel Capacity *" formControlName="fuelCapacity" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Fuel Type *" formControlName="fuelType" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Insurance Coverage" formControlName="insuranceCoverage" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Cancellation Policy *" formControlName="cancellationPolicy" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Price *" formControlName="price" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Latitude *" formControlName="latitude" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Longitude *" formControlName="longitude" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <input type="file" (change)="onFileUpload($event)">
+        
+        <button mat-raised-button color="primary">Add Vehicles</button>        
+    </form>
+</div>
+

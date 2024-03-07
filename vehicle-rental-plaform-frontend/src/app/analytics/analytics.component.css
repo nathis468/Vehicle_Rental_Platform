@@ -1,0 +1,12 @@
+.chart-analytics{
+    margin: 5px;
+}
+
+.line-chart{
+    padding: 10px;
+}       
+
+.column-chart{
+    /* width: 50%; */
+    margin: 10px;
+}

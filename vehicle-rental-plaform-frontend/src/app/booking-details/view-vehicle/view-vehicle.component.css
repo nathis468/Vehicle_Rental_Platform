@@ -1,0 +1,38 @@
+.vehicle-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+}
+
+.vehicle-image {
+    height: 30  0px;
+    width: 500px;
+}
+
+.vehicle-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.vehicle-model{
+    font-size: large;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+i{
+    margin: 10px;
+}
+
+button{
+    /* align-items: center; */
+    margin-top: 20px;
+    margin-left: 45%;
+    margin-right: 40%;
+}

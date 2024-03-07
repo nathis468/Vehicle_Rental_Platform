@@ -1,0 +1,26 @@
+.example-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 200px 5px 200px 5px;
+  margin-top: 20px;
+  margin-left: 500px;
+  margin-right: 500px;
+  margin-bottom: 0px;
+}
+
+.form{
+  display: grid;
+  grid-template-columns: auto;
+}
+
+mat-form-field{
+  width: 500px;
+}
+
+.heading{
+  color: #4758b8;
+  height: 70px;
+  font-size: 38px;
+}

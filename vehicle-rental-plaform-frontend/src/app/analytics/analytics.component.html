@@ -1,0 +1,8 @@
+<div class="chart-analytics">
+    <div class="line-chart">
+        <app-sales-over-time [options]="options" (salesOverTimeEmitter)="assignOption($event)" [chartAnalytics]="salesOverTime"></app-sales-over-time>
+    </div>
+    <div class="column-chart">
+        <app-customer-rating-distribution [chartAnalyticsTop]="customerRatingTop" [chartAnalyticsBelow]="customerRatingBelow"></app-customer-rating-distribution>
+    </div>
+</div>

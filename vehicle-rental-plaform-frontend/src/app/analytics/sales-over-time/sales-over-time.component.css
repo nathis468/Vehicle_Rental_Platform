@@ -1,0 +1,30 @@
+.chart-container {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 23px;
+    margin: 20px;
+    margin-left: 0px;
+    font-weight: 430;
+}
+  
+select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+select option:checked {
+    background-color: #2196F3;
+    color: #fff;
+}

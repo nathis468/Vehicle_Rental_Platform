@@ -1,0 +1,34 @@
+<div class="vehicles-list">
+    <div *ngFor="let item of vehiclesList" class="vehicle-item">
+        <div class="vechicle-box">
+
+        <img [src]="item.vehicles.image" alt="Car Image" class="vehicle-image">
+        <div class="vehicle-details">
+            <div class="vehicle-model">{{item.vehicles.carModel}}</div>
+            <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{item.vehicles.seatingCapacity}}</div>
+            <div class="insurance-coverage"> <i class="fa-solid fa-car-burst"></i> Insurance Coverage: {{item.vehicles.insuranceCoverage}}</div>
+            <div class="cancellation-policy"> <i class="fa-solid fa-check" style="color: #14c892;"></i>Cancellation Policy: {{item.vehicles.cancellationPolicy}}</div>
+            <div class="rating"> <i class="fa-sharp fa-solid fa-star"></i> Rating: {{item.vehicles.ratings[0].rating | number:'1.2-2'}}</div>
+            <div class="fuel-capacity"> <i class="fa-solid fa-gas-pump"></i> Fuel Capacity: {{item.vehicles.fuelCapacity}}</div>
+            <div class="mileage"> <i class="fa-duotone fa-circle-info"></i> Mileage: {{item.vehicles.mileage}}</div>
+            <div class="fuel-type"> <i class="fa-duotone fa-circle-info"></i> Fuel Type: {{item.vehicles.fuelType}}</div>
+            <div class="distance"> <i class="fa-solid fa-people-arrows"></i> Distance: {{item.distance | number:'1.2-2'}}</div>
+        </div>
+        <div class="price-info">
+            <div>Price for {{noOfDays}} days</div>
+            <div>{{ noOfDays * item.vehicles.price }}</div>
+            <div>Base Price: {{item.vehicles.price}}</div>
+        </div>
+        
+    </div>
+        <div class="actions">
+            <span appPermissions [permissions]="'update_vehicle'" (click)="updateEvent(item)">
+                <i class="fa-solid fa-pen" style="color: #757575;"></i>
+            </span>
+            <span appPermissions [permissions]="'remove_vehicle'" (click)="deleteEvent(item)">
+                <i class="fa-solid fa-trash" style="color: #757575;"></i>
+            </span>
+            <button mat-raised-button class="button" (click)="onClick(item)" color="primary" appPermissions [permissions]="'rental_car'">Choose this car</button>
+        </div>
+    </div>
+</div>

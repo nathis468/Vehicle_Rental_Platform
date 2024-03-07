@@ -1,0 +1,37 @@
+<div class="example-container">
+
+    
+    <div *ngIf="profileData.profilePic !== ''; else template">
+        <img [src]="profileData.profilePic" alt="profilePic" height="100px" width="100px">
+    </div>
+    
+    <input type="file" (change)="onFileUpload($event)">
+    
+    <ng-template #template>
+        <i class="fa-duotone fa-user fa-2xl"></i>
+    </ng-template>
+
+    <form class="form" [formGroup]="profile " (ngSubmit)="onSubmit()">
+        <mat-label class="heading">Profile Info</mat-label>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="UserName" formControlName="userName" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Contact Number" formControlName="contactNumber" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Bio" formControlName="bio">
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <button mat-raised-button color="primary">Submit</button>
+    </form>
+</div>

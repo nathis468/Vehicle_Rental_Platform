@@ -1,0 +1,7 @@
+<div class="container">
+    <label for="vehicleSelect">Select Vehicle</label>
+    <select id="vehicleSelect" [(ngModel)]="selectedOption" (change)="onSelectChange()">
+      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    </select>
+    <div class="chart-container" [chart]="chart"></div>
+</div>

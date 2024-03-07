@@ -1,0 +1,66 @@
+.example-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .mat-divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .example-form-field {
+    width: 100%;
+  }
+  
+  .mat-select {
+    width: 100%;
+  }
+  
+  .mat-datepicker-toggle {
+    cursor: pointer;
+  }
+  
+  /* Adjust other styles as needed */
+  /* Custom styling for file input */
+.input-file-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .input-file-button {
+    padding: 8px 12px;
+    background-color: #4758b8;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .input-file {
+    display: none; /* Hide the default file input */
+  }
+  
+  /* Styling for the chosen file name */
+  .file-name {
+    margin-left: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+  
+  /* Adjust other styles as needed */
+  

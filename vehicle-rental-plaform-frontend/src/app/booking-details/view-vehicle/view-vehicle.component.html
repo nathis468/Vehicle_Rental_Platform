@@ -1,0 +1,19 @@
+<div *ngIf="vehicle.vehicles != null;else template" class="vehicle-item">
+    <img [src]="vehicle.vehicles.image" alt="Car Image" class="vehicle-image">
+    <div class="vehicle-details">
+        <div class="vehicle-model">{{vehicle.vehicles.carModel}}</div>
+        <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{vehicle.vehicles.seatingCapacity}}</div>
+        <div class="insurance-coverage"> <i class="fa-solid fa-car-burst"></i> Insurance Coverage: {{vehicle.vehicles.insuranceCoverage}}</div>
+        <div class="cancellation-policy"> <i class="fa-solid fa-check" style="color: #14c892;"></i>Cancellation Policy: {{vehicle.vehicles.cancellationPolicy}}</div>
+        <div class="rating"> <i class="fa-sharp fa-solid fa-star"></i> Rating: {{vehicle.vehicles.ratings[0].rating | number:'1.2-2'}}</div>
+        <div class="fuel-capacity"> <i class="fa-solid fa-gas-pump"></i> Fuel Capacity: {{vehicle.vehicles.fuelCapacity}}</div>
+        <div class="mileage"> <i class="fa-duotone fa-circle-info"></i> Mileage: {{vehicle.vehicles.mileage}}</div>
+        <div class="fuel-type"> <i class="fa-duotone fa-circle-info"></i> Fuel Type: {{vehicle.vehicles.fuelType}}</div>
+        <div class="distance"> <i class="fa-solid fa-people-arrows"></i> Distance: {{vehicle.distance | number:'1.2-2'}}</div>
+    </div></div>
+
+<ng-template #template>
+    No Details Found
+</ng-template>
+
+<button mat-raised-button (click)="close()" color="primary">Close</button>

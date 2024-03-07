@@ -1,0 +1,30 @@
+<div class="example-container">
+    <form class="form" [formGroup]="register" (ngSubmit)="onSubmit()">
+        <mat-label class="heading">Register Form</mat-label>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="UserName" formControlName="userName" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Email" formControlName="email" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Password" formControlName="password" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Contact Number" formControlName="contactNumber" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <button mat-raised-button color="primary">Register</button>
+    </form>
+</div>

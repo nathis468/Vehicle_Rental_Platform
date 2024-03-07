@@ -1,0 +1,66 @@
+<div class="top-nav-bar">
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <button class="profile-icon" style="border-radius: 50%; border: none;height: 35px;" routerLink="profile">
+    <img
+      class="icon"
+      src="assets/Profile.png"
+      height="25px"
+      width="25px"
+    />
+  </button>
+  
+</div>
+
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="vehicles">
+      <i class="fa-duotone fa-house"></i>
+      Home
+    </button>
+
+    <span appPermissions [permissions]="'add_vehicle'">
+      <button mat-menu-item routerLink="add-vehicle">
+        <i class="fa-regular fa-plus"></i>
+        Add Vehicle
+      </button>
+    </span>
+
+    <button mat-menu-item routerLink="booking-details">
+      <i class="fa-sharp fa-regular fa-circle-info"></i>
+      Booking details
+    </button>
+
+    <span appPermissions [permissions]="'analytics'">
+      <button mat-menu-item routerLink="analytics">
+        <i class="fa-solid fa-chart-pie-simple" style="color: #4d4c4c;"></i>
+        Analytics
+      </button>
+    </span>
+
+    <span appPermissions [permissions]="'users_list'">
+      <button mat-menu-item routerLink="list-users">
+        <i class="fa-duotone fa-users" style="color: #4d4c4c;"></i>
+        Users List
+      </button>
+    </span>
+
+    <span appPermissions [permissions]="'maintanance'">
+      <button mat-menu-item routerLink="maintanance">
+        <i class="fa-regular fa-screwdriver-wrench" style="color: #4d4c4c;"></i>
+        Maintanace
+      </button>
+    </span>
+
+    <button mat-menu-item (click)="logOut()">
+      <i class="fa-duotone fa-arrow-right-from-bracket"></i>
+      SignOut 
+    </button>
+</mat-menu>
+
+
+
+
+<router-outlet></router-outlet>
