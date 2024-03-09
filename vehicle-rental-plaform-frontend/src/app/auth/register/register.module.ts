@@ -10,6 +10,7 @@ import {MatDividerModule} from '@angular/material/divider';
 
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterComponent } from './register.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { RegisterComponent } from './register.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule ,
-    MatDividerModule
+    MatDividerModule,
+    MatIconModule
   ]
 })
 export class RegisterModule { }

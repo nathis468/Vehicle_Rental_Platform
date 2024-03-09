@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class Bookings {
     @Id
     private String _id;
+
+    @Field("booking_id")
+    private String bookingId;
 
     @Field("car_model_name")
     private String carModelName;
@@ -30,10 +32,13 @@ public class Bookings {
     private Date toDate;
 
     @Field("price")
-    private String price;
+    private double price;
 
     @Field("status")
     private String status;
+
+    @Field("cancellation_policy")
+    private String cancellationPolicy;
 
     @Field("vehicle_details")
     private String vehcileDetails;

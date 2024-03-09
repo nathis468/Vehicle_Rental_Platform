@@ -24,9 +24,9 @@ export class UpdateVehicleComponent {
     this.editVehicle = new FormGroup({
       _id : new FormControl<string>(this.vehicle.vehicles._id),
       carModel  : new FormControl<string>(this.vehicle.vehicles.carModel,Validators.required),
-      seatingCapacity  : new FormControl<string>(this.vehicle.vehicles.seatingCapacity,Validators.required),
-      mileage  : new FormControl<string>(this.vehicle.vehicles.mileage,Validators.required),
-      fuelCapacity  : new FormControl<string>(this.vehicle.vehicles.fuelCapacity,Validators.required),
+      seatingCapacity  : new FormControl<number>(this.vehicle.vehicles.seatingCapacity,Validators.required),
+      mileage  : new FormControl<number>(this.vehicle.vehicles.mileage,Validators.required),
+      fuelCapacity  : new FormControl<number>(this.vehicle.vehicles.fuelCapacity,Validators.required),
       fuelType  : new FormControl<string>(this.vehicle.vehicles.fuelType,Validators.required),
       insuranceCoverage  : new FormControl<string>(this.vehicle.vehicles.insuranceCoverage,Validators.required),
       cancellationPolicy  : new FormControl<string>(this.vehicle.vehicles.cancellationPolicy,Validators.required),

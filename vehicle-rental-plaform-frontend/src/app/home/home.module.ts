@@ -6,6 +6,8 @@ import { HomeComponent } from './home.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import { PermissionsDirective } from '../directives/permissions.directive';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { PermissionsDirective } from '../directives/permissions.directive';
     HomeRoutingModule,
     MatMenuModule,
     MatIconModule,
-    PermissionsDirective
+    PermissionsDirective,
+    MatSidenavModule
   ]
 })
 export class HomeModule { }

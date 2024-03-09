@@ -39,16 +39,11 @@
                 </mat-select>
             </mat-form-field>
 
-            <!-- <div (click)="uploadFile.click()">
-            <button mat-button color="primary">Choose File</button>
-            <input #uploadFile (change)="onFileUpload($event)" type='file' style="display:none"/> 
-            </div> -->
-
             <div class="input-file-container">
                 <button mat-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
                 <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
                 <div class="file-name">{{ fileName }}</div>
-              </div>
+            </div>
 
                     
             <button mat-raised-button color="primary">Add New Record</button>        

@@ -10,9 +10,10 @@ export class HomeComponent {
 
   constructor(private router : Router) {}
 
+  profilePic: string = '';
+
   ngOnInit() {
-    console.log(JSON.parse(localStorage.getItem('profile')).profilePic);
-    
+    this.profilePic = JSON.parse(localStorage.getItem('profile')).profilePic;
   }
 
   logOut(){

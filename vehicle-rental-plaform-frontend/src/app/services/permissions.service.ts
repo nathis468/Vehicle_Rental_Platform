@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class PermissionsService {
 
-  permissions = new BehaviorSubject<Array<string>>([]);
+  permissions = new BehaviorSubject<string[]>([]);
 
   constructor() { 
     if(localStorage.getItem('permissions') !== null){
@@ -21,5 +21,9 @@ export class PermissionsService {
     else{
       return false;
     }
+  }
+
+  getPermissions(): string[] {
+    return this.permissions.getValue();
   }
 }

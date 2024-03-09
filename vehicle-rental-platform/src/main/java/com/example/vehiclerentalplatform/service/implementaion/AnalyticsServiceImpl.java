@@ -14,11 +14,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 import com.example.vehiclerentalplatform.dto.MonthlyIncome;
-import com.example.vehiclerentalplatform.dto.Ratings;
 import com.example.vehiclerentalplatform.dto.TopRatings;
 import com.example.vehiclerentalplatform.model.Bookings;
 import com.example.vehiclerentalplatform.model.Maintanance;
@@ -54,7 +52,7 @@ public class AnalyticsServiceImpl implements AnalyticsService{
                     
                     if (fromDate.getYear() == Year.now().getValue()) {
                         Month month = fromDate.getMonth();
-                        double price = Double.parseDouble(booking.get().getPrice());
+                        double price = booking.get().getPrice();
     
                         monthlyIncomeMap.put(month, monthlyIncomeMap.getOrDefault(month, 0.0) + price);
                     }

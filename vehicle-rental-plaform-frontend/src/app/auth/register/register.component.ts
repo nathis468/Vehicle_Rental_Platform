@@ -9,6 +9,7 @@ import { RegisterService } from 'src/app/services/register.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  hide: boolean = true;
 
   constructor(private registerService : RegisterService, private router : Router) { }
 
@@ -30,12 +31,6 @@ export class RegisterComponent {
           if(response.status === 200){
             this.router.navigate(['login']);
           }
-        },
-        error : (error) => {
-          
-        },
-        complete : () => {
-          
         }
       })
     }

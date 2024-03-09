@@ -40,6 +40,10 @@
     padding: 10px;
 }
 
+.vehicle-details:hover {
+    cursor: pointer;
+}
+
 .price-info {
     font-weight: bold;
     margin-bottom: 10px;

@@ -26,8 +26,8 @@ public class UsersController {
     private UsersService usersService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Users>> getAllUsers(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return new ResponseEntity<>(usersService.getAllUsers(page, pageSize),HttpStatus.OK);
+    public ResponseEntity<Page<Users>> getAllUsers(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestParam("searchedValue") String searchedValue, @RequestParam("active") String active, @RequestParam("direction") String direction) {
+        return new ResponseEntity<>(usersService.getAllUsers(page, pageSize, searchedValue, active, direction),HttpStatus.OK);
     }
 
     @GetMapping("profile/{email}")

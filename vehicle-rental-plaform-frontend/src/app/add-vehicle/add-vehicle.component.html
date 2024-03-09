@@ -4,66 +4,84 @@
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Car Model Name *" formControlName="carModel" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            <mat-label>Enter Car Model Name</mat-label>
+            <input matInput formControlName="carModel" required>
         </mat-form-field>
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Seating  Capacity *" formControlName="seatingCapacity" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            <mat-label>Choose Seat Capacity</mat-label>
+            <input matInput formControlName="seatingCapacity" type="number" required>
         </mat-form-field>
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Mileage *" formControlName="mileage" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            <mat-label>Choose Mileages</mat-label>      
+            <input matInput formControlName="mileage" required type="number">
+            <span matTextSuffix>Km</span>
         </mat-form-field>
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Fuel Capacity *" formControlName="fuelCapacity" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            <mat-label>Choose Fuel Capacity</mat-label>
+            <input matInput formControlName="fuelCapacity" required type="number">
+            <span matTextSuffix>Litre</span>
         </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Fuel Type *" formControlName="fuelType" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Insurance Coverage" formControlName="insuranceCoverage" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Cancellation Policy *" formControlName="cancellationPolicy" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Price *" formControlName="price" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Latitude *" formControlName="latitude" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Longitude *" formControlName="longitude" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
-
-        <input type="file" (change)="onFileUpload($event)">
         
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose Fuel type</mat-label>
+            <mat-select formControlName="fuelType" required>
+              <mat-option value="petrol">Petrol</mat-option>
+              <mat-option value="diesel">Diesel</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose Insurance Coverage</mat-label>
+            <mat-select formControlName="insuranceCoverage" required>
+              <mat-option value="comprehensive">Comprehensive</mat-option>
+              <mat-option value="personal addict">Personal Addict</mat-option>
+              <mat-option value="third party liable">Third-Party Liable</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose Cancellation Policy</mat-label>
+            <mat-select formControlName="cancellationPolicy" required>
+              <mat-option value="available">Available</mat-option>
+              <mat-option value="not-available">Not Available</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Enter Rental Price</mat-label>
+            <input matInput formControlName="price" required type="number" required>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <mat-label class="location">Enter Location</mat-label>
+        <mat-form-field appearance="fill">
+            <mat-label>Latitude</mat-label>
+            <input matInput formControlName="latitude" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Longitude</mat-label>
+            <input matInput formControlName="longitude" required>
+        </mat-form-field>
+
+        <div class="input-file-container">
+            <button mat-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
+            <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
+            <div class="file-name">{{ fileName }}</div>
+        </div>
+
+
         <button mat-raised-button color="primary">Add Vehicles</button>        
     </form>
 </div>

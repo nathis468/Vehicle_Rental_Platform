@@ -13,8 +13,6 @@ export class BookingsService {
   constructor(private http: HttpClient) { }
 
   getBookingDetails(email: string, page: number, pageSize: number, searchedValue: string,active: string, direction: string) {
-    console.log(active,direction);
-    
     const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString()).set('searchedValue',searchedValue).set('active',active).set('direction',direction);
     return this.http.get<any>(`${environment.bookingsUrl}/${email}`, {params, observe: 'response'});
   }
@@ -27,7 +25,11 @@ export class BookingsService {
     return this.http.put<any>(`${environment.bookingsUrl}?rating=${rating}`, data);
   }
 
-  sendEmail(data: Email){
-    return this.http.post<any>(environment.emailUrl, data, {observe: 'response'});  
+  sendEmail(data: Email, status: string){
+    return this.http.post<any>(`${environment.emailUrl}/${status}`, data, {observe: 'response'});  
+  }
+
+  cancelBooking(data: BookingDetails){
+    return this.http.put<any>(`${environment.bookingsUrl}/cancel`, data, {observe: 'response'});
   }
 }

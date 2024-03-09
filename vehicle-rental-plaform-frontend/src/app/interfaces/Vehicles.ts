@@ -5,9 +5,9 @@ export interface Vehicles{
     vehicles : {
         _id: string;
         carModel : string;
-        seatingCapacity : string;
-        mileage : string;
-        fuelCapacity : string;
+        seatingCapacity : number;
+        mileage : number;
+        fuelCapacity : number;
         fuelType : string;
         insuranceCoverage : string;
         cancellationPolicy : string;

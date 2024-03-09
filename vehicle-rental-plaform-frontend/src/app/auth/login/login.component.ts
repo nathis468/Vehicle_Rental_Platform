@@ -17,6 +17,8 @@ export class LoginComponent {
 
   login : FormGroup;
 
+  hide: boolean = true;
+
   ngOnInit() {
     this.login = new FormGroup({
       email : new FormControl<string>('',[Validators.required,Validators.email]),
@@ -36,6 +38,8 @@ export class LoginComponent {
           }
         },
         error : (error) => {
+          console.log(error);
+          
           if(error.status ===  401){
             this.openSnackBar('Invalid Credentials');
           }

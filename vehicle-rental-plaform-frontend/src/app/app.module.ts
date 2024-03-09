@@ -26,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MaintananceComponent,
     SalesOverTimeComponent,
     CustomerRatingDistributionComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    ViewVehicleComponent  
   ],
   imports: [
     BrowserModule,

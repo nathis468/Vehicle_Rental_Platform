@@ -16,6 +16,8 @@ public interface BookingsRepository extends MongoRepository<Bookings,String>{
     @Query("{ $or: [ { 'carModelName' : { $regex: ?0, $options: 'i' } }, { 'email' : { $regex: ?0, $options: 'i' } } ] }")
     Page<Bookings> findByCarModelNameAndEmail(String searchedValue, PageRequest pageRequest);
 
-    @Query("{ 'email' : ?0, $or[{'carModelName' : { $regex: ?1, $options: 'i' } }, {'email' : { $regex: ?1, $options: 'i' } }]")
+    @Query("{ 'email' : ?0, $or: [{'carModelName' : { $regex: ?1, $options: 'i' } }, {'email' : { $regex: ?1, $options: 'i' } }]}")
     Page<Bookings> findByEmailAndCarModelNameAndEmail(String email, String searchedValue, PageRequest pageRequest);
+
+    Bookings findByBookingId(String bookingId);
 }

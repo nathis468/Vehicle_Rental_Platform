@@ -19,9 +19,9 @@ export class AddVehicleComponent {
   ngOnInit() {
     this.addVehicle = new FormGroup({
       carModel  : new FormControl<string>('',Validators.required),
-      seatingCapacity  : new FormControl<string>('',Validators.required),
-      mileage  : new FormControl<string>('',Validators.required),
-      fuelCapacity  : new FormControl<string>('',Validators.required),
+      seatingCapacity  : new FormControl<number>(0,Validators.required),
+      mileage  : new FormControl<number>(0,Validators.required),
+      fuelCapacity  : new FormControl<number>(0,Validators.required),
       fuelType  : new FormControl<string>('',Validators.required),
       insuranceCoverage  : new FormControl<string>('',Validators.required),
       cancellationPolicy  : new FormControl<string>('',Validators.required),
@@ -31,10 +31,12 @@ export class AddVehicleComponent {
     })
   }
 
-  image : any;
+  image : File;
 
-  onFileUpload(event : any){
+  fileName: string = '';
+  onFileUpload(event : Event){
     this.image = (event.target as HTMLInputElement).files[0];
+    this.fileName = this.image?.name || '';
   }
 
   onSubmit() {

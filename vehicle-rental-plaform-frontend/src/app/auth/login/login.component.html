@@ -4,16 +4,19 @@
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-label>Enter your Email</mat-label>
+            <input matInput formControlName="email" required>
             <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
         </mat-form-field>
 
-        <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
-            <input matInput placeholder="Password" formControlName="password" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
         </mat-form-field>
-        
+
         <button mat-raised-button color="primary">Login</button>
         
         <div>New User ? <a routerLink="/register">Register</a></div>

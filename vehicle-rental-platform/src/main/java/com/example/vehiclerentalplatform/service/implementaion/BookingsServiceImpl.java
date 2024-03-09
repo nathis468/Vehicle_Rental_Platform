@@ -3,6 +3,7 @@ package com.example.vehiclerentalplatform.service.implementaion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import com.example.vehiclerentalplatform.security.model.Role;
 import com.example.vehiclerentalplatform.security.model.UserEntity;
 import com.example.vehiclerentalplatform.security.repository.UserEntityRepository;
 import com.example.vehiclerentalplatform.service.BookingsService;
+import com.example.vehiclerentalplatform.service.EmailService;
 
 @Service
 public class BookingsServiceImpl implements BookingsService{
@@ -29,6 +31,25 @@ public class BookingsServiceImpl implements BookingsService{
 
     @Autowired
     private VehiclesRepository vehiclesRepo;
+
+    @Autowired EmailService emailService;
+
+
+    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    public String generateRandomString() {
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder(10);
+
+        for (int i = 0; i < 20; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            stringBuilder.append(randomChar);
+        }
+
+        return stringBuilder.toString();
+    }
+    
 
     @Override
     public Page<Bookings> getBookingDetails(String email, int page, int pageSize, String searchedValue, String active, String direction) {
@@ -48,7 +69,6 @@ public class BookingsServiceImpl implements BookingsService{
             pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc("bookingDate")));
         }
 
-
         Optional<UserEntity> user  = userEntityRepo.findByEmail(email);
         if(user.get().getRole().equals(Role.USER)){ 
             Page<Bookings> result = bookingsRepo.findByEmailAndCarModelNameAndEmail(email,searchedValue,pageable);
@@ -60,15 +80,17 @@ public class BookingsServiceImpl implements BookingsService{
     
     @Override
     public Bookings createPaymentRecord(Bookings newRecord){
+        String bookingId = generateRandomString();
+        newRecord.setBookingId(bookingId);
         Bookings booking =  bookingsRepo.save(newRecord);
         Vehicles vehicle =  vehiclesRepo.findById(booking.getVehcileDetails()).orElse(null);
         List<String> previousBookingDetails = vehicle.getBooking_details();
         if(previousBookingDetails != null){
-            vehicle.getBooking_details().add(booking.get_id());
+            vehicle.getBooking_details().add(booking.getBookingId());
         }
         else{
             List<String> currentBooking = new ArrayList<>();
-            currentBooking.add(0, booking.get_id());
+            currentBooking.add(0, booking.getBookingId());
             vehicle.setBooking_details(currentBooking);
         }
         vehiclesRepo.save(vehicle);
@@ -92,9 +114,17 @@ public class BookingsServiceImpl implements BookingsService{
                 vehicle.get().getRatings().get(0).setCount(count);
             }
 
-            vehicle.get().getRatings().get(0).getBookingId().add(theBooking.get_id());
+            vehicle.get().getRatings().get(0).getBookingId().add(theBooking.getBookingId());
 
             vehiclesRepo.save(vehicle.get());
         }
     }
+
+    @Override
+    public void cancelBookingService(Bookings theBookings){
+        Bookings booking = bookingsRepo.findByBookingId(theBookings.getBookingId());
+        booking.setStatus("cancelled");
+        bookingsRepo.save(booking);
+    }
+
 }

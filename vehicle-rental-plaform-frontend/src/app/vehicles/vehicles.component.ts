@@ -32,12 +32,14 @@ export class VehiclesComponent {
   
   bookingDetails: BookingDetails = {
     id: '',
+    bookingId: '',
     carModelName: '',
     email: '',
     fromDate: new Date(),
     toDate: new Date(),
     price: 0,
     status: '',
+    cancellationPolicy: '',
     vehcileDetails: '',
     paymentDate: new Date(),
     latitude: 0,
@@ -53,18 +55,13 @@ export class VehiclesComponent {
       this.bookingDetails.email = localStorage.getItem('email');
       this.bookingDetails.price = event.vehicles.price * this.noOfDays;
       this.bookingDetails.vehcileDetails = event.vehicles._id;
+      this.bookingDetails.cancellationPolicy = event.vehicles.cancellationPolicy;
       this.bookingDetails.paymentDate = new Date();
 
       this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
         next :(response) => {
           console.log(response);
           this.payment(response.body);
-        },
-        error: (error) => {
-          
-        },
-        complete: () => {
-
         }
       })
     }
@@ -133,12 +130,14 @@ export class VehiclesComponent {
       body: '',
       bookingDetails: {
         id: '',
+        bookingId: '',
         carModelName: '',
         email: '',
         fromDate: new Date(),
         toDate: new Date(),
         price: 0,
         status: '',
+        cancellationPolicy: '',
         vehcileDetails: '',
         paymentDate: new Date(),
         latitude: 0,
@@ -148,24 +147,10 @@ export class VehiclesComponent {
       }
     };
 
-    console.log(this.bookingDetails);
-
-    console.log(data);
-    
-    console.log(data.bookingDetails);
-    
-    
     data.bookingDetails = this.bookingDetails;
     // data.toEmail = localStorage.getItem('email');
     data.toEmail = "nathis468@gmail.com";
-    this.bookingsService.sendEmail(data).subscribe({
-      next: (response) => {
-
-      },
-      error: (error) => {
-
-      }
-    })
+    this.bookingsService.sendEmail(data, 'confirmed').subscribe();
   }
 
   newFilter(event : FormGroup){

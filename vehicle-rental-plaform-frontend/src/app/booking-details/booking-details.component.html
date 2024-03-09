@@ -41,6 +41,13 @@
       <td mat-cell *matCellDef="let element"> {{element.status}} </td>
     </ng-container>  
 
+    <ng-container matColumnDef="cancel">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="cancelBooking(element)" [disabled]="element.status === 'cancelled' || element.cancellationPolicy !== 'available'">Cancel</button>
+      </td>    
+    </ng-container>
+
     <ng-container matColumnDef="rating">
       <th mat-header-cell *matHeaderCellDef> Rating </th>
       <td mat-cell *matCellDef="let element">
@@ -49,7 +56,7 @@
     </ng-container>
 
     <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef> View Vehicle Details </th>
+      <th mat-header-cell *matHeaderCellDef> Vehicle Details </th>
       <td mat-cell *matCellDef="let element">
         <button mat-raised-button color="primary" (click)="viewVehicle(element)">View</button>
       </td>

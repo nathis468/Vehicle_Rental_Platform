@@ -41,5 +41,11 @@ public class BookingsController {
         bookingsService.setRatingService(theBooking, rating);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/cancel")
+    public ResponseEntity<?> cancelBookingController(@RequestBody Bookings theBooking) {
+        bookingsService.cancelBookingService(theBooking);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     
 }

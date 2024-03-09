@@ -9,12 +9,12 @@ export class PermissionsDirective {
 
   constructor(private permissionsService : PermissionsService, private el : ElementRef) { }
 
-  @Input() permissions : string = '';
+  @Input() permissionAcess : string = '';
 
   ngOnInit() {
     this.permissionsService.permissions.subscribe({
       next : (value) => {
-        this.el.nativeElement.hidden = !value.includes(this.permissions);
+        this.el.nativeElement.hidden = !value.includes(this.permissionAcess);
       }
     })
   }

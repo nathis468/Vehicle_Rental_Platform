@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Vehicles } from 'src/app/interfaces/Vehicles';
 import { VehiclesService } from 'src/app/services/vehicles.service';
+import { ViewVehicleComponent } from 'src/app/view-vehicle/view-vehicle.component';
 
 @Component({
   selector: 'app-vehicles-list',
@@ -9,7 +11,7 @@ import { VehiclesService } from 'src/app/services/vehicles.service';
 })
 export class VehiclesListComponent {
 
-  constructor(private vehiclesService : VehiclesService) {}
+  constructor(private vehiclesService : VehiclesService, private dialog: MatDialog) {}
   
   @Input() vehiclesList : Vehicles[] = [];
 
@@ -35,5 +37,8 @@ export class VehiclesListComponent {
     this.deleteVehicle.emit(event);
   }
 
+  viewInfo(vehicle) {
+    this.dialog.open(ViewVehicleComponent,{data : vehicle, height: "800px", width: "650px"});
+  }
 
 }
