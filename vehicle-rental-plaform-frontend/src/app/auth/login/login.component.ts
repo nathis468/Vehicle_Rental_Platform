@@ -32,14 +32,11 @@ export class LoginComponent {
     if(this.login.valid === true){
       this.loginSubscription = this.loginService.login(this.login.value).subscribe({
         next : (response) => {
-          console.log(response);
           if(response.status == 200){
             this.loginService.localStoring(response);
           }
         },
         error : (error) => {
-          console.log(error);
-          
           if(error.status ===  401){
             this.openSnackBar('Invalid Credentials');
           }

@@ -14,8 +14,6 @@ export class AnalyticsService {
   }
 
   rating(selectedRank: string) {
-    console.log(selectedRank);
-    
     return this.http.get<any>(`${environment.analyticsUrl}/rating/${selectedRank}`, {observe: 'response'});
   }
 }

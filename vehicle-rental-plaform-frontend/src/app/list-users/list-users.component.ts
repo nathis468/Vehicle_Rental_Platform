@@ -67,22 +67,13 @@ export class ListUsersComponent {
   onPageChanges(event: PageEvent){
     this.page = event.pageIndex+ 1;
     this.pageSize = event.pageSize;
-    console.log(this.page,this.pageSize);
     this.usersDetails(this.page,this.pageSize, this.searchedValue,this.active,this.direction);
   }
     
   usersDetails(page: number,pageSize: number, searchedValue: string,active: string,direction: string){
     this.userDetailsSubscription = this.usersService.getUserDetails(page,pageSize, searchedValue, active, direction).subscribe({
       next: (response) => {
-        console.log(response);
-        
         this.paginatorProperties(response); 
-      },
-      error: (error) => {
-        console.log(error);
-        
-      },
-      complete: () => {       
       }
     })    
   }

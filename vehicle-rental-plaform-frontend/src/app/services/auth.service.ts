@@ -31,8 +31,6 @@ export class AuthService {
 
   tokenDecode() {
     const decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('token'));
-    console.log(decodeToken);
-    console.log(decodeToken.role[0].authority);
     this.role.next(decodeToken.role[0].authority);
     this.permissions.next(decodeToken.permissions);
     this.profileInfo.next(decodeToken.profileInfo);

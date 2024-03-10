@@ -54,9 +54,7 @@ export class UpdateVehicleComponent {
    
     this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
 
-    console.log(this.vehicle);
-    
-    this.vehiclesService.updateVehicle(this.vehicle.vehicles).subscribe({
+    this.updateVehicleSubscription = this.vehiclesService.updateVehicle(this.vehicle.vehicles).subscribe({
       next: () => {
         Swal.fire("Updated Vehicle Successfully");
       },
@@ -79,6 +77,10 @@ export class UpdateVehicleComponent {
       duration: 3000,
     });
     this.updateVehicle.close();
+  }
+
+  ngOnDestroy() {
+    this.updateVehicleSubscription.unsubscribe();
   }
 
 }

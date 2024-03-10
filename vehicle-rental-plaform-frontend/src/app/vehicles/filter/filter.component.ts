@@ -22,7 +22,6 @@ export class    FilterComponent {
     this.addFilter.emit(this.filterDetails);
   }
 
-
   onSubmit(){
     this.addFilter.emit(this.filterDetails);
   }

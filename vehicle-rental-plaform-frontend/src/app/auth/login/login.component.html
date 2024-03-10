@@ -1,4 +1,7 @@
 <div class="example-container">
+    <div class="form-image">
+        <img src="assets/Login-amico.png" alt="login image">
+    </div>
     <form class="form" [formGroup]="login" (ngSubmit)="onSubmit()">
         <mat-label class="heading">Login Form</mat-label>
 
@@ -6,7 +9,6 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter your Email</mat-label>
             <input matInput formControlName="email" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -19,6 +21,6 @@
 
         <button mat-raised-button color="primary">Login</button>
         
-        <div>New User ? <a routerLink="/register">Register</a></div>
+        <div class="register-naviagte">New User ? <a routerLink="/register" style="margin-left: 10px;">Register</a></div>
     </form>
 </div>

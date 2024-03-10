@@ -4,6 +4,12 @@
     align-items: center;
     height: 100vh;
   }
+
+  .form-image {
+    display: flex;
+    height: 80%;
+    width: 40%;
+  }
   
   .form {
     max-width: 400px;
@@ -46,3 +52,12 @@
   a:hover {
     text-decoration: underline;
   }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+.register-naviagte {
+  margin-top: 30px;
+  font-size: 17px;
+}

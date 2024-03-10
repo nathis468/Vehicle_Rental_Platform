@@ -12,9 +12,7 @@ export class ViewVehicleComponent {
   vehicle : Vehicles;
 
   constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private viewVehicle : MatDialogRef<ViewVehicleComponent>){
-    
     this.vehicle = data;  
-    console.log(this.vehicle);
   }
 
   close(): void {

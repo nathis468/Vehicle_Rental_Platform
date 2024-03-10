@@ -58,11 +58,7 @@ export class AnalyticsComponent {
     
     this.topRatingSubscription = this.analyticsService.rating('top').subscribe({
       next: (response) => {
-        console.log(response);
         this.customerRatingTop = response.body;
-      },
-      error: (error) => {
-        console.log("error",error);
       },
       complete: () => {
         this.customerRatingBelowCalc();
@@ -75,11 +71,7 @@ export class AnalyticsComponent {
   customerRatingBelowCalc() {
     this.belowRatingSubsciption = this.analyticsService.rating('below').subscribe({
       next: (response) => {
-        console.log(response);
         this.customerRatingBelow = response.body;
-      },
-      error: (error) => {
-        console.log("error",error);
       }
     })
   }

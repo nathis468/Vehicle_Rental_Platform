@@ -15,6 +15,7 @@ import { UpdateVehicleComponent } from '../update-vehicle/update-vehicle.compone
 import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
 import { Email } from '../interfaces/Email';
 import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 declare let Razorpay : any;
 
@@ -33,8 +34,13 @@ export class VehiclesComponent {
 
   email: string = '';
 
+  emailSubscription: Subscription;
+  paymentSubscription: Subscription;
+  createBookingSubscription: Subscription;
+  filteredVehiclesSubscription: Subscription;
+
   ngOnInit() {
-    this.authService.email.subscribe({
+    this.emailSubscription = this.authService.email.subscribe({
       next: (data) => {
         this.email = data;
       }
@@ -61,7 +67,6 @@ export class VehiclesComponent {
 
   newEvent(event : Vehicles){
     if(this.bookingDetails.latitude !== 0 && this.bookingDetails.longitude != 0){
-      console.log(event.vehicles.price * this.noOfDays);
       this.bookingDetails.carModelName = event.vehicles.carModel;
       this.bookingDetails.email = this.email;
       this.bookingDetails.price = event.vehicles.price * this.noOfDays;
@@ -69,9 +74,8 @@ export class VehiclesComponent {
       this.bookingDetails.cancellationPolicy = event.vehicles.cancellationPolicy;
       this.bookingDetails.paymentDate = new Date();
 
-      this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
+      this.paymentSubscription = this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
         next :(response) => {
-          console.log(response);
           this.payment(response.body);
         }
       })
@@ -103,7 +107,6 @@ export class VehiclesComponent {
       notes: { },
       modal: {
         ondismiss: () => {
-          console.log('dismissed');
         }
       }
     }
@@ -117,15 +120,8 @@ export class VehiclesComponent {
     this.bookingDetails.paymentId = response.razorpay_payment_id;
     this.bookingDetails.status = 'confirmed';
     
-    this.bookingsService.createBooking(this.bookingDetails).subscribe({
+    this.createBookingSubscription = this.bookingsService.createBooking(this.bookingDetails).subscribe({
       next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        console.log(error);
-        
-      },
-      complete: () => {
         this.sendEmail();
         this.route.navigate(['home/booking-details']);
       }
@@ -184,10 +180,8 @@ export class VehiclesComponent {
     const timeDifference = new Date(event.value.endDate).getTime() - new Date(event.value.startDate).getTime();
     this.noOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24))+1;
     
-    this.vehiclesService.getFilteredVehicles(event.value, this.currentPage).subscribe({
+    this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(event.value, this.currentPage).subscribe({
       next : (response) => {
-        console.log(response);
-        console.log(this.currentPage);
         this.vehiclesList = response.body;
       },
     })
@@ -211,22 +205,23 @@ export class VehiclesComponent {
     const documentHeight = document.body.scrollHeight;
     if (scrollPosition + windowHeight >= documentHeight) {      
       this.currentPage++;
-      this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
+      this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
-          console.log(response);
-          console.log(this.currentPage);
-          
           if(response.body.length === 0){
             Swal.fire("No more Records Found");
           }
           else{
             this.vehiclesList = response.body;
-            console.log(this.currentPage);
-            
           }
         }
       })
     }
   }
 
+  ngOnDestroy() {
+    this.emailSubscription.unsubscribe();
+    this.paymentSubscription.unsubscribe();
+    this.createBookingSubscription.unsubscribe();
+    this.filteredVehiclesSubscription.unsubscribe();  
+  }
 }

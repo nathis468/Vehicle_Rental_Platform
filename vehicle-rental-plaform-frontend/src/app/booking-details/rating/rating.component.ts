@@ -28,9 +28,6 @@ export class RatingComponent {
   }
 
   sendRating(){
-    console.log(this.rating);
-    console.log(this.data);
-    
     this.bookingsService.provideRating(this.data, this.rating).subscribe();
   }
 
