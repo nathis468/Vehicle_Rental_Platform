@@ -13,6 +13,8 @@ export class BookingsService {
   constructor(private http: HttpClient) { }
 
   getBookingDetails(email: string, page: number, pageSize: number, searchedValue: string,active: string, direction: string) {
+    console.log(email);
+    
     const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString()).set('searchedValue',searchedValue).set('active',active).set('direction',direction);
     return this.http.get<any>(`${environment.bookingsUrl}/${email}`, {params, observe: 'response'});
   }

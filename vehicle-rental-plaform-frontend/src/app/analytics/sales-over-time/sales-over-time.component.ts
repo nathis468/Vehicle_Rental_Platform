@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { SalesOverTime } from 'src/app/interfaces/SalesOverTime';
-import { AnalyticsService } from 'src/app/services/analytics.service';
-import { VehiclesService } from 'src/app/services/vehicles.service';
 
 @Component({
   selector: 'app-sales-over-time',
@@ -10,12 +8,12 @@ import { VehiclesService } from 'src/app/services/vehicles.service';
   styleUrls: ['./sales-over-time.component.css']
 })
 export class SalesOverTimeComponent {
-  constructor(private analyticsService: AnalyticsService, private vehiclesService: VehiclesService) { }
+  constructor() { }
 
   @Output() salesOverTimeEmitter = new EventEmitter<string>();
   selectedOption: string = 'Honda City';
 
-  @Input() options: string[];
+  @Input() options: string[] = [];
 
   @Input() chartAnalytics:SalesOverTime[];
   
@@ -25,13 +23,10 @@ export class SalesOverTimeComponent {
     this.salesOverTimeEmitter.emit(this.selectedOption);
   }
 
-
-  ngOnInit() {
-    this.onSelectChange();
-  }
-
-  ngOnChanges(){
-    this.salesOverTimeChart();
+  ngOnChanges(changes: SimpleChanges){
+    if (changes['chartAnalytics'] && changes['chartAnalytics'].currentValue) {
+      this.salesOverTimeChart();  
+    }
   }
 
   salesOverTimeChart(){

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { VehiclesService } from '../services/vehicles.service';
 import { Router } from '@angular/router';
 import { Vehicles } from '../interfaces/Vehicles';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { PaymentService } from '../services/payment.service';
 import { Payment } from '../interfaces/Payment';
 import { formatDate } from '@angular/common';
@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UpdateVehicleComponent } from '../update-vehicle/update-vehicle.component';
 import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
 import { Email } from '../interfaces/Email';
+import { AuthService } from '../services/auth.service';
 
 declare let Razorpay : any;
 
@@ -24,11 +25,21 @@ declare let Razorpay : any;
 })
 
 export class VehiclesComponent {
-  constructor(private vehiclesService : VehiclesService, private route:Router, private paymentService : PaymentService, private bookingsService : BookingsService, private dialog: MatDialog) {}
+  constructor(private vehiclesService : VehiclesService, private route:Router, private paymentService : PaymentService, private bookingsService : BookingsService, private dialog: MatDialog, private authService: AuthService) {}
   
   vehiclesList : Vehicles[];
   
   noOfDays : number = 1;
+
+  email: string = '';
+
+  ngOnInit() {
+    this.authService.email.subscribe({
+      next: (data) => {
+        this.email = data;
+      }
+    })
+  }
   
   bookingDetails: BookingDetails = {
     id: '',
@@ -52,7 +63,7 @@ export class VehiclesComponent {
     if(this.bookingDetails.latitude !== 0 && this.bookingDetails.longitude != 0){
       console.log(event.vehicles.price * this.noOfDays);
       this.bookingDetails.carModelName = event.vehicles.carModel;
-      this.bookingDetails.email = localStorage.getItem('email');
+      this.bookingDetails.email = this.email;
       this.bookingDetails.price = event.vehicles.price * this.noOfDays;
       this.bookingDetails.vehcileDetails = event.vehicles._id;
       this.bookingDetails.cancellationPolicy = event.vehicles.cancellationPolicy;
@@ -119,7 +130,6 @@ export class VehiclesComponent {
         this.route.navigate(['home/booking-details']);
       }
     })
-    console.log(response);
   }  
 
   sendEmail(){
@@ -148,12 +158,23 @@ export class VehiclesComponent {
     };
 
     data.bookingDetails = this.bookingDetails;
-    // data.toEmail = localStorage.getItem('email');
     data.toEmail = "nathis468@gmail.com";
     this.bookingsService.sendEmail(data, 'confirmed').subscribe();
   }
 
+
+  filter: FormGroup = new FormGroup({
+    latitude: new FormControl<string>(''),
+    longitude: new FormControl<string>(''),
+    startDate: new FormControl<string>(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
+    endDate: new FormControl<string>(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
+  })
+
   newFilter(event : FormGroup){
+    this.filter.value.startDate = event.value.startDate;
+    this.filter.value.toDate = event.value.toDate;
+    this.filter.value.latitude = event.value.latitude;
+    this.filter.value.longitude = event.value.longitude;
     
     this.bookingDetails.fromDate = event.value.startDate;
     this.bookingDetails.toDate = event.value.endDate;
@@ -162,16 +183,13 @@ export class VehiclesComponent {
 
     const timeDifference = new Date(event.value.endDate).getTime() - new Date(event.value.startDate).getTime();
     this.noOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24))+1;
-    this.vehiclesService.getFilteredVehicles(event.value).subscribe({
+    
+    this.vehiclesService.getFilteredVehicles(event.value, this.currentPage).subscribe({
       next : (response) => {
+        console.log(response);
+        console.log(this.currentPage);
         this.vehiclesList = response.body;
       },
-      error : (error) => {
-        
-      },
-      complete : () => {
-
-      }
     })
   }
 
@@ -182,4 +200,33 @@ export class VehiclesComponent {
   deleteVehicle(event : Vehicles){
     this.dialog.open(DeleteVehicleComponent,{data : event});    
   }
+
+  currentPage: number = 0;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    const documentHeight = document.body.scrollHeight;
+    if (scrollPosition + windowHeight >= documentHeight) {      
+      this.currentPage++;
+      this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
+        next: (response) => {
+          console.log(response);
+          console.log(this.currentPage);
+          
+          if(response.body.length === 0){
+            Swal.fire("No more Records Found");
+          }
+          else{
+            this.vehiclesList = response.body;
+            console.log(this.currentPage);
+            
+          }
+        }
+      })
+    }
+  }
+
 }

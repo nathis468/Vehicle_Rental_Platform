@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Users } from '../interfaces/Users';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,6 +28,9 @@ export class ListUsersComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  sortableSubscription: Subscription;
+  userDetailsSubscription: Subscription;
+
   ngOnInit(){
     this.usersDetails(this.page,this.pageSize, this.searchedValue, this.active, this.direction);
   }
@@ -34,7 +38,7 @@ export class ListUsersComponent {
   ngAfterViewInit() {
     this.changeDetect.detectChanges();
     
-    this.sort.sortChange.subscribe({
+    this.sortableSubscription = this.sort.sortChange.subscribe({
       next: (data: Sort) => {
         this.active = data.active;
         this.direction = data.direction;
@@ -68,7 +72,7 @@ export class ListUsersComponent {
   }
     
   usersDetails(page: number,pageSize: number, searchedValue: string,active: string,direction: string){
-    this.usersService.getUserDetails(page,pageSize, searchedValue, active, direction).subscribe({
+    this.userDetailsSubscription = this.usersService.getUserDetails(page,pageSize, searchedValue, active, direction).subscribe({
       next: (response) => {
         console.log(response);
         
@@ -88,6 +92,11 @@ export class ListUsersComponent {
     this.paginator.pageIndex = response.body.number;
     this.paginator.pageSize = response.body.size;
     this.paginator.length = response.body.totalElements;
+  }
+
+  ngOnDestroy() {
+    this.sortableSubscription.unsubscribe();
+    this.userDetailsSubscription.unsubscribe();
   }
 }
 

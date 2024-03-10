@@ -14,4 +14,5 @@ public class Filters {
     private String longitude;
     private Date startDate;
     private Date endDate;
+    private int currentPage;
 }

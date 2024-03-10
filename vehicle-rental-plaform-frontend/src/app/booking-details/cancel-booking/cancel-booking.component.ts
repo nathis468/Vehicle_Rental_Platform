@@ -1,12 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { BookingDetails } from 'src/app/interfaces/BookingDetails';
 import { Email } from 'src/app/interfaces/Email';
-import { Vehicles } from 'src/app/interfaces/Vehicles';
 import { BookingsService } from 'src/app/services/bookings.service';
-import { VehiclesService } from 'src/app/services/vehicles.service';
-import { UpdateVehicleComponent } from 'src/app/update-vehicle/update-vehicle.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,9 +14,11 @@ import Swal from 'sweetalert2';
 export class CancelBookingComponent {
 
   constructor(@Inject (MAT_DIALOG_DATA) private data : BookingDetails, private bookingsService: BookingsService) { }
+
+  cancelBookingSubscription: Subscription;
   
   cancelBooking() {
-    this.bookingsService.cancelBooking(this.data).subscribe({
+    this.cancelBookingSubscription = this.bookingsService.cancelBooking(this.data).subscribe({
       next: (response) => {
         if(response.status === 200){
           Swal.fire("Cancelled Booking Successfully");
@@ -55,5 +54,9 @@ export class CancelBookingComponent {
         this.bookingsService.sendEmail(data, 'cancelled').subscribe();
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.cancelBookingSubscription.unsubscribe();
   }
 }

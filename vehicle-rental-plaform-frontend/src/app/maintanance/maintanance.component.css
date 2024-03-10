@@ -1,22 +1,27 @@
+.container{
+  padding-top: 90px;
+}
+
 .tab-content {
     display: flex;
     flex-direction: column;
-  }
-  
-  .header {
-    padding: 10px;
-  }
-  
-  .content {
-    overflow: auto;
-  }
-  
-  .mat-table {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .mat-paginator {
-    margin-top: 20px;
-  }
+}
+
+.header {
+  padding: 10px;
+  margin: 20px;
+}
+
+.content {
+  overflow: auto;
+}
+
+.mat-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-paginator {
+  margin-top: 20px;
+}
     

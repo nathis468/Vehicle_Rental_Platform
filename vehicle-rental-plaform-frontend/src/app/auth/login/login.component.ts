@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoginService } from 'src/app/services/login.service';
-import { PermissionsService } from 'src/app/services/permissions.service';
 import { ProfileService } from 'src/app/services/ProfileService';
 
 @Component({
@@ -11,13 +12,14 @@ import { ProfileService } from 'src/app/services/ProfileService';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  
-  constructor(private loginService : LoginService, private router : Router, private snackBar : MatSnackBar, private permissionsService : PermissionsService, private profileService: ProfileService) { }
+export class LoginComponent {  
+  constructor(private loginService : LoginService, private router : Router, private snackBar : MatSnackBar, private authService : AuthService) { }
 
   login : FormGroup;
 
   hide: boolean = true;
+
+  loginSubscription: Subscription;
 
   ngOnInit() {
     this.login = new FormGroup({
@@ -28,13 +30,11 @@ export class LoginComponent {
 
   onSubmit() {
     if(this.login.valid === true){
-      this.loginService.login(this.login.value).subscribe({
-        
+      this.loginSubscription = this.loginService.login(this.login.value).subscribe({
         next : (response) => {
           console.log(response);
           if(response.status == 200){
-            this.localStoring(response);
-            this.router.navigate(['home']);
+            this.loginService.localStoring(response);
           }
         },
         error : (error) => {
@@ -45,31 +45,21 @@ export class LoginComponent {
           }
         },
         complete : () => {
-          // this.loginService.getUserProfile().subscribe({
-          //   next: (response) => {
-          //     console.log(response);
-              
-          //     this.profileService.setProfileDetails(response.body); 
-          //   }
-          // })
+          this.authService.tokenDecode();
+          this.router.navigate(['home']);
         }
       })
     }
   }
 
-  localStoring(response){
-    localStorage.setItem('permissions',JSON.stringify(response.body.permission));
-    this.permissionsService.permissions.next(JSON.parse(localStorage.getItem('permissions')));
-    localStorage.setItem('isLogin','true');
-    localStorage.setItem('token',`${response.body.token}`);
-    localStorage.setItem('email',`${this.login.value.email}`);
-    localStorage.setItem('userInfo',JSON.stringify(response.body.userInfo));
-    this.profileService.profileInfo.next(JSON.parse(localStorage.getItem('userInfo')));
-  }
 
   openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 3000,
     });
+  }
+
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
   }
 }

@@ -13,7 +13,7 @@ export class AnalyticsService {
     return this.http.get<any>(`${environment.analyticsUrl}/yearly?carModelName=${carModelName}`, {observe: 'response'});
   }
 
-  topRating(selectedRank: string) {
+  rating(selectedRank: string) {
     console.log(selectedRank);
     
     return this.http.get<any>(`${environment.analyticsUrl}/rating/${selectedRank}`, {observe: 'response'});

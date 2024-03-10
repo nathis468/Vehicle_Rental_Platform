@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { PermissionsService } from '../services/permissions.service';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Directive({
   standalone:true,
@@ -7,16 +8,22 @@ import { PermissionsService } from '../services/permissions.service';
 })
 export class PermissionsDirective {
 
-  constructor(private permissionsService : PermissionsService, private el : ElementRef) { }
+  constructor(private authService : AuthService, private el : ElementRef) { }
 
   @Input() permissionAcess : string = '';
 
+  permissionsSubscription: Subscription;
+
   ngOnInit() {
-    this.permissionsService.permissions.subscribe({
+    this.permissionsSubscription = this.authService.permissions.subscribe({
       next : (value) => {
         this.el.nativeElement.hidden = !value.includes(this.permissionAcess);
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.permissionsSubscription.unsubscribe();
   }
 
 }

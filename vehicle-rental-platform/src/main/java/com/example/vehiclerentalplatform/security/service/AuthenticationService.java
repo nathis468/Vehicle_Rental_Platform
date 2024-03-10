@@ -39,7 +39,7 @@ public class AuthenticationService {
 
     private final PermissionUpdateService permissionUpdateService;
 
-    public Token register(UserCreate userCreate) {
+    public void register(UserCreate userCreate) {
 
         Users userData = new Users();
         userData.setUserName(userCreate.getUserName());
@@ -63,10 +63,6 @@ public class AuthenticationService {
         }
 
         permissionUpdateService.addNewUserPermissionsFromUserEntity(user);
-
-        String jwt = jwtService.generateToken(user);
-        Token token = new Token(jwt,new ArrayList<>(), new Users());
-        return token;
     }
 
     public Token authenticate(LoginRequest request) {
@@ -77,14 +73,15 @@ public class AuthenticationService {
             throw new BadCredentialsException("Invalid Credentials");
         }
         UserEntity user = userRepo.findByEmail(request.getEmail()).orElseThrow();
-        String jwt = jwtService.generateToken(user);
+        String jwt = jwtService.generateToken(user, permissionUpdateService.getPermissions(user), usersRepo.findByEmail(request.getEmail()));
 
         
-        Token token = new Token(jwt, permissionUpdateService.getPermissions(user), usersRepo.findByEmail(request.getEmail()));
+
+        Token token = new Token(jwt);
         return token;
     }
 
-    public void updateProfile(UserUpdate user){
+    public Users updateProfile(UserUpdate user){
         Users existingUser =  usersRepo.findById(user.getId()).get();
         existingUser.setUserName(user.getUserName());
         existingUser.setContactNumber(user.getContactNumber());
@@ -95,10 +92,14 @@ public class AuthenticationService {
         userEntity.setUserName(user.getUserName());
 
         userRepo.save(userEntity);
-        usersRepo.save(existingUser);
+        return usersRepo.save(existingUser);
     }
 
     public String imageConvet(MultipartFile file) {
+
+        if(file.equals("empty-file.txt")){
+            System.out.println("ksdn");
+        }
         String url = "";
         String contentType = file.getContentType();
 

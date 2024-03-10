@@ -4,6 +4,9 @@ import { Vehicles } from '../interfaces/Vehicles';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VehiclesService } from '../services/vehicles.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-vehicle',
@@ -14,7 +17,9 @@ export class UpdateVehicleComponent {
 
   vehicle : Vehicles;
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private updateVehicle : MatDialogRef<UpdateVehicleComponent>, private vehiclesService : VehiclesService, private snackBar: MatSnackBar) {
+  updateVehicleSubscription: Subscription;
+
+  constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private updateVehicle : MatDialogRef<UpdateVehicleComponent>, private vehiclesService : VehiclesService, private snackBar: MatSnackBar, private route: Router) {
     this.vehicle = data;
   }
 
@@ -36,30 +41,34 @@ export class UpdateVehicleComponent {
     })
   }
 
+
+  image : File;
+
+  fileName: string = '';
+  onFileUpload(event : Event){
+    this.image = (event.target as HTMLInputElement).files[0];
+    this.fileName = this.image?.name || '';
+  }
+
   onSubmit(){
-    this.vehicle.vehicles.carModel = this.editVehicle.get('carModel').value;
-    this.vehicle.vehicles.seatingCapacity = this.editVehicle.get('seatingCapacity').value;
-    this.vehicle.vehicles.mileage = this.editVehicle.get('mileage').value;
-    this.vehicle.vehicles.fuelCapacity = this.editVehicle.get('fuelCapacity').value;
-    this.vehicle.vehicles.fuelType = this.editVehicle.get('fuelType').value;
-    this.vehicle.vehicles.insuranceCoverage = this.editVehicle.get('insuranceCoverage').value;
-    this.vehicle.vehicles.cancellationPolicy = this.editVehicle.get('cancellationPolicy').value;
-    this.vehicle.vehicles.price = this.editVehicle.get('price').value;
-    this.vehicle.vehicles.latitude = this.editVehicle.get('latitude').value;
-    this.vehicle.vehicles.longitude = this.editVehicle.get('longitude').value;
-    
+   
+    this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
 
     console.log(this.vehicle);
     
     this.vehiclesService.updateVehicle(this.vehicle.vehicles).subscribe({
-      next: (response) => {
-        this.openSnackBar('Updated Successfully');
+      next: () => {
+        Swal.fire("Updated Vehicle Successfully");
       },
-      error: (error) => {
-
+      error: () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       },
       complete: () => {
-
+        this.route.navigate(['home/vehicles'])
       }
     })
 

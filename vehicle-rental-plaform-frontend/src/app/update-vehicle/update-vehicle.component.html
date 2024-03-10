@@ -1,68 +1,104 @@
-<div>
-    <form [formGroup]="editVehicle" (ngSubmit)="onSubmit()">
+<div class="example-container">
+    <form class="form" [formGroup]="editVehicle" (ngSubmit)="onSubmit()">
+
         <mat-label class="heading">Update Vehicle</mat-label>
 
         <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Car Model Name *" formControlName="carModel" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Seating  Capacity *" formControlName="seatingCapacity" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Car Model Name *</mat-label>
+                <input matInput formControlName="carModel" required>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Mileage *" formControlName="mileage" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Seating Capacity *</mat-label>
+                <input matInput formControlName="seatingCapacity" required>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Fuel Capacity *" formControlName="fuelCapacity" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Mileage *</mat-label>      
+                <input matInput formControlName="mileage" required>
+                <span matTextSuffix>Km</span>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Fuel Type *" formControlName="fuelType" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Fuel Capacity *</mat-label>
+                <input matInput formControlName="fuelCapacity" required>
+                <span matTextSuffix>Litre</span>
+            </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Fuel Type *</mat-label>
+                <mat-select formControlName="fuelType" required>
+                    <mat-option value="petrol">Petrol</mat-option>
+                    <mat-option value="diesel">Diesel</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Insurance Coverage" formControlName="insuranceCoverage" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Insurance Coverage *</mat-label>
+                <mat-select formControlName="insuranceCoverage" required>
+                    <mat-option value="comprehensive">Comprehensive</mat-option>
+                    <mat-option value="personal addict">Personal Addict</mat-option>
+                    <mat-option value="third party liable">Third-Party Liable</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Cancellation Policy *" formControlName="cancellationPolicy" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Cancellation Policy *</mat-label>
+                <mat-select formControlName="cancellationPolicy" required>
+                    <mat-option value="available">Available</mat-option>
+                    <mat-option value="not-available">Not Available</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Price *" formControlName="price" required>
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Price *</mat-label>
+                <input matInput formControlName="price" required>
+            </mat-form-field>
+        </div>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Latitude *" formControlName="latitude" required type="number">
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <mat-label class="location">Enter Location</mat-label>
 
-        <mat-divider></mat-divider>
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Longitude *" formControlName="longitude" required type="number">
-            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Latitude *</mat-label>
+                <input matInput formControlName="latitude" required>
+            </mat-form-field>
+        </div>
 
-        <button mat-raised-button color="primary">Add Vehicles</button>        
+        <div class="form-field">
+            <mat-form-field appearance="fill">
+                <mat-label>Longitude *</mat-label>
+                <input matInput formControlName="longitude" required>
+            </mat-form-field>
+        </div>
 
+        <div class="form-field">
+            <div class="input-file-container">
+                <button mat-raised-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
+                <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
+                <div class="file-name">{{ fileName }}</div>
+            </div>
+        </div>
+
+        <div class="form-field-submit">
+            <button mat-raised-button color="primary">Update Vehicle</button>
+        </div>
     </form>
 </div>

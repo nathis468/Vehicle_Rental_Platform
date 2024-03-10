@@ -67,11 +67,13 @@ public class BookingsServiceImpl implements BookingsService{
 
         else{
             pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc("bookingDate")));
+            System.out.println(pageable);
         }
 
         Optional<UserEntity> user  = userEntityRepo.findByEmail(email);
         if(user.get().getRole().equals(Role.USER)){ 
             Page<Bookings> result = bookingsRepo.findByEmailAndCarModelNameAndEmail(email,searchedValue,pageable);
+            System.out.println(result);
             return result;
         }
         Page<Bookings> result2 = bookingsRepo.findByCarModelNameAndEmail(searchedValue, pageable);

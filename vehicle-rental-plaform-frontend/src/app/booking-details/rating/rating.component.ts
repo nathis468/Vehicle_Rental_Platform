@@ -2,6 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { BookingDetails } from 'src/app/interfaces/BookingDetails';
 import { BookingsService } from 'src/app/services/bookings.service';
 
@@ -19,6 +20,8 @@ export class RatingComponent {
   rating: number = 0;
   readonly: boolean = false;
 
+  ratingSubscription: Subscription;
+
   setRating(value: number) {
     if (this.readonly) return;
     this.rating = value; 
@@ -28,16 +31,10 @@ export class RatingComponent {
     console.log(this.rating);
     console.log(this.data);
     
-    this.bookingsService.provideRating(this.data, this.rating).subscribe({
-      next: (response) => {
+    this.bookingsService.provideRating(this.data, this.rating).subscribe();
+  }
 
-      },
-      error: () => {
-
-      },
-      complete: () => {
-
-      }
-    })
+  ngOnDestroy() {
+    this.ratingSubscription.unsubscribe();
   }
 }

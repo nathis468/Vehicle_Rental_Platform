@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { TopRatings } from 'src/app/interfaces/TopRatings';
 
@@ -9,9 +9,13 @@ import { TopRatings } from 'src/app/interfaces/TopRatings';
 })
 export class CustomerRatingDistributionComponent {
 
-  ngOnChanges() {
-    this.topRating();
-    this.belowRating();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['chartAnalyticsTop'] && changes['chartAnalyticsTop'].currentValue){
+      this.topRating();
+    } 
+    if(changes['chartAnalyticsBelow'] && changes['chartAnalyticsBelow'].currentValue) {
+      this.belowRating();
+    }
   }
 
   @Input() chartAnalyticsTop: TopRatings[];

@@ -1,3 +1,7 @@
+.container {
+  padding-top: 20%;
+}
+
 .custom-form {
   display: flex;
   flex-direction: column;

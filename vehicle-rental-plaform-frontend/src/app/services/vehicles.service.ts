@@ -15,18 +15,11 @@ export class VehiclesService {
     return this.http.get<Observable<Vehicles>>(environment.vehiclesUrl, {observe : 'response'});
   }
 
-  getFilteredVehicles(body : any){
-    if(body.latitude === ''){
-      body.latitude = 'default';
-    }
-    if(body.longitude === ''){
-      body.longitude = 'default';
-    }
-    
-    const vehiclesUrl = `${environment.vehiclesUrl}?latitude=${body.latitude}&longitude=${body.longitude}&startDate=${body.startDate}&endDate=${body.endDate}`;
+  getFilteredVehicles(body : any, currentPage: number){
+    const vehiclesUrl = `${environment.vehiclesUrl}?latitude=${body.latitude}&longitude=${body.longitude}&startDate=${body.startDate}&endDate=${body.endDate}&currentPage=${currentPage}`;
     return this.http.get<any>(vehiclesUrl, {observe : 'response'});
   }
-
+  
   getVehicle(vehicleId : string){
     return this.http.get<Vehicles>(`${environment.vehiclesUrl}/${vehicleId}`, {observe : 'response'});
   }

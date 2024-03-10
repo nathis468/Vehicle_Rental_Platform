@@ -5,6 +5,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MaintananceService } from '../services/maintanance.service';
 import { DamageComponent } from './damage/damage.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-maintanance',
@@ -18,7 +19,10 @@ export class MaintananceComponent {
 
   page = 1;
   pageSize = 5;
-  type: string = "damage";  
+  type: string = "damage"; 
+  
+  serviceDetailsSubscription: Subscription;
+  changeDetailsSubscription: Subscription;
 
   changeType(type: any){
 
@@ -49,22 +53,13 @@ export class MaintananceComponent {
   onPageChanges(event: PageEvent){
     this.page = event.pageIndex+ 1;
     this.pageSize = event.pageSize;
-    console.log(this.page,this.pageSize);
     this.maintananceDetails(this.page,this.pageSize);
   }
     
   maintananceDetails(page,pageSize){
-    this.maintananceService.getDetails(page,pageSize,this.type).subscribe({
-      next: (response) => {
-        console.log(response);
-        
+    this.serviceDetailsSubscription = this.maintananceService.getDetails(page,pageSize,this.type).subscribe({
+      next: (response) => {        
         this.paginatorProperties(response); 
-      },
-      error: (error) => {
-        console.log(error);
-        
-      },
-      complete: () => {       
       }
     })    
   }
@@ -74,9 +69,6 @@ export class MaintananceComponent {
     this.paginator.pageIndex = response.body.number;
     this.paginator.pageSize = response.body.size;
     this.paginator.length = response.body.totalElements;
-
-    console.log(response.body);
-    console.log(this.paginator);
   }
 
 
@@ -87,12 +79,11 @@ export class MaintananceComponent {
 
   statusChange(element) {
     element.status = 'completed'
-    console.log(element);
-    
-    this.maintananceService.changeDetails(element).subscribe({
-      next: () => {
+    this.changeDetailsSubscription = this.maintananceService.changeDetails(element).subscribe();
+  }
 
-      }
-    })
+  ngOnDestroy() {
+    this.serviceDetailsSubscription.unsubscribe();
+    this.changeDetailsSubscription.unsubscribe();
   }
 }

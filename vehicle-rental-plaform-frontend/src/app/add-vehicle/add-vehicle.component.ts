@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VehiclesService } from '../services/vehicles.service';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,6 +16,8 @@ export class AddVehicleComponent {
   constructor(private vehiclesService : VehiclesService, private router: Router) {}
 
   addVehicle : FormGroup;
+
+  vehicleDetailsSubscription: Subscription;
   
   ngOnInit() {
     this.addVehicle = new FormGroup({
@@ -54,20 +57,27 @@ export class AddVehicleComponent {
       formData.append('longitude',this.addVehicle.value.longitude);
       formData.append('file', this.image);
 
-      this.vehiclesService.addVehicle(formData).subscribe({
+      this.vehicleDetailsSubscription = this.vehiclesService.addVehicle(formData).subscribe({
         next: (response) => {
           if(response.status === 200){
             Swal.fire("Inserted New Vehicle");
           }
         },
-        error: (error) => {
-          console.log(error);
-          
+        error: () => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
         },
         complete: () => {
           this.router.navigate(['home']);
         }
       })
     } 
+  }
+
+  ngOnDestroy() {
+    this.vehicleDetailsSubscription.unsubscribe();
   }
 }

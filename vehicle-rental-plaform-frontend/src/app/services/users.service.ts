@@ -13,4 +13,8 @@ export class UsersService {
     const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString()).set('searchedValue',searchedValue).set('active',active).set('direction',direction);
     return this.http.get<any>(`${environment.usersUrl}`, {params, observe: 'response'});
   }
+
+  getUserProfile(email: string) {
+    return this.http.get<any>(`${environment.usersUrl}/profile/${email}`);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicles } from 'src/app/interfaces/Vehicles';
 import { VehiclesService } from 'src/app/services/vehicles.service';
@@ -19,8 +19,8 @@ export class VehiclesListComponent {
 
   @Input() noOfDays : number;
 
-  ngOnInit(){ }
-
+  ngOnInit() { }
+  
   onClick(event : Vehicles){
     this.selectedVehicle.emit(event);
   }
@@ -37,8 +37,10 @@ export class VehiclesListComponent {
     this.deleteVehicle.emit(event);
   }
 
-  viewInfo(vehicle) {
+  viewInfo(vehicle: Vehicles) {
     this.dialog.open(ViewVehicleComponent,{data : vehicle, height: "800px", width: "650px"});
   }
 
+  isLoading: boolean = false;
+  currentPage: number = 0;
 }

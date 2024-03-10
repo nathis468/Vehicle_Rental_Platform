@@ -16,7 +16,6 @@ import com.example.vehiclerentalplatform.dto.NearestVehicles;
 import com.example.vehiclerentalplatform.dto.Ratings;
 import com.example.vehiclerentalplatform.model.Bookings;
 import com.example.vehiclerentalplatform.model.Vehicles;
-import com.example.vehiclerentalplatform.repository.BookingsRepository;
 import com.example.vehiclerentalplatform.repository.VehiclesRepository;
 import com.example.vehiclerentalplatform.service.VehiclesService;
 
@@ -31,9 +30,7 @@ public class VehiclesServiceImpl implements VehiclesService{
     @Autowired
     private VehiclesDAO vehiclesDTO;
 
-    @Autowired
-    private BookingsRepository bookingsRepo;
-
+    private final int limit = 7;
 
     @Override
     public NearestVehicles getVehicleById(String vehicleId){
@@ -63,14 +60,19 @@ public class VehiclesServiceImpl implements VehiclesService{
         }
         List<Vehicles> list2 = vehiclesRepo.findAll();
         List<Vehicles> filteredList2 = list2.stream().filter(vehicle -> !list1.contains(vehicle.get_id())).collect(Collectors.toList());
-        if(newFilter.getLatitude().equals("default") || newFilter.getLongitude().equals("default")){
+        if(newFilter.getLatitude().equals("") || newFilter.getLongitude().equals("")){
             List<NearestVehicles> result = new ArrayList<>();
             for(int i=0;i<filteredList2.size();i++){
                 NearestVehicles result1 = new NearestVehicles();
                 result1.setVehicles(filteredList2.get(i));
                 result.add(result1);
             }
-            return result;
+            List<NearestVehicles> result2 = new ArrayList<>();
+            if(result.size() <= newFilter.getCurrentPage()*limit){
+                return new ArrayList<>();
+            }
+            result2 = result.subList(0, Math.min((newFilter.getCurrentPage()*limit)+limit, result.size()));
+            return result2;
         }
         return haversine(newFilter,filteredList2);
     }
@@ -94,8 +96,16 @@ public class VehiclesServiceImpl implements VehiclesService{
             newList.add(result1);
         } 
         Collections.sort(newList, Comparator.comparing(NearestVehicles::getDistance));
+        
+        System.out.println(newList.subList(newFilter.getCurrentPage()*limit, Math.min(limit, newList.size())));
+        // return newList.subList(newFilter.getCurrentPage()*5, Math.min(5, newList.size()));
 
-        return newList;
+        List<NearestVehicles> result2 = new ArrayList<>();
+        if(newList.size() <= newFilter.getCurrentPage()*limit){
+            return new ArrayList<>();
+        }
+        result2 = newList.subList(0, Math.min((newFilter.getCurrentPage()*limit)+limit, newList.size()));
+        return result2;
     }
 
     @Override

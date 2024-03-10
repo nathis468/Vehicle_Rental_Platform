@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.componen
     MatDividerModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule
   ]
 })
 export class VehiclesModule { }

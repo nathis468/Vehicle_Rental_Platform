@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { MaintananceService } from 'src/app/services/maintanance.service';
 import { VehiclesService } from 'src/app/services/vehicles.service';
 import Swal from 'sweetalert2';
@@ -21,10 +22,12 @@ export class DamageComponent {
   
   addService : FormGroup;
   
-  carModelSelected;
+  carModelSelected: string;
   statusSelected: string;
   carModelOption: string[];
 
+  carDetailsSubscription: Subscription;
+  insertDetailsSubscription: Subscription;
 
   ngOnInit() {
     this.addService = new FormGroup({
@@ -37,15 +40,9 @@ export class DamageComponent {
     })
 
 
-    this.vehiclesService.getTotalCarDetails().subscribe({
+    this.carDetailsSubscription = this.vehiclesService.getTotalCarDetails().subscribe({
       next: (response) => {
         this.carModelOption = response.body;
-      },
-      error: () => {
-
-      },
-      complete: () => {
-    
       }
     })
   }
@@ -82,18 +79,12 @@ export class DamageComponent {
 
   onSubmit() {
     if(this.addService.valid){
-
-      console.log(this.image);
-      
-      console.log(this.addService.value);
       this.addService.patchValue({
         carModelName: this.carModelSelected
       })
     
       this.addService.value.serviceDate = this.addService.value.serviceDate.toDateString();
       
-      console.log(this.addService.value.serviceDate);
-
       const formData = new FormData();
       formData.append('carModelName', this.addService.get('carModelName').value);
       formData.append('maintananceType', this.addService.get('maintananceType').value);
@@ -102,11 +93,8 @@ export class DamageComponent {
       formData.append('description', this.addService.get('description').value);
       formData.append('status', this.addService.get('status').value);
       formData.append('file',this.image)
-
-
-      console.log(formData);
       
-      this.maintananceService.sendDetails(formData).subscribe({
+      this.insertDetailsSubscription = this.maintananceService.sendDetails(formData).subscribe({
         next: (response) => {
           if(response.status === 200){
             Swal.fire("Inserted New Record");
@@ -118,5 +106,10 @@ export class DamageComponent {
       })
     }
     
+  }
+
+  ngOnDestroy() {
+    this.carDetailsSubscription.unsubscribe();
+    this.insertDetailsSubscription.unsubscribe();
   }
 }

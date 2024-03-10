@@ -4,4 +4,8 @@ export interface ProfileInfo{
     profilePic: any ;
     contactNumber: string;
     bio: string;
+    address: string;
+    city: string;
+    state: string;
+    zipcode: string;
 }

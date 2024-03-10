@@ -46,13 +46,13 @@ public class AnalyticsServiceImpl implements AnalyticsService{
         List<String> bookingDetails = vehicle.getBooking_details();
         if (bookingDetails != null) {
             for (String bookingId : bookingDetails) {
-                Optional<Bookings> booking = bookingsRepo.findById(bookingId);
-                if (!booking.isEmpty()) {
-                    LocalDate fromDate = booking.get().getFromDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                Bookings booking = bookingsRepo.findByBookingId(bookingId);
+                if (booking != null) {
+                    LocalDate fromDate = booking.getFromDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     
                     if (fromDate.getYear() == Year.now().getValue()) {
                         Month month = fromDate.getMonth();
-                        double price = booking.get().getPrice();
+                        double price = booking.getPrice();
     
                         monthlyIncomeMap.put(month, monthlyIncomeMap.getOrDefault(month, 0.0) + price);
                     }

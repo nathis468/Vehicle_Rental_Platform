@@ -10,9 +10,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { error } from 'highcharts';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
-import { Subject, TimeoutConfig, TimeoutError, TimeoutInfo, debounce, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Subject, Subscription, TimeoutConfig, TimeoutError, TimeoutInfo, debounce, debounceTime, distinctUntilChanged } from 'rxjs';
 import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
 import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -21,12 +22,14 @@ import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
   styleUrls: ['./booking-details.component.css']
 })
 export class BookingDetailsComponent {
-  constructor(private bookingsService : BookingsService, private vehicleService : VehiclesService, private dialog: MatDialog, private changeDetect: ChangeDetectorRef) {}
+  constructor(private bookingsService : BookingsService, private vehicleService : VehiclesService, private dialog: MatDialog, private changeDetect: ChangeDetectorRef, private authService: AuthService) {}
 
   page: number = 1;
   pageSize: number = 5; 
   active: string = '';
   direction: string ='';
+  email: string = '';
+
 
   displayedColumns :string[] = ["carModelName", "email", "fromDate", "toDate", "price", "status", "cancel", "rating", "view"];
   dataSource  = new MatTableDataSource<BookingDetails>() ;
@@ -37,18 +40,29 @@ export class BookingDetailsComponent {
   searchedValue: string = '';
   private searchSubject = new Subject<string>();
 
+  emailSubscription: Subscription;
+  sortableSubscription: Subscription;
+  searchSubscription: Subscription;
+  bookingDetailsSubscription: Subscription;
+  viewVehicleSubscription:Subscription;
+
   ngOnInit(){
+    this.emailSubscription = this.authService.email.subscribe({
+      next: (data) => {
+        this.email = data;    
+      }
+    })
     this.bookings(this.page,this.pageSize,this.searchedValue,'','');
 
-    this.searchSubject.pipe(debounceTime(1000),).subscribe((data) => {
+    this.searchSubscription = this.searchSubject.pipe(debounceTime(1000)).subscribe((data) => {
       this.bookings(this.page, this.pageSize, data, this.active, this.direction);
     });
+
   }
 
   ngAfterViewInit() {
     this.changeDetect.detectChanges();
-
-    this.sort.sortChange.subscribe({
+    this.sortableSubscription = this.sort.sortChange.subscribe({
       next: (data: Sort) => {
         this.active = data.active;
         this.direction = data.direction;
@@ -61,15 +75,15 @@ export class BookingDetailsComponent {
   timer: any;
   onFiltering(event: Event){
     this.searchedValue = (event.target as HTMLInputElement).value;
-    // if(event.type === 'click'){
-    //   this.bookings(this.page,this.pageSize,this.searchedValue, this.active, this.direction);
-    // } 
-    // else{
-    //   clearTimeout(this.timer);
-    //   this.timer = setTimeout(() => {
-    //     this.bookings(this.page,this.pageSize,this.searchedValue, this.active, this.direction);
-    //   },1000)
-    // }
+    if(event.type === 'click'){
+      this.bookings(this.page,this.pageSize,this.searchedValue, this.active, this.direction);
+    } 
+    else{
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.bookings(this.page,this.pageSize,this.searchedValue, this.active, this.direction);
+      },1000)
+    }
     this.searchSubject.next(this.searchedValue);
   }
 
@@ -80,15 +94,9 @@ export class BookingDetailsComponent {
   }
     
   bookings(page: number,pageSize: number,searchedValue: string,active: string,direction: string){
-    this.bookingsService.getBookingDetails(localStorage.getItem('email'),page,pageSize,searchedValue,active,direction).subscribe({
+    this.bookingDetailsSubscription = this.bookingsService.getBookingDetails(this.email,page,pageSize,searchedValue,active,direction).subscribe({
       next: (response) => {   
         this.paginatorProperties(response); 
-      },
-      error: () => {
-        console.log(error);
-        
-      },
-      complete: () => {       
       }
     })
   }
@@ -104,13 +112,9 @@ export class BookingDetailsComponent {
 
   viewVehicle(item : BookingDetails){  
     
-    this.vehicleService.getVehicle(item.vehcileDetails).subscribe({
+    this.viewVehicleSubscription = this.vehicleService.getVehicle(item.vehcileDetails).subscribe({
       next: (response) => {
         this.vehicle = response.body;
-      },
-      error: (error) => {
-        console.log(error);
-        
       },
       complete: () => {
         this.dialog.open(ViewVehicleComponent,{data : this.vehicle, height: "800px", width: "650px"});
@@ -124,5 +128,13 @@ export class BookingDetailsComponent {
 
   cancelBooking(element: BookingDetails) {
     this.dialog.open(CancelBookingComponent, {data: element});
+  }
+
+  ngOnDestroy() {
+    this.emailSubscription.unsubscribe();
+    this.sortableSubscription.unsubscribe();
+    this.searchSubscription.unsubscribe();
+    this.bookingDetailsSubscription.unsubscribe();
+    this.viewVehicleSubscription.unsubscribe();  
   }
 }

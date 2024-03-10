@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AnalyticsService } from '../services/analytics.service';
 import { VehiclesService } from '../services/vehicles.service';
 import { SalesOverTime } from '../interfaces/SalesOverTime';
-import { Chart } from 'angular-highcharts';
 import { TopRatings } from '../interfaces/TopRatings';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-analytics',
@@ -14,9 +14,14 @@ export class AnalyticsComponent {
 
   constructor(private analyticsService: AnalyticsService, private vehiclesService: VehiclesService) {}
 
-  options : string[];
+  options : string[] = [];
 
-  selectedOption: string;
+  selectedOption: string = 'Honda City';
+
+  totalCarSubcription: Subscription;
+  yearlyAnalyticsSubscription: Subscription;
+  topRatingSubscription: Subscription;
+  belowRatingSubsciption: Subscription;
 
   assignOption(value: string) {
     this.selectedOption = value;
@@ -25,11 +30,12 @@ export class AnalyticsComponent {
 
   ngOnInit() {
     this.onSelectBefore(); 
+    this.onSelectChange();
     this.customerRatingTopCalc();   
   }
 
   onSelectBefore() {
-    this.vehiclesService.getTotalCarDetails().subscribe({
+    this.totalCarSubcription = this.vehiclesService.getTotalCarDetails().subscribe({
       next: (response) => {
         this.options = response.body;
       },
@@ -39,24 +45,18 @@ export class AnalyticsComponent {
   salesOverTime: SalesOverTime[];
 
   onSelectChange(){
-    this.analyticsService.yearlyAnalytics(this.selectedOption).subscribe({
+    this.yearlyAnalyticsSubscription = this.analyticsService.yearlyAnalytics(this.selectedOption).subscribe({
       next: (response) => {
         this.salesOverTime = response.body;
       },
     }) 
   }
 
-
-
-  // eventFromRating(event: string) {
-  // }
-
-
   customerRatingTop: TopRatings[];
 
   customerRatingTopCalc() {
     
-    this.analyticsService.topRating('top').subscribe({
+    this.topRatingSubscription = this.analyticsService.rating('top').subscribe({
       next: (response) => {
         console.log(response);
         this.customerRatingTop = response.body;
@@ -73,8 +73,7 @@ export class AnalyticsComponent {
   customerRatingBelow: TopRatings[];
 
   customerRatingBelowCalc() {
-    
-    this.analyticsService.topRating('below').subscribe({
+    this.belowRatingSubsciption = this.analyticsService.rating('below').subscribe({
       next: (response) => {
         console.log(response);
         this.customerRatingBelow = response.body;
@@ -85,4 +84,10 @@ export class AnalyticsComponent {
     })
   }
 
+  ngOnDestroy() {
+    this.totalCarSubcription.unsubscribe();
+    this.yearlyAnalyticsSubscription.unsubscribe();
+    this.topRatingSubscription.unsubscribe();
+    this.belowRatingSubsciption.unsubscribe();
+  }
 }

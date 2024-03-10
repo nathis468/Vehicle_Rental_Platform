@@ -1,51 +1,51 @@
-    <div class="example-container">
-        <form class="form" [formGroup]="addService" (ngSubmit)="onSubmit()">
-            <mat-label class="heading">Add New {{data.type}}</mat-label>
+<div class="example-container">
+    <form class="form" [formGroup]="addService" (ngSubmit)="onSubmit()">
+        <mat-label class="heading">Add New {{data.type}}</mat-label>
 
-            <mat-divider></mat-divider>
-            <mat-form-field appearance="fill">
-                <mat-label>Select Car</mat-label>
-                <mat-select [(value)]="carModelSelected" name="car" (selectionChange)="onCarModelNameChange(carModelSelected)" required>
-                    <mat-option *ngFor="let car of carModelOption" [value]="car">{{car}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-divider></mat-divider>
-            <mat-form-field class="example-form-field" appearance="fill">
-                <mat-label>Service Date</mat-label>
-                <input matInput [matDatepicker]="startDatePicker" [value]="addService.get('serviceDate')?.value" placeholder="Service date" (dateChange)="onDateChange($event)">
-                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-divider></mat-divider>
-            <mat-form-field appearance="fill">
-                <mat-label>Add Total Cost</mat-label>
-                <input matInput formControlName="price" required type="number">
+        <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Select Car</mat-label>
+            <mat-select [(value)]="carModelSelected" name="car" (selectionChange)="onCarModelNameChange(carModelSelected)" required>
+                <mat-option *ngFor="let car of carModelOption" [value]="car">{{car}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Service Date</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" [value]="addService.get('serviceDate')?.value" placeholder="Service date" (dateChange)="onDateChange($event)">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
 
         <mat-divider></mat-divider>
-            <mat-form-field appearance="fill">
-                <mat-label>Add Description</mat-label>
-                <input matInput  formControlName="description">
+        <mat-form-field appearance="fill">
+            <mat-label>Add Total Cost</mat-label>
+            <input matInput formControlName="price" required type="number">
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Add Description</mat-label>
+            <input matInput  formControlName="description">
+    </mat-form-field>
+        
+
+    <mat-divider></mat-divider>
+        <mat-form-field appearance="fill">
+            <mat-label>Select Status</mat-label>
+            <mat-select [(value)]="statusSelected" name="car" (selectionChange)="onStatusChanges(statusSelected)" required>
+                <mat-option [value]="'pending'">Pending</mat-option>
+                <mat-option [value]="'completed'">Completed</mat-option>
+            </mat-select>
         </mat-form-field>
-            
 
-        <mat-divider></mat-divider>
-            <mat-form-field appearance="fill">
-                <mat-label>Select Status</mat-label>
-                <mat-select [(value)]="statusSelected" name="car" (selectionChange)="onStatusChanges(statusSelected)" required>
-                    <mat-option [value]="'pending'">Pending</mat-option>
-                    <mat-option [value]="'completed'">Completed</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div class="input-file-container">
+            <button mat-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
+            <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
+            <div class="file-name">{{ fileName }}</div>
+        </div>
 
-            <div class="input-file-container">
-                <button mat-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
-                <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
-                <div class="file-name">{{ fileName }}</div>
-            </div>
-
-                    
-            <button mat-raised-button color="primary">Add New Record</button>        
-        </form>
-    </div>
+                
+        <button mat-raised-button color="primary">Add New Record</button>        
+    </form>
+</div>

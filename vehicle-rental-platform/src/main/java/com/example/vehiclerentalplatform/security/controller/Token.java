@@ -1,28 +1,12 @@
 package com.example.vehiclerentalplatform.security.controller;
 
-import java.util.List;
+import lombok.Data;
 
-import com.example.vehiclerentalplatform.model.Users;
-
+@Data
 public class Token {
-    private final String token;
-    private final List<String> permissions;
-    private Users userInfo;
+    private String token;
 
-    public Token(String jwt,List<String> permission,Users userInfo) {
+    public Token(String jwt){
         this.token = jwt;
-        this.permissions = permission;
-        this.userInfo = userInfo;
-    }
-
-    public String getToken() {
-        return token;
-    }
-    public List<String> getPermission() {
-        return permissions;
-    }
-
-    public Users getUserInfo(){
-        return userInfo;
     }
 }

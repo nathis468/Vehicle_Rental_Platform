@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vehiclerentalplatform.dto.UserCreate;
 import com.example.vehiclerentalplatform.dto.UserUpdate;
+import com.example.vehiclerentalplatform.model.Users;
 import com.example.vehiclerentalplatform.security.model.LoginRequest;
 import com.example.vehiclerentalplatform.security.service.AuthenticationService;
 
@@ -28,9 +29,8 @@ public class AuthenticationController {
     private AuthenticationService service;
 
     @PostMapping("/register")
-    public Token register(@RequestBody UserCreate request){
-        Token token =  service.register(request);
-        return token;
+    public void register(@RequestBody UserCreate request){
+        service.register(request);
     }
 
     @PostMapping("/login")
@@ -40,9 +40,11 @@ public class AuthenticationController {
     }
 
     @PutMapping("updateProfile")
-    public void putMethodName(@ModelAttribute UserUpdate user, @RequestParam("file") MultipartFile fileImage) {
-        user.setProfilePic(service.imageConvet(fileImage));
-        service.updateProfile(user);
-        // return entity;
+    public Users putMethodName(@ModelAttribute UserUpdate user, @RequestParam("file") MultipartFile fileImage) {
+
+        if(!fileImage.isEmpty()){
+            user.setProfilePic(service.imageConvet(fileImage));
+        }
+        return service.updateProfile(user);
     }
-}
+}   

@@ -3,11 +3,14 @@ package com.example.vehiclerentalplatform.security.service;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.example.vehiclerentalplatform.model.Users;
+import com.example.vehiclerentalplatform.security.model.UserEntity;
 import com.mongodb.Function;
 
 import io.jsonwebtoken.Claims;
@@ -32,12 +35,14 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, List<String> permissions, Users profileInfo){
+        return generateToken(new HashMap<>(), userDetails, permissions, profileInfo);
     }
 
-    public String generateToken(Map<String,Object> extraClaims,UserDetails userDetails){
-        // extraClaims.put("role", userDetails.getAuthorities());
+    public String generateToken(Map<String,Object> extraClaims,UserDetails userDetails, List<String> permissions, Users profileInfo){
+        extraClaims.put("role", userDetails.getAuthorities());
+        extraClaims.put("permissions", permissions);
+        extraClaims.put("profileInfo", profileInfo);
         return Jwts.builder()
             .setClaims(extraClaims)
             .setSubject(userDetails.getUsername())
