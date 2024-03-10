@@ -14,5 +14,4 @@ export interface BookingDetails{
     longitude: number,
     paymentId : string;
     currency : string;
-    // bookingDate: Date;
 }

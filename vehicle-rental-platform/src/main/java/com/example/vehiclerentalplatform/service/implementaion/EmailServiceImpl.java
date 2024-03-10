@@ -39,38 +39,7 @@ public class EmailServiceImpl implements EmailService{
                 + "Best regards,\n"
                 + "Car Rental Service";
         message.setText(emailContent);
-        
         message.setSubject(mailInfo.getSubject());
         mailSender.send(message);
-        System.out.println("Mail Sent successfully...");
     }
-
-    @Scheduled (cron = "0 37 18 * * *")
-    public void sendSchedulesEmail() {
-
-        MailInfo mailInfo = new MailInfo();
-        mailInfo.setToEmail("nathis468@gmail.com");
-        mailInfo.setSubject("Scheduled email");
-        mailInfo.setBody("Testing");
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailInfo.getToEmail());
-
-        String emailContent = "Dear Customer,\n\n"
-                + "Thank you for booking a car with us \n\n";
-                // + "Booking Details:\n"
-                // + "Car Model: " + mailInfo.getBookingDetails().getCarModelName() + "\n"
-                // + "Pickup Location: " + mailInfo.getBookingDetails().getLatitude() + mailInfo.getBookingDetails().getLongitude() + "\n"
-                // + "Pickup Date: " + mailInfo.getBookingDetails().getFromDate() + "\n"
-                // + "Drop-off Date: " + mailInfo.getBookingDetails().getToDate() + "\n\n"
-                // + "has been confirmed"
-                // + "We look forward to serving you.\n\n"
-                // + "Best regards,\n"
-                // + "Car Rental Service";
-        message.setText(emailContent);
-        
-        message.setSubject(mailInfo.getSubject());
-        mailSender.send(message);
-        System.out.println("Mail Sent successfully...");
-    }
-
 }

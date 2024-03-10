@@ -41,7 +41,6 @@ public class PaymentServiceImpl implements PaymentService {
  
             Order order= razorpayClient.orders.create(orderRequest);
  
-            System.out.println(order);
             Integer receivedamount = order.get("amount");
             int getAmount = receivedamount/100;
             Payments payment = Payments.builder().orderId(order.get("id")).currency(order.get("currency")).amount(getAmount).key(apiKey).build();

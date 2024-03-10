@@ -97,9 +97,6 @@ public class VehiclesServiceImpl implements VehiclesService{
         } 
         Collections.sort(newList, Comparator.comparing(NearestVehicles::getDistance));
         
-        System.out.println(newList.subList(newFilter.getCurrentPage()*limit, Math.min(limit, newList.size())));
-        // return newList.subList(newFilter.getCurrentPage()*5, Math.min(5, newList.size()));
-
         List<NearestVehicles> result2 = new ArrayList<>();
         if(newList.size() <= newFilter.getCurrentPage()*limit){
             return new ArrayList<>();
@@ -112,7 +109,6 @@ public class VehiclesServiceImpl implements VehiclesService{
     public Vehicles insertNewVehicleService(Vehicles newVehicle) {
         Ratings initialRating = new Ratings();
         newVehicle.setRatings(new ArrayList<>(Collections.singletonList(initialRating)));
-        System.out.println(newVehicle);
         return vehiclesRepo.save(newVehicle);
     }
 

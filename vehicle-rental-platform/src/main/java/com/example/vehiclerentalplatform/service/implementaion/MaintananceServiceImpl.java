@@ -37,11 +37,9 @@ public class MaintananceServiceImpl implements MaintananceService{
     public void maintanance (Maintanance details, MultipartFile imageFile) {
         details.setImage(imageConvet(imageFile));
         Maintanance newRecord = maintananceRepo.save(details);  
-        System.out.println(vehiclesRepo.findByCarModel(newRecord.getCarModelName()).getMaintanance());
         Vehicles vehicle = vehiclesRepo.findByCarModel(newRecord.getCarModelName());
         vehicle.getMaintanance().add(newRecord.get_id());
         vehiclesRepo.save(vehicle);
-        System.out.println(vehicle);
     }      
 
     public String imageConvet(MultipartFile file) {

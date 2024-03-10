@@ -33,7 +33,6 @@ public class MaintananceController {
     @GetMapping("")
     public ResponseEntity<Page<Maintanance>> getDetails(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize , @RequestParam("type") String type) {
         Page<Maintanance> maintanance = maintananceService.getMaintananceDetails(page, pageSize, type);
-        System.out.println(maintanance);
         return new ResponseEntity<>(maintanance,HttpStatus.OK);
     }
 

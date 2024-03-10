@@ -96,10 +96,6 @@ public class AuthenticationService {
     }
 
     public String imageConvet(MultipartFile file) {
-
-        if(file.equals("empty-file.txt")){
-            System.out.println("ksdn");
-        }
         String url = "";
         String contentType = file.getContentType();
 
