@@ -13,53 +13,53 @@ import { Subscription } from 'rxjs';
 })
 export class AddVehicleComponent {
 
-  constructor(private vehiclesService : VehiclesService, private router: Router) {}
+  constructor(private vehiclesService: VehiclesService, private router: Router) { }
 
-  addVehicle : FormGroup;
+  addVehicle: FormGroup;
 
-  vehicleDetailsSubscription: Subscription;
-  
+  vehicleDetailsSubscription: Subscription = new Subscription();
+
   ngOnInit() {
     this.addVehicle = new FormGroup({
-      carModel  : new FormControl<string>('',Validators.required),
-      seatingCapacity  : new FormControl<number>(0,Validators.required),
-      mileage  : new FormControl<number>(0,Validators.required),
-      fuelCapacity  : new FormControl<number>(0,Validators.required),
-      fuelType  : new FormControl<string>('',Validators.required),
-      insuranceCoverage  : new FormControl<string>('',Validators.required),
-      cancellationPolicy  : new FormControl<string>('',Validators.required),
-      price  : new FormControl<string>('',Validators.required),
-      latitude  : new FormControl<string>('',Validators.required),
-      longitude  : new FormControl<string>('',Validators.required),
+      carModel: new FormControl<string>('', Validators.required),
+      seatingCapacity: new FormControl<number>(0, Validators.required),
+      mileage: new FormControl<number>(0, Validators.required),
+      fuelCapacity: new FormControl<number>(0, Validators.required),
+      fuelType: new FormControl<string>('', Validators.required),
+      insuranceCoverage: new FormControl<string>('', Validators.required),
+      cancellationPolicy: new FormControl<string>('', Validators.required),
+      price: new FormControl<string>('', Validators.required),
+      latitude: new FormControl<string>('', Validators.required),
+      longitude: new FormControl<string>('', Validators.required),
     })
   }
 
-  image : File;
+  image: File;
 
   fileName: string = '';
-  onFileUpload(event : Event){
+  onFileUpload(event: Event) {
     this.image = (event.target as HTMLInputElement).files[0];
     this.fileName = this.image?.name || '';
   }
 
   onSubmit() {
-    if(this.addVehicle.valid === true){
+    if (this.addVehicle.valid === true) {
       const formData = new FormData();
-      formData.append('carModel',this.addVehicle.value.carModel);
-      formData.append('seatingCapacity',this.addVehicle.value.seatingCapacity);
-      formData.append('mileage',this.addVehicle.value.mileage);
-      formData.append('fuelCapacity',this.addVehicle.value.fuelCapacity);
-      formData.append('fuelType',this.addVehicle.value.fuelType);
-      formData.append('insuranceCoverage',this.addVehicle.value.insuranceCoverage);
-      formData.append('cancellationPolicy',this.addVehicle.value.cancellationPolicy);
-      formData.append('price',this.addVehicle.value.price);
-      formData.append('latitude',this.addVehicle.value.latitude);
-      formData.append('longitude',this.addVehicle.value.longitude);
+      formData.append('carModel', this.addVehicle.value.carModel);
+      formData.append('seatingCapacity', this.addVehicle.value.seatingCapacity);
+      formData.append('mileage', this.addVehicle.value.mileage);
+      formData.append('fuelCapacity', this.addVehicle.value.fuelCapacity);
+      formData.append('fuelType', this.addVehicle.value.fuelType);
+      formData.append('insuranceCoverage', this.addVehicle.value.insuranceCoverage);
+      formData.append('cancellationPolicy', this.addVehicle.value.cancellationPolicy);
+      formData.append('price', this.addVehicle.value.price);
+      formData.append('latitude', this.addVehicle.value.latitude);
+      formData.append('longitude', this.addVehicle.value.longitude);
       formData.append('file', this.image);
 
       this.vehicleDetailsSubscription = this.vehiclesService.addVehicle(formData).subscribe({
         next: (response) => {
-          if(response.status === 200){
+          if (response.status === 200) {
             Swal.fire("Inserted New Vehicle");
           }
         },
@@ -74,7 +74,7 @@ export class AddVehicleComponent {
           this.router.navigate(['home']);
         }
       })
-    } 
+    }
   }
 
   ngOnDestroy() {

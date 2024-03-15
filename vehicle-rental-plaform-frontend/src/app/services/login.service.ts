@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment.development';
 })
 export class LoginService {
 
-  constructor(private http : HttpClient) { }
-  
-  login(body : object){
-    return this.http.post<any>(`${environment.authenticationUrl}/login`, body, {observe : 'response'});
+  constructor(private http: HttpClient) { }
+
+  login(body: object) {
+    return this.http.post<any>(`${environment.authenticationUrl}/login`, body, { observe: 'response' });
   }
 
-  localStoring(response){
-    localStorage.setItem('isLogin','true');
-    localStorage.setItem('token',`${response.body.token}`);
+  localStoring(response) {
+    localStorage.setItem('isLogin', 'true');
+    localStorage.setItem('token', `${response.body.token}`);
   }
 }

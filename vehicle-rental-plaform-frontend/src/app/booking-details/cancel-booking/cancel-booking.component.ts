@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { BookingDetails } from 'src/app/interfaces/BookingDetails';
 import { Email } from 'src/app/interfaces/Email';
+import { AuthService } from 'src/app/services/auth.service';
 import { BookingsService } from 'src/app/services/bookings.service';
 import Swal from 'sweetalert2';
 
@@ -13,14 +14,14 @@ import Swal from 'sweetalert2';
 })
 export class CancelBookingComponent {
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : BookingDetails, private bookingsService: BookingsService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: BookingDetails, private bookingsService: BookingsService, private authService: AuthService) { }
 
-  cancelBookingSubscription: Subscription;
-  
+  cancelBookingSubscription: Subscription = new Subscription();
+
   cancelBooking() {
     this.cancelBookingSubscription = this.bookingsService.cancelBooking(this.data).subscribe({
       next: (response) => {
-        if(response.status === 200){
+        if (response.status === 200) {
           Swal.fire("Cancelled Booking Successfully");
         }
       },
@@ -47,11 +48,18 @@ export class CancelBookingComponent {
             currency: ''
           }
         };
-        
-        data.bookingDetails = this.data;
-        data.toEmail = "nathis468@gmail.com";
 
-        this.bookingsService.sendEmail(data, 'cancelled').subscribe();
+        data.bookingDetails = this.data;
+
+        this.authService.email.subscribe({
+          next: (email) => {
+            data.toEmail = email;
+          },
+          complete: () => {
+            this.bookingsService.sendEmail(data, 'cancelled').subscribe();
+          }
+        })
+
       }
     })
   }

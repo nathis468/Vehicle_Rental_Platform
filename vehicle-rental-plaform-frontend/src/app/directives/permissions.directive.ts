@@ -3,20 +3,20 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Directive({
-  standalone:true,
+  standalone: true,
   selector: '[appPermissions]'
 })
 export class PermissionsDirective {
 
-  constructor(private authService : AuthService, private el : ElementRef) { }
+  constructor(private authService: AuthService, private el: ElementRef) { }
 
-  @Input() permissionAcess : string = '';
+  @Input() permissionAcess: string = '';
 
-  permissionsSubscription: Subscription;
+  permissionsSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.permissionsSubscription = this.authService.permissions.subscribe({
-      next : (value) => {
+      next: (value) => {
         this.el.nativeElement.hidden = !value.includes(this.permissionAcess);
       }
     })

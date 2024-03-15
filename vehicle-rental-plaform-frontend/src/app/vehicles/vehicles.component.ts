@@ -17,7 +17,7 @@ import { Email } from '../interfaces/Email';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 
-declare let Razorpay : any;
+declare let Razorpay: any;
 
 @Component({
   selector: 'app-vehicles',
@@ -26,18 +26,18 @@ declare let Razorpay : any;
 })
 
 export class VehiclesComponent {
-  constructor(private vehiclesService : VehiclesService, private route:Router, private paymentService : PaymentService, private bookingsService : BookingsService, private dialog: MatDialog, private authService: AuthService) {}
-  
-  vehiclesList : Vehicles[];
-  
-  noOfDays : number = 1;
+  constructor(private vehiclesService: VehiclesService, private route: Router, private paymentService: PaymentService, private bookingsService: BookingsService, private dialog: MatDialog, private authService: AuthService) { }
+
+  vehiclesList: Vehicles[];
+
+  noOfDays: number = 1;
 
   email: string = '';
 
-  emailSubscription: Subscription;
-  paymentSubscription: Subscription;
-  createBookingSubscription: Subscription;
-  filteredVehiclesSubscription: Subscription;
+  emailSubscription: Subscription = new Subscription();
+  paymentSubscription: Subscription = new Subscription();
+  createBookingSubscription: Subscription = new Subscription();
+  filteredVehiclesSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.emailSubscription = this.authService.email.subscribe({
@@ -46,7 +46,7 @@ export class VehiclesComponent {
       }
     })
   }
-  
+
   bookingDetails: BookingDetails = {
     id: '',
     bookingId: '',
@@ -65,8 +65,8 @@ export class VehiclesComponent {
     currency: ''
   };
 
-  newEvent(event : Vehicles){
-    if(this.bookingDetails.latitude !== 0 && this.bookingDetails.longitude != 0){
+  newEvent(event: Vehicles) {
+    if (this.bookingDetails.latitude !== 0 && this.bookingDetails.longitude != 0) {
       this.bookingDetails.carModelName = event.vehicles.carModel;
       this.bookingDetails.email = this.email;
       this.bookingDetails.price = event.vehicles.price * this.noOfDays;
@@ -75,36 +75,36 @@ export class VehiclesComponent {
       this.bookingDetails.paymentDate = new Date();
 
       this.paymentSubscription = this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
-        next :(response) => {
+        next: (response) => {
           this.payment(response.body);
         }
       })
     }
-    else{
+    else {
       Swal.fire("Please enter your current Location");
     }
   }
 
-  payment(body : Payment) {
+  payment(body: Payment) {
     const options: any = {
       key: body.key,
       amount: body.amount,
       currency: body.currency,
-      name: 'Vehicle Rental Platform', 
+      name: 'Vehicle Rental Platform',
       description: '',
       image: './assets/VehicleRental Logo.png',
       order_id: body.orderId,
       theme: { color: '#0c238a' },
-      handler: (response: RazorPayOrder) => { 
-        if(response != null && response.razorpay_payment_id != null){
+      handler: (response: RazorPayOrder) => {
+        if (response != null && response.razorpay_payment_id != null) {
           this.bookingDetails.currency = body.currency;
           this.processResponse(response);
         }
-        else{
-          alert('Payment failed..'); 
+        else {
+          alert('Payment failed..');
         }
       },
-      notes: { },
+      notes: {},
       modal: {
         ondismiss: () => {
         }
@@ -119,17 +119,17 @@ export class VehiclesComponent {
 
     this.bookingDetails.paymentId = response.razorpay_payment_id;
     this.bookingDetails.status = 'confirmed';
-    
+
     this.createBookingSubscription = this.bookingsService.createBooking(this.bookingDetails).subscribe({
       next: (response) => {
         this.sendEmail();
         this.route.navigate(['home/booking-details']);
       }
     })
-  }  
+  }
 
-  sendEmail(){
-    
+  sendEmail() {
+
     let data: Email = {
       toEmail: '',
       subject: '',
@@ -154,8 +154,16 @@ export class VehiclesComponent {
     };
 
     data.bookingDetails = this.bookingDetails;
-    data.toEmail = "nathis468@gmail.com";
-    this.bookingsService.sendEmail(data, 'confirmed').subscribe();
+
+    this.authService.email.subscribe({
+      next: (email) => {
+        data.toEmail = email;
+      },
+      complete: () => {
+        this.bookingsService.sendEmail(data, 'confirmed').subscribe();
+      }
+    })
+
   }
 
 
@@ -166,33 +174,33 @@ export class VehiclesComponent {
     endDate: new FormControl<string>(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
   })
 
-  newFilter(event : FormGroup){
+  newFilter(event: FormGroup) {
     this.filter.value.startDate = event.value.startDate;
     this.filter.value.toDate = event.value.toDate;
     this.filter.value.latitude = event.value.latitude;
     this.filter.value.longitude = event.value.longitude;
-    
+
     this.bookingDetails.fromDate = event.value.startDate;
     this.bookingDetails.toDate = event.value.endDate;
     this.bookingDetails.latitude = event.value.latitude;
     this.bookingDetails.longitude = event.value.longitude;
 
     const timeDifference = new Date(event.value.endDate).getTime() - new Date(event.value.startDate).getTime();
-    this.noOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24))+1;
-    
+    this.noOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + 1;
+
     this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(event.value, this.currentPage).subscribe({
-      next : (response) => {
+      next: (response) => {
         this.vehiclesList = response.body;
       },
     })
   }
 
-  updateVehicle(event : Vehicles) {
-    this.dialog.open(UpdateVehicleComponent,{data : event, height: "800px", width: "750px"});
+  updateVehicle(event: Vehicles) {
+    this.dialog.open(UpdateVehicleComponent, { data: event, height: "800px", width: "750px" });
   }
 
-  deleteVehicle(event : Vehicles){
-    this.dialog.open(DeleteVehicleComponent,{data : event});    
+  deleteVehicle(event: Vehicles) {
+    this.dialog.open(DeleteVehicleComponent, { data: event });
   }
 
   currentPage: number = 0;
@@ -203,14 +211,14 @@ export class VehiclesComponent {
     const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     const documentHeight = document.body.scrollHeight;
-    if (scrollPosition + windowHeight >= documentHeight) {      
+    if (scrollPosition + windowHeight >= documentHeight) {
       this.currentPage++;
       this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
-          if(response.body.length === 0){
+          if (response.body.length === 0) {
             Swal.fire("No more Records Found");
           }
-          else{
+          else {
             this.vehiclesList = response.body;
           }
         }
@@ -222,6 +230,6 @@ export class VehiclesComponent {
     this.emailSubscription.unsubscribe();
     this.paymentSubscription.unsubscribe();
     this.createBookingSubscription.unsubscribe();
-    this.filteredVehiclesSubscription.unsubscribe();  
+    this.filteredVehiclesSubscription.unsubscribe();
   }
 }

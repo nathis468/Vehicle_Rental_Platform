@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UpdateProfileComponent } from './update-profile.component';
 
 const routes: Routes = [
-  { path: '', component: UpdateProfileComponent}
+  { path: '', component: UpdateProfileComponent }
 ];
 
 @NgModule({

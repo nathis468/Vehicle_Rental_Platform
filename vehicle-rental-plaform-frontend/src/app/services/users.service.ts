@@ -9,9 +9,9 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getUserDetails(page: number, pageSize: number, searchedValue: string,active: string,direction: string){
-    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString()).set('searchedValue',searchedValue).set('active',active).set('direction',direction);
-    return this.http.get<any>(`${environment.usersUrl}`, {params, observe: 'response'});
+  getUserDetails(page: number, pageSize: number, searchedValue: string, active: string, direction: string) {
+    const params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString()).set('searchedValue', searchedValue).set('active', active).set('direction', direction);
+    return this.http.get<any>(`${environment.usersUrl}`, { params, observe: 'response' });
   }
 
   getUserProfile(email: string) {

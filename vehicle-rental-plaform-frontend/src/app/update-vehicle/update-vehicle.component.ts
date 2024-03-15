@@ -15,11 +15,11 @@ import { Subscription } from 'rxjs';
 })
 export class UpdateVehicleComponent {
 
-  vehicle : Vehicles;
+  vehicle: Vehicles;
 
-  updateVehicleSubscription: Subscription;
+  updateVehicleSubscription: Subscription = new Subscription();
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private updateVehicle : MatDialogRef<UpdateVehicleComponent>, private vehiclesService : VehiclesService, private snackBar: MatSnackBar, private route: Router) {
+  constructor(@Inject(MAT_DIALOG_DATA) private data: Vehicles, private updateVehicle: MatDialogRef<UpdateVehicleComponent>, private vehiclesService: VehiclesService, private snackBar: MatSnackBar, private route: Router) {
     this.vehicle = data;
   }
 
@@ -27,36 +27,37 @@ export class UpdateVehicleComponent {
 
   ngOnInit() {
     this.editVehicle = new FormGroup({
-      _id : new FormControl<string>(this.vehicle.vehicles._id),
-      carModel  : new FormControl<string>(this.vehicle.vehicles.carModel,Validators.required),
-      seatingCapacity  : new FormControl<number>(this.vehicle.vehicles.seatingCapacity,Validators.required),
-      mileage  : new FormControl<number>(this.vehicle.vehicles.mileage,Validators.required),
-      fuelCapacity  : new FormControl<number>(this.vehicle.vehicles.fuelCapacity,Validators.required),
-      fuelType  : new FormControl<string>(this.vehicle.vehicles.fuelType,Validators.required),
-      insuranceCoverage  : new FormControl<string>(this.vehicle.vehicles.insuranceCoverage,Validators.required),
-      cancellationPolicy  : new FormControl<string>(this.vehicle.vehicles.cancellationPolicy,Validators.required),
-      price  : new FormControl<number>(this.vehicle.vehicles.price,Validators.required),
-      latitude  : new FormControl<number>(this.vehicle.vehicles.latitude,Validators.required),
-      longitude  : new FormControl<number>(this.vehicle.vehicles.longitude,Validators.required),
+      _id: new FormControl<string>(this.vehicle.vehicles._id),
+      carModel: new FormControl<string>(this.vehicle.vehicles.carModel, Validators.required),
+      seatingCapacity: new FormControl<number>(this.vehicle.vehicles.seatingCapacity, Validators.required),
+      mileage: new FormControl<number>(this.vehicle.vehicles.mileage, Validators.required),
+      fuelCapacity: new FormControl<number>(this.vehicle.vehicles.fuelCapacity, Validators.required),
+      fuelType: new FormControl<string>(this.vehicle.vehicles.fuelType, Validators.required),
+      insuranceCoverage: new FormControl<string>(this.vehicle.vehicles.insuranceCoverage, Validators.required),
+      cancellationPolicy: new FormControl<string>(this.vehicle.vehicles.cancellationPolicy, Validators.required),
+      price: new FormControl<number>(this.vehicle.vehicles.price, Validators.required),
+      latitude: new FormControl<number>(this.vehicle.vehicles.latitude, Validators.required),
+      longitude: new FormControl<number>(this.vehicle.vehicles.longitude, Validators.required),
     })
   }
 
 
-  image : File;
+  image: File;
 
   fileName: string = '';
-  onFileUpload(event : Event){
+  onFileUpload(event: Event) {
     this.image = (event.target as HTMLInputElement).files[0];
     this.fileName = this.image?.name || '';
   }
 
-  onSubmit(){
-   
+  onSubmit() {
+
     this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
 
     this.updateVehicleSubscription = this.vehiclesService.updateVehicle(this.vehicle.vehicles).subscribe({
       next: () => {
         Swal.fire("Updated Vehicle Successfully");
+        this.updateVehicle.close();
       },
       error: () => {
         Swal.fire({

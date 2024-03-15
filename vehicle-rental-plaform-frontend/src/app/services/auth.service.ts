@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   permissions = new BehaviorSubject<string[]>([]);
@@ -14,17 +14,17 @@ export class AuthService {
   profileInfo = new BehaviorSubject<any>({});
   email = new BehaviorSubject<string>('');
 
-  constructor() { 
-    if(localStorage.getItem('token') != null){
+  constructor() {
+    if (localStorage.getItem('token') != null) {
       this.tokenDecode();
     }
   }
 
-  isAuthenticated() : boolean{
-    if(localStorage.getItem('isLogin') === 'true'){
+  isAuthenticated(): boolean {
+    if (localStorage.getItem('isLogin') === 'true') {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }

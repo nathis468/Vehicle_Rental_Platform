@@ -12,36 +12,36 @@ import { ProfileService } from 'src/app/services/ProfileService';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {  
-  constructor(private loginService : LoginService, private router : Router, private snackBar : MatSnackBar, private authService : AuthService) { }
+export class LoginComponent {
+  constructor(private loginService: LoginService, private router: Router, private snackBar: MatSnackBar, private authService: AuthService) { }
 
-  login : FormGroup;
+  login: FormGroup;
 
   hide: boolean = true;
 
-  loginSubscription: Subscription;
+  loginSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.login = new FormGroup({
-      email : new FormControl<string>('',[Validators.required,Validators.email]),
-      password : new FormControl<string>('',Validators.required),
+      email: new FormControl<string>('', [Validators.required, Validators.email]),
+      password: new FormControl<string>('', Validators.required),
     })
   }
 
   onSubmit() {
-    if(this.login.valid === true){
+    if (this.login.valid === true) {
       this.loginSubscription = this.loginService.login(this.login.value).subscribe({
-        next : (response) => {
-          if(response.status == 200){
+        next: (response) => {
+          if (response.status == 200) {
             this.loginService.localStoring(response);
           }
         },
-        error : (error) => {
-          if(error.status ===  401){
+        error: (error) => {
+          if (error.status === 401) {
             this.openSnackBar('Invalid Credentials');
           }
         },
-        complete : () => {
+        complete: () => {
           this.authService.tokenDecode();
           this.router.navigate(['home']);
         }

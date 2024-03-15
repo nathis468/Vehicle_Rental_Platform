@@ -12,26 +12,26 @@ import { Subscription } from 'rxjs';
 })
 export class AnalyticsComponent {
 
-  constructor(private analyticsService: AnalyticsService, private vehiclesService: VehiclesService) {}
+  constructor(private analyticsService: AnalyticsService, private vehiclesService: VehiclesService) { }
 
-  options : string[] = [];
+  options: string[] = [];
 
   selectedOption: string = 'Honda City';
 
-  totalCarSubcription: Subscription;
-  yearlyAnalyticsSubscription: Subscription;
-  topRatingSubscription: Subscription;
-  belowRatingSubsciption: Subscription;
+  totalCarSubcription: Subscription = new Subscription();
+  yearlyAnalyticsSubscription: Subscription = new Subscription();
+  topRatingSubscription: Subscription = new Subscription();
+  belowRatingSubsciption: Subscription = new Subscription();
 
   assignOption(value: string) {
     this.selectedOption = value;
-    this.onSelectChange();  
+    this.onSelectChange();
   }
 
   ngOnInit() {
-    this.onSelectBefore(); 
+    this.onSelectBefore();
     this.onSelectChange();
-    this.customerRatingTopCalc();   
+    this.customerRatingTopCalc();
   }
 
   onSelectBefore() {
@@ -39,23 +39,23 @@ export class AnalyticsComponent {
       next: (response) => {
         this.options = response.body;
       },
-    }) 
+    })
   }
 
   salesOverTime: SalesOverTime[];
 
-  onSelectChange(){
+  onSelectChange() {
     this.yearlyAnalyticsSubscription = this.analyticsService.yearlyAnalytics(this.selectedOption).subscribe({
       next: (response) => {
         this.salesOverTime = response.body;
       },
-    }) 
+    })
   }
 
   customerRatingTop: TopRatings[];
 
   customerRatingTopCalc() {
-    
+
     this.topRatingSubscription = this.analyticsService.rating('top').subscribe({
       next: (response) => {
         this.customerRatingTop = response.body;

@@ -10,15 +10,15 @@ export class MaintananceService {
 
   constructor(private http: HttpClient) { }
 
-  getDetails(page: number, pageSize: number, type: string){
-    return this.http.get<any>(`${environment.maintananceUrl}?page=${page}&pageSize=${pageSize}&type=${type}`, {observe: 'response'});
+  getDetails(page: number, pageSize: number, type: string) {
+    return this.http.get<any>(`${environment.maintananceUrl}?page=${page}&pageSize=${pageSize}&type=${type}`, { observe: 'response' });
   }
 
-  sendDetails(formData: FormData){
-    return this.http.post<any>(`${environment.maintananceUrl}`, formData, {observe: 'response'});
+  sendDetails(formData: FormData) {
+    return this.http.post<any>(`${environment.maintananceUrl}`, formData, { observe: 'response' });
   }
 
   changeDetails(element: Maintanance) {
-    return this.http.put<any>(`${environment.maintananceUrl}`, element, {observe: 'response'});
+    return this.http.put<any>(`${environment.maintananceUrl}`, element, { observe: 'response' });
   }
 }

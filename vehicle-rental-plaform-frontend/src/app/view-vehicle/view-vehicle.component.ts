@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable } from '@angular/core';
+import { Component, ElementRef, Inject, Injectable } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Vehicles } from 'src/app/interfaces/Vehicles';
 
@@ -9,10 +9,21 @@ import { Vehicles } from 'src/app/interfaces/Vehicles';
 })
 export class ViewVehicleComponent {
 
-  vehicle : Vehicles;
+  vehicle: Vehicles;
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private viewVehicle : MatDialogRef<ViewVehicleComponent>){
-    this.vehicle = data;  
+  constructor(@Inject(MAT_DIALOG_DATA) private data: Vehicles, private viewVehicle: MatDialogRef<ViewVehicleComponent>, private elementRef: ElementRef) {
+    this.vehicle = this.data;
+  }
+
+  ngAfterViewInit() {
+    const contentHeight = this.elementRef.nativeElement.scrollHeight;
+
+    const minHeight = 650;
+    const maxHeight = 1000;
+
+    let dialogHeight = Math.min(Math.max(contentHeight, minHeight), maxHeight);
+
+    this.viewVehicle.updateSize(minHeight + 'px', dialogHeight + 'px')
   }
 
   close(): void {

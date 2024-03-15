@@ -13,19 +13,19 @@ import Swal from 'sweetalert2';
 })
 export class DeleteVehicleComponent {
 
-  vehicle : Vehicles;
-  
-  removeVehicleSubscription: Subscription;
+  vehicle: Vehicles;
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : Vehicles, private vehiclesService : VehiclesService, private snackBar: MatSnackBar) {
+  removeVehicleSubscription: Subscription = new Subscription();
+
+  constructor(@Inject(MAT_DIALOG_DATA) private data: Vehicles, private vehiclesService: VehiclesService, private snackBar: MatSnackBar) {
     this.vehicle = this.data;
   }
 
   deleteVehicle() {
-    
+
     this.removeVehicleSubscription = this.vehiclesService.removeVehicle(this.vehicle.vehicles).subscribe({
       next: (response) => {
-        if(response.status === 200){
+        if (response.status === 200) {
           Swal.fire("Deleted Vehicle Successfully");
         }
       },
@@ -38,5 +38,5 @@ export class DeleteVehicleComponent {
       },
     })
   }
-  
+
 }

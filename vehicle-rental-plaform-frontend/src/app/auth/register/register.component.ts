@@ -12,26 +12,26 @@ import { RegisterService } from 'src/app/services/register.service';
 export class RegisterComponent {
   hide: boolean = true;
 
-  constructor(private registerService : RegisterService, private router : Router) { }
+  constructor(private registerService: RegisterService, private router: Router) { }
 
-  register : FormGroup;
+  register: FormGroup;
 
-  registerSubscription: Subscription;
+  registerSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.register = new FormGroup({
-      userName : new FormControl<string>('',Validators.required),
-      email : new FormControl<string>('',[Validators.required,Validators.email]),
-      password : new FormControl<string>('',Validators.required),
-      contactNumber : new FormControl<string>('',Validators.required),
+      userName: new FormControl<string>('', Validators.required),
+      email: new FormControl<string>('', [Validators.required, Validators.email]),
+      password: new FormControl<string>('', Validators.required),
+      contactNumber: new FormControl<string>('', Validators.required),
     })
   }
 
   onSubmit() {
-    if(this.register.valid === true){
+    if (this.register.valid === true) {
       this.registerSubscription = this.registerService.register(this.register.value).subscribe({
-        next : (response) => {
-          if(response.status === 200){
+        next: (response) => {
+          if (response.status === 200) {
             this.router.navigate(['login']);
           }
         }

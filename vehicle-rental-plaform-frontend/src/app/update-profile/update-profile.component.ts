@@ -15,14 +15,14 @@ import { Router } from '@angular/router';
 })
 export class UpdateProfileComponent {
 
-  constructor(private authService:AuthService, private profileService: ProfileService, private usersService: UsersService, private route: Router) {}
+  constructor(private authService: AuthService, private profileService: ProfileService, private usersService: UsersService, private route: Router) { }
 
-  userProfileSubscription: Subscription;
-  updateProfileSubscription: Subscription;
+  userProfileSubscription: Subscription = new Subscription();
+  updateProfileSubscription: Subscription = new Subscription();
 
-  profileData : ProfileInfo = {
+  profileData: ProfileInfo = {
     _id: '',
-    userName : '',
+    userName: '',
     profilePic: '',
     contactNumber: '',
     bio: '',
@@ -32,13 +32,13 @@ export class UpdateProfileComponent {
     zipcode: ''
   };
 
-  profile : FormGroup;
+  profile: FormGroup;
 
   ngOnInit() {
     this.authService.email.subscribe({
       next: (email) => {
         this.userProfileSubscription = this.usersService.getUserProfile(email).subscribe({
-          next: (data) => {    
+          next: (data) => {
             this.profileData = data;
             this.profile.patchValue({
               userName: this.profileData.userName,
@@ -54,9 +54,9 @@ export class UpdateProfileComponent {
       },
     })
     this.profile = new FormGroup({
-      userName : new FormControl<string>('',Validators.required),
-      contactNumber : new FormControl<string>('',Validators.required),
-      bio : new FormControl<string>(''),
+      userName: new FormControl<string>('', Validators.required),
+      contactNumber: new FormControl<string>('', Validators.required),
+      bio: new FormControl<string>(''),
       address: new FormControl<string>(''),
       city: new FormControl<string>(''),
       state: new FormControl<string>(''),
@@ -64,9 +64,9 @@ export class UpdateProfileComponent {
     })
   }
 
-  profilePic : File;
-  
-  onFileUpload(event : any){
+  profilePic: File;
+
+  onFileUpload(event: any) {
     this.profilePic = (event.target as HTMLInputElement).files[0];
 
     if (this.profilePic) {
@@ -77,9 +77,9 @@ export class UpdateProfileComponent {
       reader.readAsDataURL(this.profilePic);
     }
   }
-  
-  
-  onSubmit() {    
+
+
+  onSubmit() {
     this.profileData.userName = this.profile.value.userName;
     this.profileData.contactNumber = this.profile.value.contactNumber;
     this.profileData.bio = this.profile.value.bio;
@@ -87,29 +87,29 @@ export class UpdateProfileComponent {
     this.profileData.city = this.profile.value.city;
     this.profileData.state = this.profile.value.state;
     this.profileData.zipcode = this.profile.value.zipcode;
-    
-    
+
+
     const updateProfile = new FormData();
-    updateProfile.append('id',this.profileData._id);
-    updateProfile.append('userName',this.profileData.userName);
-    updateProfile.append('contactNumber',this.profileData.contactNumber);
-    updateProfile.append('bio',this.profileData.bio);
-    updateProfile.append('address',this.profileData.address);
-    updateProfile.append('city',this.profileData.city);
-    updateProfile.append('state',this.profileData.state);
-    updateProfile.append('zipcode',this.profileData.zipcode);
+    updateProfile.append('id', this.profileData._id);
+    updateProfile.append('userName', this.profileData.userName);
+    updateProfile.append('contactNumber', this.profileData.contactNumber);
+    updateProfile.append('bio', this.profileData.bio);
+    updateProfile.append('address', this.profileData.address);
+    updateProfile.append('city', this.profileData.city);
+    updateProfile.append('state', this.profileData.state);
+    updateProfile.append('zipcode', this.profileData.zipcode);
 
     if (this.profilePic) {
       updateProfile.append('file', this.profilePic);
-    } 
+    }
     else {
       const defaultFile = new File([], 'default-image.txt', { type: 'text/plain' });
       updateProfile.append('file', defaultFile);
     }
-    
-    updateProfile.append('file',this.profilePic);
 
-    if(this.profile.valid){
+    updateProfile.append('file', this.profilePic);
+
+    if (this.profile.valid) {
       this.updateProfileSubscription = this.profileService.updateProfile(updateProfile).subscribe({
         next: (response) => {
           this.authService.profileInfo.next(response.body);

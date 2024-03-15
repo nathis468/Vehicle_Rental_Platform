@@ -15,34 +15,34 @@ import { Subscription } from 'rxjs';
 export class MaintananceComponent {
   maintanance: any;
 
-  constructor(private changeDetect: ChangeDetectorRef, private maintananceService: MaintananceService, private dialog: MatDialog) {}
+  constructor(private changeDetect: ChangeDetectorRef, private maintananceService: MaintananceService, private dialog: MatDialog) { }
 
   page = 1;
   pageSize = 5;
-  type: string = "damage"; 
-  
-  serviceDetailsSubscription: Subscription;
-  changeDetailsSubscription: Subscription;
+  type: string = "damage";
 
-  changeType(type: any){
+  serviceDetailsSubscription: Subscription = new Subscription();
+  changeDetailsSubscription: Subscription = new Subscription();
 
-    if(type.index == 0){
+  changeType(type: any) {
+
+    if (type.index == 0) {
       this.type = 'damage';
     }
-    else{
+    else {
       this.type = 'service';
     }
-    
-    this.maintananceDetails(this.page,this.pageSize); 
+
+    this.maintananceDetails(this.page, this.pageSize);
   }
 
-  displayedColumns :string[] = ["carModelName","serviceDate","price","description","image","status"];
-  dataSource  = new MatTableDataSource<Maintanance>() ;
+  displayedColumns: string[] = ["carModelName", "serviceDate", "price", "description", "image", "status"];
+  dataSource = new MatTableDataSource<Maintanance>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngOnInit(){
-    this.maintananceDetails(this.page,this.pageSize);
+  ngOnInit() {
+    this.maintananceDetails(this.page, this.pageSize);
   }
 
 
@@ -50,18 +50,18 @@ export class MaintananceComponent {
     this.changeDetect.detectChanges();
   }
 
-  onPageChanges(event: PageEvent){
-    this.page = event.pageIndex+ 1;
+  onPageChanges(event: PageEvent) {
+    this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    this.maintananceDetails(this.page,this.pageSize);
+    this.maintananceDetails(this.page, this.pageSize);
   }
-    
-  maintananceDetails(page,pageSize){
-    this.serviceDetailsSubscription = this.maintananceService.getDetails(page,pageSize,this.type).subscribe({
-      next: (response) => {        
-        this.paginatorProperties(response); 
+
+  maintananceDetails(page, pageSize) {
+    this.serviceDetailsSubscription = this.maintananceService.getDetails(page, pageSize, this.type).subscribe({
+      next: (response) => {
+        this.paginatorProperties(response);
       }
-    })    
+    })
   }
 
   paginatorProperties(response) {
@@ -73,8 +73,8 @@ export class MaintananceComponent {
 
 
   addNewService() {
-    this.dialog.open(DamageComponent, {data: {type: this.type}, height: "750px", width: "600px"});
-  }    
+    this.dialog.open(DamageComponent, { data: { type: this.type }, height: "750px", width: "600px" });
+  }
 
 
   statusChange(element) {

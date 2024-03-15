@@ -12,13 +12,13 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent {
 
-  constructor(private router : Router, private authService: AuthService, private usersService: UsersService) {}
+  constructor(private router: Router, private authService: AuthService, private usersService: UsersService) { }
 
   profilePic: string = '';
   userName: string = '';
 
-  profileInfoDubscription: Subscription;
-  userProfileSubscription: Subscription;
+  profileInfoDubscription: Subscription = new Subscription();
+  userProfileSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.profileInfoDubscription = this.authService.profileInfo.subscribe({
@@ -27,11 +27,11 @@ export class HomeComponent {
         this.userName = profileInfo.userName;
       }
     })
-    
+
     this.authService.email.subscribe({
       next: (email) => {
         this.userProfileSubscription = this.usersService.getUserProfile(email).subscribe({
-          next: (data) => {        
+          next: (data) => {
             this.profilePic = data.profilePic;
             this.userName = data.userName;
           }
@@ -39,8 +39,8 @@ export class HomeComponent {
       }
     })
   }
-  
-  logOut(){
+
+  logOut() {
     localStorage.clear();
     this.router.navigate(['']);
   }

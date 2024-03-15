@@ -13,21 +13,21 @@ import { BookingsService } from 'src/app/services/bookings.service';
 })
 export class RatingComponent {
 
-  constructor(@Inject (MAT_DIALOG_DATA) private data : BookingDetails, private ratingVehicle : MatDialogRef<RatingComponent>, private bookingsService : BookingsService, private snackBar: MatSnackBar) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: BookingDetails, private ratingVehicle: MatDialogRef<RatingComponent>, private bookingsService: BookingsService, private snackBar: MatSnackBar) { }
 
   faStar = faStar;
 
   rating: number = 0;
   readonly: boolean = false;
 
-  ratingSubscription: Subscription;
+  ratingSubscription: Subscription = new Subscription();
 
   setRating(value: number) {
     if (this.readonly) return;
-    this.rating = value; 
+    this.rating = value;
   }
 
-  sendRating(){
+  sendRating() {
     this.bookingsService.provideRating(this.data, this.rating).subscribe();
   }
 

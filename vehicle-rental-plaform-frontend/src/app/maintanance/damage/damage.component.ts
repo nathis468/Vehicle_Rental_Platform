@@ -14,29 +14,29 @@ import Swal from 'sweetalert2';
   styleUrls: ['./damage.component.css']
 })
 export class DamageComponent {
-  data : any;
+  data: any;
 
-  constructor(@Inject (MAT_DIALOG_DATA) private passedData: any, private damage : MatDialogRef<DamageComponent>, private vehiclesService: VehiclesService, private maintananceService: MaintananceService){
+  constructor(@Inject(MAT_DIALOG_DATA) private passedData: any, private damage: MatDialogRef<DamageComponent>, private vehiclesService: VehiclesService, private maintananceService: MaintananceService) {
     this.data = this.passedData;
   }
-  
-  addService : FormGroup;
-  
+
+  addService: FormGroup;
+
   carModelSelected: string;
   statusSelected: string;
   carModelOption: string[];
 
-  carDetailsSubscription: Subscription;
-  insertDetailsSubscription: Subscription;
+  carDetailsSubscription: Subscription = new Subscription();
+  insertDetailsSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.addService = new FormGroup({
-      carModelName : new FormControl<string>('',Validators.required),
-      maintananceType : new FormControl<string>(this.data.type,Validators.required),
-      serviceDate : new FormControl(new Date()),
-      price : new FormControl<number>(0),
-      description : new FormControl<string>(''),
-      status : new FormControl<string>('', Validators.required),
+      carModelName: new FormControl<string>('', Validators.required),
+      maintananceType: new FormControl<string>(this.data.type, Validators.required),
+      serviceDate: new FormControl(new Date()),
+      price: new FormControl<number>(0),
+      description: new FormControl<string>(''),
+      status: new FormControl<string>('', Validators.required),
     })
 
 
@@ -47,7 +47,7 @@ export class DamageComponent {
     })
   }
 
-  image : any;
+  image: any;
 
 
   onCarModelNameChange(value: string) {
@@ -62,7 +62,7 @@ export class DamageComponent {
     });
   }
 
-  onStatusChanges(value: string){
+  onStatusChanges(value: string) {
     this.addService.patchValue({
       status: value
     })
@@ -71,20 +71,20 @@ export class DamageComponent {
 
   fileName: string = '';
 
-  onFileUpload(event: Event){
+  onFileUpload(event: Event) {
     this.image = (event.target as HTMLInputElement).files[0];
     this.fileName = this.image?.name || '';
   }
 
 
   onSubmit() {
-    if(this.addService.valid){
+    if (this.addService.valid) {
       this.addService.patchValue({
         carModelName: this.carModelSelected
       })
-    
+
       this.addService.value.serviceDate = this.addService.value.serviceDate.toDateString();
-      
+
       const formData = new FormData();
       formData.append('carModelName', this.addService.get('carModelName').value);
       formData.append('maintananceType', this.addService.get('maintananceType').value);
@@ -92,11 +92,11 @@ export class DamageComponent {
       formData.append('price', this.addService.get('price').value);
       formData.append('description', this.addService.get('description').value);
       formData.append('status', this.addService.get('status').value);
-      formData.append('file',this.image)
-      
+      formData.append('file', this.image)
+
       this.insertDetailsSubscription = this.maintananceService.sendDetails(formData).subscribe({
         next: (response) => {
-          if(response.status === 200){
+          if (response.status === 200) {
             Swal.fire("Inserted New Record");
           }
         },
@@ -105,7 +105,7 @@ export class DamageComponent {
         }
       })
     }
-    
+
   }
 
   ngOnDestroy() {

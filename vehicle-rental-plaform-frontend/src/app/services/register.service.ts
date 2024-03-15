@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class RegisterService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  register(body : object){
-    return this.http.post<any>(`${environment.authenticationUrl}/register`, body, {observe : 'response'});
+  register(body: object) {
+    return this.http.post<any>(`${environment.authenticationUrl}/register`, body, { observe: 'response' });
   }
 }

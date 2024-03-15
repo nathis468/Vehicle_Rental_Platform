@@ -9,34 +9,34 @@ import { Vehicles } from '../interfaces/Vehicles';
 })
 export class VehiclesService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getAllVehiclesDetails() {
-    return this.http.get<Observable<Vehicles>>(environment.vehiclesUrl, {observe : 'response'});
+    return this.http.get<Observable<Vehicles>>(environment.vehiclesUrl, { observe: 'response' });
   }
 
-  getFilteredVehicles(body : any, currentPage: number){
+  getFilteredVehicles(body: any, currentPage: number) {
     const vehiclesUrl = `${environment.vehiclesUrl}?latitude=${body.latitude}&longitude=${body.longitude}&startDate=${body.startDate}&endDate=${body.endDate}&currentPage=${currentPage}`;
-    return this.http.get<any>(vehiclesUrl, {observe : 'response'});
-  }
-  
-  getVehicle(vehicleId : string){
-    return this.http.get<Vehicles>(`${environment.vehiclesUrl}/${vehicleId}`, {observe : 'response'});
+    return this.http.get<any>(vehiclesUrl, { observe: 'response' });
   }
 
-  addVehicle( formData : FormData){
+  getVehicle(vehicleId: string) {
+    return this.http.get<Vehicles>(`${environment.vehiclesUrl}/${vehicleId}`, { observe: 'response' });
+  }
+
+  addVehicle(formData: FormData) {
     return this.http.post<any>(`${environment.vehiclesUrl}`, formData, { observe: 'response' });
   }
 
-  updateVehicle(updateVehicle: Vehicles['vehicles']){
+  updateVehicle(updateVehicle: Vehicles['vehicles']) {
     return this.http.put<any>(`${environment.vehiclesUrl}`, updateVehicle, { observe: 'response' });
   }
 
-  removeVehicle(removeVehicle: Vehicles['vehicles']){
-    return this.http.delete<any>(`${environment.vehiclesUrl}`, {body : removeVehicle});
+  removeVehicle(removeVehicle: Vehicles['vehicles']) {
+    return this.http.delete<any>(`${environment.vehiclesUrl}`, { body: removeVehicle });
   }
 
-  getTotalCarDetails(){
-    return this.http.get<any>(`${environment.vehiclesUrl}/getCarsName`, {observe: 'response'});
+  getTotalCarDetails() {
+    return this.http.get<any>(`${environment.vehiclesUrl}/getCarsName`, { observe: 'response' });
   }
 }

@@ -1,4 +1,4 @@
-export interface SalesOverTime{
+export interface SalesOverTime {
     month: string;
     income: number;
 }

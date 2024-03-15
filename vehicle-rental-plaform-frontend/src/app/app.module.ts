@@ -25,7 +25,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 
 
@@ -40,7 +40,7 @@ import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
     SalesOverTimeComponent,
     CustomerRatingDistributionComponent,
     UpdateProfileComponent,
-    ViewVehicleComponent  
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +63,7 @@ import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS, 
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },

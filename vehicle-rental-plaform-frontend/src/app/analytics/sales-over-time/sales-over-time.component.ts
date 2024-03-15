@@ -15,21 +15,21 @@ export class SalesOverTimeComponent {
 
   @Input() options: string[] = [];
 
-  @Input() chartAnalytics:SalesOverTime[];
-  
+  @Input() chartAnalytics: SalesOverTime[];
+
   chart: Chart;
 
-  onSelectChange(){
+  onSelectChange() {
     this.salesOverTimeEmitter.emit(this.selectedOption);
   }
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['chartAnalytics'] && changes['chartAnalytics'].currentValue) {
-      this.salesOverTimeChart();  
+      this.salesOverTimeChart();
     }
   }
 
-  salesOverTimeChart(){
+  salesOverTimeChart() {
     this.chart = new Chart({
       chart: {
         type: 'line',

@@ -7,11 +7,11 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class    FilterComponent {
+export class FilterComponent {
   filterDetails: FormGroup;
-  
+
   @Output() addFilter = new EventEmitter<FormGroup>();
-  
+
   ngOnInit() {
     this.filterDetails = new FormGroup({
       latitude: new FormControl<string>(''),
@@ -22,7 +22,7 @@ export class    FilterComponent {
     this.addFilter.emit(this.filterDetails);
   }
 
-  onSubmit(){
+  onSubmit() {
     this.addFilter.emit(this.filterDetails);
   }
 

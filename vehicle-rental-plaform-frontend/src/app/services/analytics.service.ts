@@ -9,11 +9,11 @@ export class AnalyticsService {
 
   constructor(private http: HttpClient) { }
 
-  yearlyAnalytics(carModelName: string){
-    return this.http.get<any>(`${environment.analyticsUrl}/yearly?carModelName=${carModelName}`, {observe: 'response'});
+  yearlyAnalytics(carModelName: string) {
+    return this.http.get<any>(`${environment.analyticsUrl}/yearly?carModelName=${carModelName}`, { observe: 'response' });
   }
 
   rating(selectedRank: string) {
-    return this.http.get<any>(`${environment.analyticsUrl}/rating/${selectedRank}`, {observe: 'response'});
+    return this.http.get<any>(`${environment.analyticsUrl}/rating/${selectedRank}`, { observe: 'response' });
   }
 }

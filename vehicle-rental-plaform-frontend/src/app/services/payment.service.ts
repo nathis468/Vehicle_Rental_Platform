@@ -8,9 +8,9 @@ import { BookingDetails } from '../interfaces/BookingDetails';
 })
 export class PaymentService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  createPayment(amount : number) {
-    return this.http.get<any>(`${environment.paymentUrl}?amount=${amount}`, {observe : 'response'})
+  createPayment(amount: number) {
+    return this.http.get<any>(`${environment.paymentUrl}?amount=${amount}`, { observe: 'response' })
   }
 }

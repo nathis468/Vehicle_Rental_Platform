@@ -1,4 +1,4 @@
-export  interface TopRatings{
+export interface TopRatings {
     rating: number;
     carModelName: string;
 };

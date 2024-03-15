@@ -10,18 +10,18 @@ import { TopRatings } from 'src/app/interfaces/TopRatings';
 export class CustomerRatingDistributionComponent {
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['chartAnalyticsTop'] && changes['chartAnalyticsTop'].currentValue){
+    if (changes['chartAnalyticsTop'] && changes['chartAnalyticsTop'].currentValue) {
       this.topRating();
-    } 
-    if(changes['chartAnalyticsBelow'] && changes['chartAnalyticsBelow'].currentValue) {
+    }
+    if (changes['chartAnalyticsBelow'] && changes['chartAnalyticsBelow'].currentValue) {
       this.belowRating();
     }
   }
 
   @Input() chartAnalyticsTop: TopRatings[];
-  
+
   chartTop: Chart;
-  topRating(){
+  topRating() {
     this.chartTop = new Chart({
       chart: {
         type: 'line',
@@ -61,7 +61,7 @@ export class CustomerRatingDistributionComponent {
 
   chartBelow: Chart;
 
-  belowRating(){
+  belowRating() {
     this.chartBelow = new Chart({
       chart: {
         type: 'line',

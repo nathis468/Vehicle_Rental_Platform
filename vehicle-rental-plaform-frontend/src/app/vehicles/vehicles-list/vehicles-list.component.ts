@@ -11,34 +11,34 @@ import { ViewVehicleComponent } from 'src/app/view-vehicle/view-vehicle.componen
 })
 export class VehiclesListComponent {
 
-  constructor(private vehiclesService : VehiclesService, private dialog: MatDialog) {}
-  
-  @Input() vehiclesList : Vehicles[] = [];
+  constructor(private vehiclesService: VehiclesService, private dialog: MatDialog) { }
+
+  @Input() vehiclesList: Vehicles[] = [];
 
   @Output() selectedVehicle = new EventEmitter<Vehicles>();
 
-  @Input() noOfDays : number;
+  @Input() noOfDays: number;
 
   ngOnInit() { }
-  
-  onClick(event : Vehicles){
+
+  onClick(event: Vehicles) {
     this.selectedVehicle.emit(event);
   }
 
   @Output() updateVehicle = new EventEmitter<Vehicles>();
 
-  updateEvent(event : Vehicles){
+  updateEvent(event: Vehicles) {
     this.updateVehicle.emit(event);
   }
 
   @Output() deleteVehicle = new EventEmitter<Vehicles>();
 
-  deleteEvent(event : Vehicles){
+  deleteEvent(event: Vehicles) {
     this.deleteVehicle.emit(event);
   }
 
   viewInfo(vehicle: Vehicles) {
-    this.dialog.open(ViewVehicleComponent,{data : vehicle, height: "800px", width: "650px"});
+    this.dialog.open(ViewVehicleComponent, { data: vehicle, width: "650px" });
   }
 
   isLoading: boolean = false;
