@@ -118,6 +118,7 @@ public class BookingsServiceImpl implements BookingsService{
 
             vehiclesRepo.save(vehicle.get());
         }
+        bookingsRepo.save(theBooking);
     }
 
     @Override

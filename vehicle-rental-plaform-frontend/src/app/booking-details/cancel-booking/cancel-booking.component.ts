@@ -45,7 +45,8 @@ export class CancelBookingComponent {
             latitude: 0,
             longitude: 0,
             paymentId: '',
-            currency: ''
+            currency: '',
+            rating: ''
           }
         };
 

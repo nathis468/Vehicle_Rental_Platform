@@ -90,14 +90,14 @@
 
         <div class="form-field">
             <div class="input-file-container">
-                <button mat-raised-button class="input-file-button" (click)="uploadFile.click()">Choose File</button>
+                <button mat-raised-button class="input-file-button" (click)="uploadFile.click()" type="button">Choose File</button>
                 <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
                 <div class="file-name">{{ fileName }}</div>
             </div>
         </div>
 
         <div class="form-field-submit">
-            <button mat-raised-button color="primary">Add Vehicles</button>
+            <button mat-raised-button style="background-color: #545ff0; color:white">Add Vehicles</button>
         </div>
     </form>
 </div>

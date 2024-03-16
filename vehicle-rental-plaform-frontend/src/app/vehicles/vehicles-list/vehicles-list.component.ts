@@ -19,8 +19,8 @@ export class VehiclesListComponent {
 
   @Input() noOfDays: number;
 
-  ngOnInit() { }
-
+  @Input() remainingData: boolean = false;
+  
   onClick(event: Vehicles) {
     this.selectedVehicle.emit(event);
   }

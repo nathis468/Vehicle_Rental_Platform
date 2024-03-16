@@ -34,6 +34,8 @@ export class VehiclesComponent {
 
   email: string = '';
 
+  remainingData: boolean = false;
+
   emailSubscription: Subscription = new Subscription();
   paymentSubscription: Subscription = new Subscription();
   createBookingSubscription: Subscription = new Subscription();
@@ -62,7 +64,8 @@ export class VehiclesComponent {
     latitude: 0,
     longitude: 0,
     paymentId: '',
-    currency: ''
+    currency: '',
+    rating: ''
   };
 
   newEvent(event: Vehicles) {
@@ -149,7 +152,8 @@ export class VehiclesComponent {
         latitude: 0,
         longitude: 0,
         paymentId: '',
-        currency: ''
+        currency: '',
+        rating: ''
       }
     };
 
@@ -157,9 +161,9 @@ export class VehiclesComponent {
 
     this.authService.email.subscribe({
       next: (email) => {
+        // data.toEmail = 'nathis468@gmail.com';
         data.toEmail = email;
-      },
-      complete: () => {
+        console.log(data.toEmail);
         this.bookingsService.sendEmail(data, 'confirmed').subscribe();
       }
     })
@@ -216,7 +220,7 @@ export class VehiclesComponent {
       this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
           if (response.body.length === 0) {
-            Swal.fire("No more Records Found");
+            this.remainingData = true;
           }
           else {
             this.vehiclesList = response.body;

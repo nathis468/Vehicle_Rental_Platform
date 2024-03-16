@@ -41,6 +41,7 @@ mat-divider {
 }
 
 button {
+  margin-top: 8px;
   width: 100%;
 }
 
@@ -55,4 +56,9 @@ a:hover {
 
 mat-form-field {
   width: 100%;
+}
+
+.login-navigate {
+  margin-top: 30px;
+  font-size: 17px;
 }

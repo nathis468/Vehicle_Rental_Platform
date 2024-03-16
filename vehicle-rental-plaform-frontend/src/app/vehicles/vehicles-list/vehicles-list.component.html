@@ -1,35 +1,46 @@
-<div class="vehicles-list">
-    <div *ngFor="let item of vehiclesList" class="vehicle-item">
-        <div class="vechicle-box">
-
-        <img [src]="item.vehicles.image" alt="Car Image" class="vehicle-image">
-        <div class="vehicle-details" (click)="viewInfo(item)">
-            <div class="vehicle-model">{{item.vehicles.carModel}}</div>
-            <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{item.vehicles.seatingCapacity}}</div>
-            <div class="cancellation-policy"> 
-                <i class="fa-solid fa-check" style="color: #14c892;" *ngIf="item.vehicles.cancellationPolicy === 'available'; else template1"></i>
-                <ng-template #template1>
-                    <i class="fa-sharp fa-light fa-xmark" style="color: #db0037;"></i>
-                </ng-template>
-                Cancellation Policy</div>
-            <div class="rating"> <i class="fa-sharp fa-solid fa-star"></i> Rating: {{item.vehicles.ratings[0].rating | number:'1.2-2'}}</div>
-            <div class="distance"> <i class="fa-solid fa-people-arrows"></i> Distance: {{item.distance | number:'1.2-2'}}</div>
+<div class="container">
+    <div class="vehicles-list">
+        <div *ngFor="let item of vehiclesList" class="vehicle-item">
+            <div class="vechicle-box">
+                <img [src]="item.vehicles.image" alt="Car Image" class="vehicle-image">
+                <div class="vehicle-details" (click)="viewInfo(item)">
+                    <div class="vehicle-model">{{item.vehicles.carModel}}</div>
+                    <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{item.vehicles.seatingCapacity}}</div>
+                    <div class="cancellation-policy"> 
+                        <i class="fa-solid fa-check" style="color: #14c892;" *ngIf="item.vehicles.cancellationPolicy === 'available'; else template1"></i>
+                        <ng-template #template1>
+                            <i class="fa-sharp fa-light fa-xmark" style="color: #db0037;"></i>
+                        </ng-template>
+                        Cancellation Policy</div>
+                        <div class="rating" *ngIf="item.vehicles.ratings[0].rating !== 0; else template2"> <i class="fa-sharp fa-solid fa-star"></i> Rating: {{item.vehicles.ratings[0].rating | number:'1.1-1'}}</div>
+                        <ng-template #template2>
+                            <div class="rating"> <i class="fa-sharp fa-solid fa-star"></i> Rating: Not-Provided</div>
+                        </ng-template>
+                        <div class="distance" *ngIf="item.distance !== 0; else template3"> <i class="fa-solid fa-people-arrows"></i> Distance: {{item.distance | number:'1.2-2'}}</div>
+                        <ng-template #template3>
+                            <div class="distance"> <i class="fa-solid fa-people-arrows"></i> Distance: Provide Location</div>
+                        </ng-template>
+                    </div>
+                    <div class="price-info">
+                        <div>Price for {{noOfDays}} days</div>
+                        <div>Rs. {{ noOfDays * item.vehicles.price }}</div>
+                        <div>Base Price: {{item.vehicles.price}}</div>
+                    </div>
+                </div>
+            <div class="actions">
+                <span appPermissions [permissionAcess]="'update_vehicle'" (click)="updateEvent(item)">
+                    <i class="fa-solid fa-pen" style="color: #757575;"></i>
+                </span>
+                <span appPermissions [permissionAcess]="'remove_vehicle'" (click)="deleteEvent(item)">
+                    <i class="fa-solid fa-trash" style="color: #757575;"></i>
+                </span>
+                <span appPermissions [permissionAcess]="'rental_car'">
+                    <button mat-raised-button (click)="onClick(item)" style="background-color: #545ff0; color:white">Choose this car</button>
+                </span>
+            </div>
         </div>
-        <div class="price-info">
-            <div>Price for {{noOfDays}} days</div>
-            <div>{{ noOfDays * item.vehicles.price }}</div>
-            <div>Base Price: {{item.vehicles.price}}</div>
-        </div>
-        
     </div>
-        <div class="actions">
-            <span appPermissions [permissionAcess]="'update_vehicle'" (click)="updateEvent(item)">
-                <i class="fa-solid fa-pen" style="color: #757575;"></i>
-            </span>
-            <span appPermissions [permissionAcess]="'remove_vehicle'" (click)="deleteEvent(item)">
-                <i class="fa-solid fa-trash" style="color: #757575;"></i>
-            </span>
-            <button mat-raised-button class="button" (click)="onClick(item)" color="primary" appPermissions [permissionAcess]="'rental_car'">Choose this car</button>
-        </div>
+    <div class="lastData" *ngIf="remainingData">
+        No more Data Available
     </div>
 </div>

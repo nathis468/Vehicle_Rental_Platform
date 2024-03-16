@@ -1,4 +1,4 @@
 <div class="container">
     <app-filter (addFilter)="newFilter($event)"></app-filter>
-    <app-vehicles-list (selectedVehicle)="newEvent($event)" (updateVehicle)="updateVehicle($event)" (deleteVehicle)="deleteVehicle($event)" [vehiclesList]="vehiclesList" [noOfDays]="noOfDays"></app-vehicles-list>
+    <app-vehicles-list (selectedVehicle)="newEvent($event)" (updateVehicle)="updateVehicle($event)" (deleteVehicle)="deleteVehicle($event)" [vehiclesList]="vehiclesList" [noOfDays]="noOfDays" [remainingData]="remainingData"></app-vehicles-list>
 </div>

@@ -43,21 +43,21 @@
       <ng-container matColumnDef="cancel">
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="cancelBooking(element)" [disabled]="element.status === 'cancelled' || element.cancellationPolicy !== 'available'">Cancel</button>
+          <button mat-raised-button (click)="cancelBooking(element)" [disabled]="element.status === 'cancelled' || element.cancellationPolicy !== 'available'" [ngStyle]="{'background-color': (element.status !== 'cancelled' && element.cancellationPolicy === 'available' ? '#545ff0' : '#e0e0e0'), 'color': (element.status !== 'cancelled' &&   element.cancellationPolicy === 'available' ? 'white' : '#8b8b8b') }">Cancel</button>
         </td>    
       </ng-container>
       
       <ng-container matColumnDef="rating">
         <th mat-header-cell *matHeaderCellDef> Rating </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="provideRating(element)">Rating</button>
+          <button mat-raised-button (click)="provideRating(element)" [disabled]="element.rating === 'provided'" [ngStyle]="{'background-color': (element.rating !== 'provided' ? '#545ff0' : '#e0e0e0'), 'color': (element.rating !== 'provided' ? 'white' : '#8b8b8b') }">Rating</button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="view">
         <th mat-header-cell *matHeaderCellDef> Vehicle Details </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="viewVehicle(element)">View</button>
+          <button mat-raised-button (click)="viewVehicle(element)" style="background-color: #545ff0; color:white">View</button>
         </td>
       </ng-container>
       

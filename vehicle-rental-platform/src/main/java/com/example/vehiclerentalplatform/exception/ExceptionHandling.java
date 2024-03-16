@@ -12,4 +12,14 @@ public class ExceptionHandling {
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException exception){
         return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(exception.getMessage());
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<?> handleEmailAlreadyExistsException(EmailAlreadyExistsException exception) {
+        return ResponseEntity.status(Response.SC_CONFLICT).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ContactNumberAlreadyExistsException.class)
+    public ResponseEntity<?> handleContactNumberAlreadyExistsException(ContactNumberAlreadyExistsException exception) {
+        return ResponseEntity.status(Response.SC_CONFLICT).body(exception.getMessage());
+    }
 }

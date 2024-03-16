@@ -9,28 +9,35 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter UserName</mat-label>
             <input matInput formControlName="userName" required>
+            <mat-error *ngIf="register.get('userName').invalid">Please enter valid UserName</mat-error>
         </mat-form-field>
         
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
             <mat-label>Enter Email</mat-label>
             <input matInput formControlName="email" required>
+            <mat-error *ngIf="register.get('email').invalid">Please enter valid Email</mat-error>
         </mat-form-field>
 
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
             <mat-label>Enter your password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <mat-error *ngIf="register.get('password').invalid">Please enter valid Password</mat-error>
         </mat-form-field>
         
         <mat-divider></mat-divider>
         <mat-form-field appearance="fill">
             <mat-label>Enter Contact Number</mat-label>
-            <input matInput formControlName="contactNumber" required>
+            <input matInput formControlName="contactNumber" required minlength="3" maxlength="15">
+            <mat-error *ngIf="register.get('contactNumber').invalid">Please enter valid Contact Number</mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Register</button>
+        <button mat-raised-button style="background-color: #545ff0; color:white">Register</button>
+
+        <div class="login-navigate">Already have an account ? <a routerLink="" style="margin-left: 10px;">Login</a></div>
+
     </form>
 </div>

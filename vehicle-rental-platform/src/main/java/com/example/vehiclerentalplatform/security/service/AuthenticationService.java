@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vehiclerentalplatform.dto.UserCreate;
 import com.example.vehiclerentalplatform.dto.UserUpdate;
+import com.example.vehiclerentalplatform.exception.ContactNumberAlreadyExistsException;
+import com.example.vehiclerentalplatform.exception.EmailAlreadyExistsException;
 import com.example.vehiclerentalplatform.model.Users;
 import com.example.vehiclerentalplatform.repository.UsersRepository;
 import com.example.vehiclerentalplatform.security.controller.Token;
@@ -53,7 +55,11 @@ public class AuthenticationService {
 
         user.setPassword(passwordEncoder.encode(userCreate.getPassword()));
         if (userRepo.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new EmailAlreadyExistsException("Email already exists");
+        }
+
+        if(usersRepo.existsByContactNumber(userCreate.getContactNumber())) {
+            throw new ContactNumberAlreadyExistsException("Contact Number Already Exists");
         }
 
         else{

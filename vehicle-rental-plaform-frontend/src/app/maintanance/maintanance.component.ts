@@ -26,7 +26,7 @@ export class MaintananceComponent {
 
   changeType(type: any) {
 
-    if (type.index == 0) {
+    if (type.index === 0) {
       this.type = 'damage';
     }
     else {

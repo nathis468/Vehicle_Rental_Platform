@@ -116,8 +116,6 @@ public class AnalyticsServiceImpl implements AnalyticsService{
 
         List<TopRatings> topTenVehicles;
         if(val.equalsIgnoreCase("top")){
-            // topTenVehicles = al.subList( Math.min(al.size()-10, 0),al.size());
-            // topTenVehicles = al.subList( al.size()-1, Math.min(al.size()-11, 0));
             Collections.sort(al, Comparator.comparing(TopRatings::getRating, Comparator.reverseOrder()));
             topTenVehicles = al.subList(0, Math.min(al.size(), 10));
         }

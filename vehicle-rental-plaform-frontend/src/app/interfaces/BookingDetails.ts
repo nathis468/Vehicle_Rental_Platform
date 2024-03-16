@@ -14,4 +14,5 @@ export interface BookingDetails {
     longitude: number,
     paymentId: string;
     currency: string;
+    rating: string;
 }

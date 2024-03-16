@@ -32,7 +32,7 @@ export class LoginComponent {
     if (this.login.valid === true) {
       this.loginSubscription = this.loginService.login(this.login.value).subscribe({
         next: (response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             this.loginService.localStoring(response);
           }
         },

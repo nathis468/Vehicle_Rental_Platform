@@ -10,6 +10,8 @@ import com.example.vehiclerentalplatform.model.Users;
 public interface UsersRepository extends MongoRepository<Users,String>{
     Users findByEmail(String email);
 
+    boolean existsByContactNumber(String contactNumber);
+
     @Query("{ $or: [ { 'emaiil' : { $regex: ?0, $options: 'i' } }, { 'userName' : { $regex: ?0, $options: 'i' } } ] }")
     Page<Users> findByEmailAndUserName(String serachedValue, Pageable paegRequest);
 }

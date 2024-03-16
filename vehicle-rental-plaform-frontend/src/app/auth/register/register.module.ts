@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
   ]
 })
 export class RegisterModule { }

@@ -117,7 +117,7 @@ export class BookingDetailsComponent {
         this.vehicle = response.body;
       },
       complete: () => {
-        this.dialog.open(ViewVehicleComponent, { data: this.vehicle, height: "800px", width: "650px" });
+        this.dialog.open(ViewVehicleComponent, { data: this.vehicle, width: "650px" });
       }
     })
   }

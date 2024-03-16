@@ -18,7 +18,7 @@ export class ViewVehicleComponent {
   ngAfterViewInit() {
     const contentHeight = this.elementRef.nativeElement.scrollHeight;
 
-    const minHeight = 650;
+    const minHeight = 750;
     const maxHeight = 1000;
 
     let dialogHeight = Math.min(Math.max(contentHeight, minHeight), maxHeight);
