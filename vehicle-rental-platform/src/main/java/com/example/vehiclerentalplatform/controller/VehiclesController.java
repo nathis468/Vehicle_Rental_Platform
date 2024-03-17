@@ -10,6 +10,7 @@ import com.example.vehiclerentalplatform.dto.NearestVehicles;
 import com.example.vehiclerentalplatform.model.Vehicles;
 import com.example.vehiclerentalplatform.service.VehiclesService;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -64,9 +65,8 @@ public class VehiclesController {
     }
     
     @DeleteMapping("")
-    public ResponseEntity<Vehicles> deleteVehicleController(@RequestBody Vehicles deleteVehicle) {
-        vehiclesService.deleteVehicleService(deleteVehicle);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Boolean> deleteVehicleController(@RequestBody Vehicles deleteVehicle) throws ParseException {
+        return new ResponseEntity<>(vehiclesService.deleteVehicleService(deleteVehicle),HttpStatus.OK);
     }
 
     @GetMapping("/getCarsName")

@@ -17,5 +17,6 @@ export interface Vehicles {
         image: File,
         ratings: Ratings[];
         bookingDetails: string[];
+        deleted: boolean;
     }
 }

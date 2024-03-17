@@ -28,7 +28,7 @@ public class VehiclesServiceImpl implements VehiclesService{
     private VehiclesRepository vehiclesRepo;
 
     @Autowired
-    private VehiclesDAO vehiclesDTO;
+    private VehiclesDAO vehiclesDAO;
 
     private final int limit = 7;
 
@@ -44,7 +44,7 @@ public class VehiclesServiceImpl implements VehiclesService{
     public List<NearestVehicles> getFilteredVehicleService(Filters newFilter) {
         List<Bookings> list1;
         try {
-            list1 = new ArrayList<>(vehiclesDTO.filteredData1(newFilter.getStartDate(),newFilter.getEndDate()));
+            list1 = new ArrayList<>(vehiclesDAO.filteredData1(newFilter.getStartDate(),newFilter.getEndDate()));
             return availableVehicle(newFilter,list1);
         } 
         catch (ParseException e) {
@@ -58,7 +58,7 @@ public class VehiclesServiceImpl implements VehiclesService{
         for(int i=0;i<previouslyBooked.size();i++){
             list1.add(previouslyBooked.get(i).getVehcileDetails());
         }
-        List<Vehicles> list2 = vehiclesRepo.findAll();
+        List<Vehicles> list2 = vehiclesRepo.findByDeleted(false);
         List<Vehicles> filteredList2 = list2.stream().filter(vehicle -> !list1.contains(vehicle.get_id())).collect(Collectors.toList());
         if(newFilter.getLatitude().equals("") || newFilter.getLongitude().equals("")){
             List<NearestVehicles> result = new ArrayList<>();
@@ -138,8 +138,21 @@ public class VehiclesServiceImpl implements VehiclesService{
     }
 
     @Override
-    public void deleteVehicleService(Vehicles deleteVehicle) {
-        vehiclesRepo.deleteById(deleteVehicle.get_id());
+    public boolean deleteVehicleService(Vehicles deleteVehicle) {
+        Optional<Vehicles> vehicle = vehiclesRepo.findBy_id(deleteVehicle.get_id());
+        try {
+            if(!vehiclesDAO.deleteVehicle(deleteVehicle.get_id())){
+
+                if(vehicle.isPresent()){
+                    vehicle.get().setDeleted(true);
+                    vehiclesRepo.save(vehicle.get());
+                    return true;
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

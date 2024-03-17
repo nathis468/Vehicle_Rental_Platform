@@ -25,8 +25,17 @@ export class DeleteVehicleComponent {
 
     this.removeVehicleSubscription = this.vehiclesService.removeVehicle(this.vehicle.vehicles).subscribe({
       next: (response) => {
-        if (response.status === 200) {
+        console.log(response);
+        
+        if (response === true) {
           Swal.fire("Deleted Vehicle Successfully");
+        }
+        else{
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "The Vehicle has upcoming Rental Booking",
+          });  
         }
       },
       error: () => {
@@ -38,5 +47,4 @@ export class DeleteVehicleComponent {
       },
     })
   }
-
 }

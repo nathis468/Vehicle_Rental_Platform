@@ -1,5 +1,6 @@
 package com.example.vehiclerentalplatform.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,6 @@ public interface VehiclesService {
     Vehicles updateVehicleService(Vehicles updateVehicle);
     List<NearestVehicles> haversine(Filters newFilter,List<Vehicles> filteredVehicles);
     String imageConvet(MultipartFile file);
-    void deleteVehicleService(Vehicles deleteVehicle);
+    boolean deleteVehicleService(Vehicles deleteVehicle) throws ParseException;
     List<String> getCarsName();
 }

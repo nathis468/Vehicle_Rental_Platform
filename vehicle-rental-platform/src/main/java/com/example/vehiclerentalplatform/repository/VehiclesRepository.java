@@ -4,13 +4,14 @@ import org.springframework.stereotype.Repository;
 
 import com.example.vehiclerentalplatform.model.Vehicles;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.Optional;
+import java.util.List;
+
 
 @Repository
 public interface VehiclesRepository extends MongoRepository<Vehicles,String>{
-    Optional<Vehicles> findById(String id);
     Vehicles findByCarModel(String carModel);
+    Optional<Vehicles> findBy_id(String _id);
+    List<Vehicles> findByDeleted(boolean deleted);
 }

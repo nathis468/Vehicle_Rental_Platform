@@ -33,7 +33,7 @@ export class VehiclesService {
   }
 
   removeVehicle(removeVehicle: Vehicles['vehicles']) {
-    return this.http.delete<any>(`${environment.vehiclesUrl}`, { body: removeVehicle });
+    return this.http.delete<boolean>(`${environment.vehiclesUrl}`, { body: removeVehicle });
   }
 
   getTotalCarDetails() {

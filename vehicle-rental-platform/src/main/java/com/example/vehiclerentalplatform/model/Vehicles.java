@@ -12,7 +12,6 @@ import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -63,7 +62,11 @@ public class Vehicles {
     @Field("maintanance")
     private List<String> maintanance;
 
+    @Field("deleted")
+    private boolean deleted;
+
     public Vehicles(){
         this.maintanance = new ArrayList<>();
+        this.deleted = false;
     }
 }
