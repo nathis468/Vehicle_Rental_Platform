@@ -42,5 +42,12 @@ export class VehiclesListComponent {
   }
 
   isLoading: boolean = false;
-  currentPage: number = 0;
+
+  prevImage(event: Vehicles){
+    event.currentImage = --event.currentImage;
+  }
+
+  nextImage(event: Vehicles) {
+    event.currentImage = ++event.currentImage;
+  }
 }

@@ -44,7 +44,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-`
+
         <div class="form-field">
             <mat-form-field appearance="fill">
                 <mat-label>Choose Insurance Coverage</mat-label>
@@ -91,8 +91,15 @@
         <div class="form-field">
             <div class="input-file-container">
                 <button mat-raised-button class="input-file-button" (click)="uploadFile.click()" type="button">Choose File</button>
-                <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file">
-                <div class="file-name">{{ fileName }}</div>
+                <input #uploadFile class="input-file" (change)="onFileUpload($event)" type="file" multiple>
+            </div>
+        </div>
+        <div *ngIf="fileName[0]">
+            <div class="images-selected">
+                Selected Images
+            </div> 
+            <div *ngFor="let item of fileName">
+                <div>{{item}}</div>
             </div>
         </div>
 

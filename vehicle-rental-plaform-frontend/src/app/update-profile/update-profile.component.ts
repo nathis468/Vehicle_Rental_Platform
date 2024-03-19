@@ -38,8 +38,8 @@ export class UpdateProfileComponent {
     this.authService.email.subscribe({
       next: (email) => {
         this.userProfileSubscription = this.usersService.getUserProfile(email).subscribe({
-          next: (data) => {
-            this.profileData = data;
+          next: (response) => {
+            this.profileData = response.body;
             this.profile.patchValue({
               userName: this.profileData.userName,
               contactNumber: this.profileData.contactNumber,
@@ -47,7 +47,7 @@ export class UpdateProfileComponent {
               address: this.profileData.address,
               city: this.profileData.city,
               state: this.profileData.state,
-              zipCode: this.profileData.zipcode,
+              zipcode: this.profileData.zipcode,
             });
           }
         });
@@ -66,7 +66,7 @@ export class UpdateProfileComponent {
 
   profilePic: File;
 
-  onFileUpload(event: any) {
+  onFileUpload(event: Event) {
     this.profilePic = (event.target as HTMLInputElement).files[0];
 
     if (this.profilePic) {

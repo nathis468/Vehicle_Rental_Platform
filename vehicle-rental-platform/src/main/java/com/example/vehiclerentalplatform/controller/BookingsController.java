@@ -33,18 +33,19 @@ public class BookingsController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Bookings> postMethodName(@RequestBody Bookings newPayment) {
-        return new ResponseEntity<>(bookingsService.createPaymentRecord(newPayment),HttpStatus.OK);
+    public ResponseEntity<Void> postMethodName(@RequestBody Bookings newPayment) {
+        bookingsService.createPaymentRecord(newPayment);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("")
-    public ResponseEntity<?> provideRatingsController(@RequestBody Bookings theBooking,@RequestParam Integer rating) {
+    public ResponseEntity<Void> provideRatingsController(@RequestBody Bookings theBooking,@RequestParam Integer rating) {
         bookingsService.setRatingService(theBooking, rating);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/cancel")
-    public ResponseEntity<?> cancelBookingController(@RequestBody Bookings theBooking) {
+    public ResponseEntity<Void> cancelBookingController(@RequestBody Bookings theBooking) {
         bookingsService.cancelBookingService(theBooking);
         return new ResponseEntity<>(HttpStatus.OK);
     }

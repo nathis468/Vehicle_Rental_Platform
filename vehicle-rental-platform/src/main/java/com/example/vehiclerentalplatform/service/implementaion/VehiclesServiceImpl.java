@@ -3,6 +3,8 @@ package com.example.vehiclerentalplatform.service.implementaion;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import com.example.vehiclerentalplatform.dao.VehiclesDAO;
 import com.example.vehiclerentalplatform.dto.Filters;
 import com.example.vehiclerentalplatform.dto.NearestVehicles;
 import com.example.vehiclerentalplatform.dto.Ratings;
+import com.example.vehiclerentalplatform.dto.UpdateVehicle;
 import com.example.vehiclerentalplatform.model.Bookings;
 import com.example.vehiclerentalplatform.model.Vehicles;
 import com.example.vehiclerentalplatform.repository.VehiclesRepository;
@@ -40,11 +43,16 @@ public class VehiclesServiceImpl implements VehiclesService{
         return result;
     }
 
+
     @Override
     public List<NearestVehicles> getFilteredVehicleService(Filters newFilter) {
+
+        LocalDateTime startDate = newFilter.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay();
+        LocalDateTime endDate = newFilter.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atTime(23, 59, 59);
+
         List<Bookings> list1;
         try {
-            list1 = new ArrayList<>(vehiclesDAO.filteredData1(newFilter.getStartDate(),newFilter.getEndDate()));
+            list1 = new ArrayList<>(vehiclesDAO.filteredData1(startDate,endDate));
             return availableVehicle(newFilter,list1);
         } 
         catch (ParseException e) {
@@ -113,8 +121,14 @@ public class VehiclesServiceImpl implements VehiclesService{
     }
 
     @Override
-    public Vehicles updateVehicleService(Vehicles updateVehicle) {
-        return vehiclesRepo.save(updateVehicle);
+    public void updateVehicleService(UpdateVehicle updateVehicle) {
+        Vehicles existing = vehiclesRepo.findBy_id(updateVehicle.getId()).get();
+
+        System.out.println(updateVehicle);
+
+        existing.updateVehicle(updateVehicle);
+
+        vehiclesRepo.save(existing);
     }
 
     @Override

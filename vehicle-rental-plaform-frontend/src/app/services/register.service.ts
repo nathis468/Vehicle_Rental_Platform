@@ -10,6 +10,6 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   register(body: object) {
-    return this.http.post<any>(`${environment.authenticationUrl}/register`, body, { observe: 'response' });
+    return this.http.post(`${environment.authenticationUrl}/register`, body, { observe: 'response' });
   }
 }

@@ -1,6 +1,8 @@
 package com.example.vehiclerentalplatform.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +31,9 @@ public class AuthenticationController {
     private AuthenticationService service;
 
     @PostMapping("/register")
-    public void register(@RequestBody UserCreate request){
+    public ResponseEntity<Void> register(@RequestBody UserCreate request){
         service.register(request);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -40,11 +43,11 @@ public class AuthenticationController {
     }
 
     @PutMapping("updateProfile")
-    public Users putMethodName(@ModelAttribute UserUpdate user, @RequestParam("file") MultipartFile fileImage) {
+    public ResponseEntity<Users> putMethodName(@ModelAttribute UserUpdate user, @RequestParam("file") MultipartFile fileImage) {
 
         if(!fileImage.isEmpty()){
             user.setProfilePic(service.imageConvet(fileImage));
         }
-        return service.updateProfile(user);
+        return new ResponseEntity<>(service.updateProfile(user), HttpStatus.OK);
     }
 }   

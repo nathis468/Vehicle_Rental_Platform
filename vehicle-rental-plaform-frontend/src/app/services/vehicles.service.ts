@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
@@ -15,28 +15,28 @@ export class VehiclesService {
     return this.http.get<Observable<Vehicles>>(environment.vehiclesUrl, { observe: 'response' });
   }
 
-  getFilteredVehicles(body: any, currentPage: number) {
+  getFilteredVehicles(body: any, currentPage: number): Observable<HttpResponse<Vehicles[]>> {
     const vehiclesUrl = `${environment.vehiclesUrl}?latitude=${body.latitude}&longitude=${body.longitude}&startDate=${body.startDate}&endDate=${body.endDate}&currentPage=${currentPage}`;
-    return this.http.get<any>(vehiclesUrl, { observe: 'response' });
+    return this.http.get<Vehicles[]>(vehiclesUrl, { observe: 'response' });
   }
 
-  getVehicle(vehicleId: string) {
+  getVehicle(vehicleId: string): Observable<HttpResponse<Vehicles>> {
     return this.http.get<Vehicles>(`${environment.vehiclesUrl}/${vehicleId}`, { observe: 'response' });
   }
 
-  addVehicle(formData: FormData) {
-    return this.http.post<any>(`${environment.vehiclesUrl}`, formData, { observe: 'response' });
+  addVehicle(addVehicle: FormData): Observable<HttpResponse<Vehicles['vehicles']>> {
+    return this.http.post<Vehicles['vehicles']>(`${environment.vehiclesUrl}`, addVehicle, { observe: 'response' });
   }
 
-  updateVehicle(updateVehicle: Vehicles['vehicles']) {
-    return this.http.put<any>(`${environment.vehiclesUrl}`, updateVehicle, { observe: 'response' });
+  updateVehicle(updateVehicle: FormData) {
+    return this.http.put(`${environment.vehiclesUrl}`, updateVehicle);
   }
 
   removeVehicle(removeVehicle: Vehicles['vehicles']) {
     return this.http.delete<boolean>(`${environment.vehiclesUrl}`, { body: removeVehicle });
   }
 
-  getTotalCarDetails() {
-    return this.http.get<any>(`${environment.vehiclesUrl}/getCarsName`, { observe: 'response' });
+  getTotalCarDetails(): Observable<HttpResponse<Array<string>>> {
+    return this.http.get<Array<string>>(`${environment.vehiclesUrl}/getCarsName`, { observe: 'response' });
   }
 }

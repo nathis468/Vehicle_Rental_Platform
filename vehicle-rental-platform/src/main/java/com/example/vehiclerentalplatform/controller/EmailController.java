@@ -24,7 +24,7 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("{status}")
-    public ResponseEntity<?> sendEmail(@RequestBody MailInfo mailInfo, @PathVariable String status) {
+    public ResponseEntity<Void> sendEmail(@RequestBody MailInfo mailInfo, @PathVariable String status) {
         emailService.sendEmail(mailInfo, status);
         return new ResponseEntity<>(HttpStatus.OK);
     }

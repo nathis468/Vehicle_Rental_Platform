@@ -9,4 +9,8 @@ public class UserUpdate {
     private String contactNumber;
     private String profilePic;
     private String bio;
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;    
 }

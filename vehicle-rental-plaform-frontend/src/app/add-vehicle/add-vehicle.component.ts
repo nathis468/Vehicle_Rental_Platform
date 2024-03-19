@@ -34,12 +34,17 @@ export class AddVehicleComponent {
     })
   }
 
-  image: File;
+  images: File[] = [];
 
-  fileName: string = '';
+  fileName: string[] = [];
   onFileUpload(event: Event) {
-    this.image = (event.target as HTMLInputElement).files[0];
-    this.fileName = this.image?.name || '';
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        this.images.push(files[i]);
+        this.fileName.push(files[i].name);
+      }
+    }
   }
 
   onSubmit() {
@@ -55,7 +60,9 @@ export class AddVehicleComponent {
       formData.append('price', this.addVehicle.value.price);
       formData.append('latitude', this.addVehicle.value.latitude);
       formData.append('longitude', this.addVehicle.value.longitude);
-      formData.append('file', this.image);
+      for (let i = 0; i < this.images.length; i++) {
+        formData.append('file', this.images[i]);
+      }
 
       this.vehicleDetailsSubscription = this.vehiclesService.addVehicle(formData).subscribe({
         next: (response) => {

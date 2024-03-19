@@ -14,9 +14,10 @@ export interface Vehicles {
         price: number;
         latitude: number,
         longitude: number,
-        image: File,
+        images: any[],
         ratings: Ratings[];
         bookingDetails: string[];
         deleted: boolean;
     }
+    currentImage: number;
 }

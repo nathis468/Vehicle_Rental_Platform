@@ -31,9 +31,9 @@ export class HomeComponent {
     this.authService.email.subscribe({
       next: (email) => {
         this.userProfileSubscription = this.usersService.getUserProfile(email).subscribe({
-          next: (data) => {
-            this.profilePic = data.profilePic;
-            this.userName = data.userName;
+          next: (response) => {
+            this.profilePic = response.body.profilePic;
+            this.userName = response.body.userName;
           }
         });
       }

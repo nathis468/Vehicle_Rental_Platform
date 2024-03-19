@@ -29,4 +29,12 @@ export class ViewVehicleComponent {
   close(): void {
     this.viewVehicle.close();
   }
+
+  prevImage(event: Vehicles){
+    event.currentImage = --event.currentImage;
+  }
+
+  nextImage(event: Vehicles) {
+    event.currentImage = ++event.currentImage;
+  }
 }

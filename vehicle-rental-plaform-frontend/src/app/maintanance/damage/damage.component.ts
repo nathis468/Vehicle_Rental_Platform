@@ -47,7 +47,7 @@ export class DamageComponent {
     })
   }
 
-  image: any;
+  image: File;
 
 
   onCarModelNameChange(value: string) {

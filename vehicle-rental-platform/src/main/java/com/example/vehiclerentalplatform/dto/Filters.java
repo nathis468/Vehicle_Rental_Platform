@@ -15,4 +15,4 @@ public class Filters {
     private Date startDate;
     private Date endDate;
     private int currentPage;
-}
+}   

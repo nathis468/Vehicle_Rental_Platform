@@ -42,19 +42,50 @@ export class UpdateVehicleComponent {
   }
 
 
-  image: File;
+  images: File[] = [];
 
-  fileName: string = '';
+  fileName: string[] = [];
   onFileUpload(event: Event) {
-    this.image = (event.target as HTMLInputElement).files[0];
-    this.fileName = this.image?.name || '';
-  }
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        this.images.push(files[i]);
+        this.fileName.push(files[i].name);
+      }
+    }  }
 
   onSubmit() {
 
-    this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
+    // this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
 
-    this.updateVehicleSubscription = this.vehiclesService.updateVehicle(this.vehicle.vehicles).subscribe({
+    const formData = new FormData();
+    formData.append('id', this.editVehicle.value._id  );
+    formData.append('carModel', this.editVehicle.value.carModel);
+    formData.append('seatingCapacity', this.editVehicle.value.seatingCapacity);
+    formData.append('mileage', this.editVehicle.value.mileage);
+    formData.append('fuelCapacity', this.editVehicle.value.fuelCapacity);
+    formData.append('fuelType', this.editVehicle.value.fuelType);
+    formData.append('insuranceCoverage', this.editVehicle.value.insuranceCoverage);
+    formData.append('cancellationPolicy', this.editVehicle.value.cancellationPolicy);
+    formData.append('price', this.editVehicle.value.price);
+    formData.append('latitude', this.editVehicle.value.latitude);
+    formData.append('longitude', this.editVehicle.value.longitude);
+
+    if (this.images.length !=0) {
+      for (let i = 0; i < this.images.length; i++) {
+        formData.append('file', this.images[i]);
+      }
+    } 
+    
+    else {
+      const emptyFile = new File([""], "empty.txt", {
+        type: "text/plain",
+      });
+      formData.append('file', emptyFile);
+    }
+
+
+    this.updateVehicleSubscription = this.vehiclesService.updateVehicle(formData).subscribe({
       next: () => {
         Swal.fire("Updated Vehicle Successfully");
         this.updateVehicle.close();

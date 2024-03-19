@@ -124,7 +124,7 @@ export class VehiclesComponent {
     this.bookingDetails.status = 'confirmed';
 
     this.createBookingSubscription = this.bookingsService.createBooking(this.bookingDetails).subscribe({
-      next: (response) => {
+      next: () => {
         this.sendEmail();
         this.route.navigate(['home/booking-details']);
       }
@@ -180,7 +180,7 @@ export class VehiclesComponent {
 
   newFilter(event: FormGroup) {
     this.filter.value.startDate = event.value.startDate;
-    this.filter.value.toDate = event.value.toDate;
+    this.filter.value.endDate = event.value.endDate;
     this.filter.value.latitude = event.value.latitude;
     this.filter.value.longitude = event.value.longitude;
 
@@ -215,11 +215,11 @@ export class VehiclesComponent {
     const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     const documentHeight = document.body.scrollHeight;
-    if (scrollPosition + windowHeight >= documentHeight) {
+    if (scrollPosition + windowHeight >= documentHeight && !this.remainingData) {
       this.currentPage++;
       this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
-          if (response.body.length === 0) {
+          if (response.body) {
             this.remainingData = true;
           }
           else {

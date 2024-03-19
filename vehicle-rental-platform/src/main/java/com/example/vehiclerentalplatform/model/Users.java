@@ -25,8 +25,24 @@ public class Users {
     @Field("bio")
     private String bio;
 
+    @Field("address")
+    private String address;
+
+    @Field("city")
+    private String city;
+
+    @Field("state")
+    private String state;
+
+    @Field("zipcode")
+    private String zipCode;    
+
     public Users() {
         this.profilePic = "";
         this.bio = "";
+        this.address = "";
+        this.city = "";
+        this.state = "";
+        this.zipCode = "";
     }
 }

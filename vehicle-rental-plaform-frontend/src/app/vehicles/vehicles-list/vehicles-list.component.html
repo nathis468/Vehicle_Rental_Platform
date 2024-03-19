@@ -2,7 +2,9 @@
     <div class="vehicles-list">
         <div *ngFor="let item of vehiclesList" class="vehicle-item">
             <div class="vechicle-box">
-                <img [src]="item.vehicles.image" alt="Car Image" class="vehicle-image">
+                <div class="gallery">
+                    <img [src]="item.vehicles.images[item.currentImage]" alt="Car Image" class="vehicle-image" (click)="viewInfo(item)">
+                </div>
                 <div class="vehicle-details" (click)="viewInfo(item)">
                     <div class="vehicle-model">{{item.vehicles.carModel}}</div>
                     <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{item.vehicles.seatingCapacity}}</div>

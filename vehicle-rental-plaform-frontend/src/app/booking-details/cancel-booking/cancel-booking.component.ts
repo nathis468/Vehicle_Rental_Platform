@@ -23,6 +23,7 @@ export class CancelBookingComponent {
       next: (response) => {
         if (response.status === 200) {
           Swal.fire("Cancelled Booking Successfully");
+          this.data.status = 'cancelled';
         }
       },
       complete: () => {

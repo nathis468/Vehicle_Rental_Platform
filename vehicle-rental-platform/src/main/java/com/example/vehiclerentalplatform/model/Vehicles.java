@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.example.vehiclerentalplatform.dto.Ratings;
+import com.example.vehiclerentalplatform.dto.UpdateVehicle;
 
 import org.springframework.data.annotation.Id;
 
@@ -56,8 +57,8 @@ public class Vehicles {
     @Field("booking_details")
     private List<String> booking_details;
 
-    @Field("image")
-    private String image;
+    @Field("images")
+    private List<String> images;
 
     @Field("maintanance")
     private List<String> maintanance;
@@ -66,7 +67,24 @@ public class Vehicles {
     private boolean deleted;
 
     public Vehicles(){
+        this.images = new ArrayList<>();
         this.maintanance = new ArrayList<>();
         this.deleted = false;
+    }
+
+    public void updateVehicle(UpdateVehicle updateVehicle) {
+        this._id = updateVehicle.getId();
+        this.carModel = updateVehicle.getCarModel();
+        this.seatingCapacity = updateVehicle.getSeatingCapacity();
+        this.mileage = updateVehicle.getMileage();
+        this.fuelCapacity = updateVehicle.getFuelCapacity();
+        this.fuelType = updateVehicle.getFuelType();
+        this.insuranceCoverage = updateVehicle.getInsuranceCoverage();
+        this.cancellationPolicy = updateVehicle.getInsuranceCoverage();
+        this.cancellationPolicy = updateVehicle.getCancellationPolicy();
+        this.price = updateVehicle.getPrice();
+        this.latitude = updateVehicle.getLatitude();
+        this.longitude = updateVehicle.getLongitude();
+        this.images.addAll(updateVehicle.getImages());
     }
 }

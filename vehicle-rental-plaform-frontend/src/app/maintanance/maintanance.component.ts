@@ -56,7 +56,7 @@ export class MaintananceComponent {
     this.maintananceDetails(this.page, this.pageSize);
   }
 
-  maintananceDetails(page, pageSize) {
+  maintananceDetails(page: number, pageSize: number) {
     this.serviceDetailsSubscription = this.maintananceService.getDetails(page, pageSize, this.type).subscribe({
       next: (response) => {
         this.paginatorProperties(response);

@@ -1,5 +1,9 @@
 <div *ngIf="vehicle.vehicles != null;else template" class="vehicle-item">
-    <img [src]="vehicle.vehicles.image" alt="Car Image" class="vehicle-image">
+    <div class="gallery">
+        <img [src]="vehicle.vehicles.images[vehicle.currentImage]" alt="Car Image" class="vehicle-image">
+        <i class="fa-sharp fa-solid fa-circle-chevron-left" (click)="prevImage(vehicle)" *ngIf="vehicle.currentImage !== 0" style="color: #707070;"></i>
+        <i class="fa-sharp fa-solid fa-circle-chevron-right" (click)="nextImage(vehicle)" *ngIf="vehicle.currentImage !== (vehicle.vehicles.images.length-1)" style="color: #707070;"></i>
+    </div>
     <div class="vehicle-details">
         <div class="vehicle-model">{{vehicle.vehicles.carModel}}</div>
         <div class="capacity"> <i class="fa-duotone fa-user"></i> Capacity : {{vehicle.vehicles.seatingCapacity}}</div>

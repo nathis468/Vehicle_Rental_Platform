@@ -1,9 +1,11 @@
 package com.example.vehiclerentalplatform.service.implementaion;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,9 +81,17 @@ public class BookingsServiceImpl implements BookingsService{
     }
     
     @Override
-    public Bookings createPaymentRecord(Bookings newRecord){
+    public void createPaymentRecord(Bookings newRecord){
         String bookingId = generateRandomString();
         newRecord.setBookingId(bookingId);
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTime(newRecord.getToDate());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        newRecord.setToDate(calendar.getTime());
+
         Bookings booking =  bookingsRepo.save(newRecord);
         Vehicles vehicle =  vehiclesRepo.findById(booking.getVehcileDetails()).orElse(null);
         List<String> previousBookingDetails = vehicle.getBooking_details();
@@ -94,7 +104,6 @@ public class BookingsServiceImpl implements BookingsService{
             vehicle.setBooking_details(currentBooking);
         }
         vehiclesRepo.save(vehicle);
-        return booking;
     }
 
     @Override

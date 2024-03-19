@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ProfileInfo } from '../interfaces/ProfileInfo';
-import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
+import { Users } from '../interfaces/Users';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  updateProfile(data: FormData) {
-    return this.http.put<any>(`${environment.authenticationUrl}/updateProfile`, data, { observe: 'response' });
+  updateProfile(data: FormData): Observable<HttpResponse<Users>>{
+    return this.http.put<Users>(`${environment.authenticationUrl}/updateProfile`, data, { observe: 'response' });
   }
 }

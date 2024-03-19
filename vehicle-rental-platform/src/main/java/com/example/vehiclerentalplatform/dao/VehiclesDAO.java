@@ -1,6 +1,7 @@
 package com.example.vehiclerentalplatform.dao;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class VehiclesDAO {
     @Autowired
     MongoTemplate template;
 
-    public List<Bookings> filteredData1(Date startDate,Date endDate) throws ParseException{
+    public List<Bookings> filteredData1(LocalDateTime startDate,LocalDateTime endDate) throws ParseException{
         Criteria criteria = new Criteria().orOperator(
             Criteria.where("from_date").gte(startDate).lte(endDate),
             Criteria.where("to_date").gte(startDate).lte(endDate),

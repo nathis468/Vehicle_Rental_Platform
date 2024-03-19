@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vehiclerentalplatform.dto.Filters;
 import com.example.vehiclerentalplatform.dto.NearestVehicles;
+import com.example.vehiclerentalplatform.dto.UpdateVehicle;
 import com.example.vehiclerentalplatform.model.Vehicles;
 import com.example.vehiclerentalplatform.service.VehiclesService;
 
@@ -54,14 +55,22 @@ public class VehiclesController {
     
 
     @PostMapping("")
-    public ResponseEntity<Vehicles> insertNewVehicleController(@ModelAttribute Vehicles newVehicle,@RequestParam("file") MultipartFile imagFile){
-        newVehicle.setImage(vehiclesService.imageConvet(imagFile));
+    public ResponseEntity<Vehicles> insertNewVehicleController(@ModelAttribute Vehicles newVehicle,@RequestParam("file") MultipartFile[] imageFile){
+        for(int i=0;i<imageFile.length;i++){
+            newVehicle.getImages().add(vehiclesService.imageConvet(imageFile[i]));
+        }
         return new ResponseEntity<>(vehiclesService.insertNewVehicleService(newVehicle),HttpStatus.OK);
     }  
     
     @PutMapping("")
-    public ResponseEntity<Vehicles> updateVehicleController(@RequestBody Vehicles updateVehicle) {
-        return new ResponseEntity<>(vehiclesService.updateVehicleService(updateVehicle),HttpStatus.OK);
+    public ResponseEntity<Void> updateVehicleController(@ModelAttribute UpdateVehicle newVehicle,@RequestParam("file") MultipartFile[] imageFile) {
+        if(!imageFile[0].getOriginalFilename().equals("empty.txt")) {
+            for(int i=0;i<imageFile.length;i++){
+                newVehicle.getImages().add(vehiclesService.imageConvet(imageFile[i]));
+            }
+        }
+        vehiclesService.updateVehicleService(newVehicle);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @DeleteMapping("")

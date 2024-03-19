@@ -16,7 +16,6 @@ export class ListUsersComponent {
 
   constructor(private usersService: UsersService, private changeDetect: ChangeDetectorRef) { }
 
-  userDetails: any;
   page: number = 1;
   pageSize: number = 5;
   active: string = '';
