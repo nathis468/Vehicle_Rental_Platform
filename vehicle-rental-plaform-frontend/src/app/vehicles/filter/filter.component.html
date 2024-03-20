@@ -4,9 +4,10 @@
         <input type="text" placeholder="Enter Latitude" formControlName="latitude">
         <input type="text" placeholder="Enter Longitude" formControlName="longitude">
         <label for="startDate">Start Date</label>
-        <input type="date" id="startDate" formControlName="startDate">
+        <input type="date" id="startDate" formControlName="startDate" [min]="currentDate">
         <label for="endDate">End Date</label>
-        <input type="date" id="endDate" formControlName="endDate">
-        <button>Search</button>
+        <input type="date" id="endDate" formControlName="endDate" [min]="currentDate">
+        <button type="submit">Search</button>
     </form>
-</div>
+  </div>
+  

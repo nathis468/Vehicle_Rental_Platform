@@ -87,7 +87,7 @@ public class BookingsServiceImpl implements BookingsService{
 
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTime(newRecord.getToDate());
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         newRecord.setToDate(calendar.getTime());

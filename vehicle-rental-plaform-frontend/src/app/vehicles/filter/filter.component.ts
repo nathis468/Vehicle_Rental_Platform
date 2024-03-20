@@ -12,12 +12,14 @@ export class FilterComponent {
 
   @Output() addFilter = new EventEmitter<FormGroup>();
 
+  currentDate: string = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
   ngOnInit() {
     this.filterDetails = new FormGroup({
       latitude: new FormControl<string>(''),
       longitude: new FormControl<string>(''),
-      startDate: new FormControl<string>(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
-      endDate: new FormControl<string>(formatDate(new Date(), 'yyyy-MM-dd', 'en'))
+      startDate: new FormControl<string>(this.currentDate),
+      endDate: new FormControl<string>(this.currentDate)
     })
     this.addFilter.emit(this.filterDetails);
   }

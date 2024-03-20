@@ -76,6 +76,7 @@ export class VehiclesComponent {
       this.bookingDetails.vehcileDetails = event.vehicles._id;
       this.bookingDetails.cancellationPolicy = event.vehicles.cancellationPolicy;
       this.bookingDetails.paymentDate = new Date();
+      this.bookingDetails.rating = 'not-provided';
 
       this.paymentSubscription = this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
         next: (response) => {
@@ -164,7 +165,6 @@ export class VehiclesComponent {
 
     this.authService.email.subscribe({
       next: (email) => {
-        // data.toEmail = 'nathis468@gmail.com';
         data.toEmail = email;
         console.log(data.toEmail);
         this.bookingsService.sendEmail(data, 'confirmed').subscribe();

@@ -38,17 +38,16 @@ export class RegisterComponent {
           }
         },
         error: (error) => {
-          if(error.error === "Email already exists") {
+          if (error.error === "Email already exists") {
             this.openSnackBar('Email Already Exists');
           }
-          else if(error.error === "Contact number already exists") {
+          else if (error.error === "Contact Number Already Exists") {
             this.openSnackBar('Contact Number Already Exists')
           }
         }
       })
     }
   }
-
 
   openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {

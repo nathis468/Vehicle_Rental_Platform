@@ -1,7 +1,7 @@
 export interface ProfileInfo {
     _id: string;
     userName: string;
-    profilePic: any;
+    profilePic: string | ArrayBuffer;
     contactNumber: string;
     bio: string;
     address: string;

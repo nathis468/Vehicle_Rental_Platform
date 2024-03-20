@@ -81,3 +81,10 @@ mat-select {
     color: #333;
     margin: 15px 0;
 }
+
+.images-selected {
+    font-size: medium;
+    font-weight: 700;
+    margin-top: 5px;
+    margin-bottom: 8px;
+}

@@ -87,8 +87,6 @@ public class AuthenticationService {
         UserEntity user = userRepo.findByEmail(request.getEmail()).orElseThrow();
         String jwt = jwtService.generateToken(user, permissionUpdateService.getPermissions(user), usersRepo.findByEmail(request.getEmail()));
 
-        
-
         Token token = new Token(jwt);
         return token;
     }
@@ -97,6 +95,7 @@ public class AuthenticationService {
         Users existingUser =  usersRepo.findById(user.getId()).get();
         existingUser.setUserName(user.getUserName());
         existingUser.setContactNumber(user.getContactNumber());
+        existingUser.setProfilePic(user.getProfilePic());
         existingUser.setBio(user.getBio());
         existingUser.setAddress(user.getAddress());
         existingUser.setCity(user.getCity());

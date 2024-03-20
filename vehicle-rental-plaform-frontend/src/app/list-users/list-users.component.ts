@@ -97,6 +97,15 @@ export class ListUsersComponent {
           text: "Role Updated Successfully",
           confirmButtonColor: '#545ff0'
         });
+      },
+      error: () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          confirmButtonColor: '#545ff0'
+        });
+        user.role = 'USER';
       }
     })
   }
