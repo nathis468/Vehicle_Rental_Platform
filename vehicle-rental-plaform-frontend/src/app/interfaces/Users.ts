@@ -4,9 +4,10 @@ export interface Users {
     email: string;
     profilePic: string;
     contactNumber: string;
+    role: string;
     bio: string;
     address: string;
     city: string;
     state: string;
-    zipcode: string;
+    zipCode: string;
 }

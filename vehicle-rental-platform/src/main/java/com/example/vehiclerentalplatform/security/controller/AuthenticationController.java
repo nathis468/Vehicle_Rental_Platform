@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vehiclerentalplatform.dto.UserCreate;
+import com.example.vehiclerentalplatform.dto.UserRoleUpdate;
 import com.example.vehiclerentalplatform.dto.UserUpdate;
 import com.example.vehiclerentalplatform.model.Users;
 import com.example.vehiclerentalplatform.security.model.LoginRequest;
@@ -40,7 +41,7 @@ public class AuthenticationController {
     public Token authenticate(@RequestBody LoginRequest request){  
         Token token = service.authenticate(request);
         return token;
-    }
+    }       
 
     @PutMapping("updateProfile")
     public ResponseEntity<Users> putMethodName(@ModelAttribute UserUpdate user, @RequestParam("file") MultipartFile fileImage) {
@@ -49,5 +50,10 @@ public class AuthenticationController {
             user.setProfilePic(service.imageConvet(fileImage));
         }
         return new ResponseEntity<>(service.updateProfile(user), HttpStatus.OK);
+    }
+    
+    @PutMapping("roleUpdate") 
+    public ResponseEntity<Users> updateRoleController(@RequestBody UserRoleUpdate user) {
+        return new ResponseEntity<>(service.updateRole(user), HttpStatus.OK);
     }
 }   

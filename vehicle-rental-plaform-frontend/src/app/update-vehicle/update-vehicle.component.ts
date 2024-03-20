@@ -52,14 +52,15 @@ export class UpdateVehicleComponent {
         this.images.push(files[i]);
         this.fileName.push(files[i].name);
       }
-    }  }
+    }
+  }
 
   onSubmit() {
 
     // this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
 
     const formData = new FormData();
-    formData.append('id', this.editVehicle.value._id  );
+    formData.append('id', this.editVehicle.value._id);
     formData.append('carModel', this.editVehicle.value.carModel);
     formData.append('seatingCapacity', this.editVehicle.value.seatingCapacity);
     formData.append('mileage', this.editVehicle.value.mileage);
@@ -71,12 +72,12 @@ export class UpdateVehicleComponent {
     formData.append('latitude', this.editVehicle.value.latitude);
     formData.append('longitude', this.editVehicle.value.longitude);
 
-    if (this.images.length !=0) {
+    if (this.images.length != 0) {
       for (let i = 0; i < this.images.length; i++) {
         formData.append('file', this.images[i]);
       }
-    } 
-    
+    }
+
     else {
       const emptyFile = new File([""], "empty.txt", {
         type: "text/plain",
@@ -87,7 +88,10 @@ export class UpdateVehicleComponent {
 
     this.updateVehicleSubscription = this.vehiclesService.updateVehicle(formData).subscribe({
       next: () => {
-        Swal.fire("Updated Vehicle Successfully");
+        Swal.fire({
+          text: "Updated Vehicle Successfully",
+          confirmButtonColor: '#545ff0'
+        });
         this.updateVehicle.close();
       },
       error: () => {
@@ -95,6 +99,7 @@ export class UpdateVehicleComponent {
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
+          confirmButtonColor: '#545ff0'
         });
       },
       complete: () => {

@@ -3,6 +3,8 @@ package com.example.vehiclerentalplatform.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.example.vehiclerentalplatform.security.model.Role;
+
 import lombok.Data;
 
 @Data
@@ -21,6 +23,9 @@ public class Users {
 
     @Field("contact_number")
     private String contactNumber;
+
+    @Field("role")
+    private Role role;    
 
     @Field("bio")
     private String bio;

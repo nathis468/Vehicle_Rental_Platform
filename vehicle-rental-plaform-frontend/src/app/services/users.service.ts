@@ -17,7 +17,11 @@ export class UsersService {
     return this.http.get<PageEvent>(`${environment.usersUrl}`, { params, observe: 'response' });
   }
 
-  getUserProfile(email: string): Observable<HttpResponse<Users>>{
-    return this.http.get<Users>(`${environment.usersUrl}/profile/${email}`, {observe: 'response'});
+  getUserProfile(email: string): Observable<HttpResponse<Users>> {
+    return this.http.get<Users>(`${environment.usersUrl}/profile/${email}`, { observe: 'response' });
+  }
+
+  updateUser(user: Users): Observable<HttpResponse<Users>> {
+    return this.http.put<Users>(`${environment.authenticationUrl}/roleUpdate`, user, { observe: 'response'});
   }
 }

@@ -14,9 +14,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.vehiclerentalplatform.dto.Result;
 import com.example.vehiclerentalplatform.model.Bookings;
-import com.example.vehiclerentalplatform.model.Vehicles;
 
 @Repository
 public class VehiclesDAO {
@@ -42,7 +40,6 @@ public class VehiclesDAO {
         AggregationOperation lookup = Aggregation.lookup("bookings", "booking_details", "booking_id", "bookings");
         AggregationOperation unwindBookingsResults = Aggregation.unwind("$bookings");
         AggregationOperation matchDate = Aggregation.match(Criteria.where("bookings.from_date").gte(new Date()));
-        // AggregationOperation group = Aggregation.group().count().as("count");
 
         Aggregation aggregation = Aggregation.newAggregation(
                 matchVehicle,
@@ -50,7 +47,6 @@ public class VehiclesDAO {
                 lookup,
                 unwindBookingsResults,
                 matchDate
-                // group
         );
 
         AggregationResults<Bookings> results = template.aggregate(aggregation, "vehicles", Bookings.class);

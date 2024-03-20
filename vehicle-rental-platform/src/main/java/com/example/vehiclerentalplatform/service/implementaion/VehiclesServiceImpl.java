@@ -76,7 +76,7 @@ public class VehiclesServiceImpl implements VehiclesService{
                 result.add(result1);
             }
             List<NearestVehicles> result2 = new ArrayList<>();
-            if(result.size() <= newFilter.getCurrentPage()*limit){
+            if(result.size() < newFilter.getCurrentPage()*limit){
                 return new ArrayList<>();
             }
             result2 = result.subList(0, Math.min((newFilter.getCurrentPage()*limit)+limit, result.size()));

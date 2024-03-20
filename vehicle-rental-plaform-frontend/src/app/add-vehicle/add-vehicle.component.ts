@@ -67,7 +67,10 @@ export class AddVehicleComponent {
       this.vehicleDetailsSubscription = this.vehiclesService.addVehicle(formData).subscribe({
         next: (response) => {
           if (response.status === 200) {
-            Swal.fire("Inserted New Vehicle");
+            Swal.fire({
+              text: "Inserted New Vehicle",
+              confirmButtonColor: '#545ff0'
+            });
           }
         },
         error: () => {
@@ -75,6 +78,7 @@ export class AddVehicleComponent {
             icon: "error",
             title: "Oops...",
             text: "Something went wrong!",
+            confirmButtonColor: '#545ff0'
           });
         },
         complete: () => {

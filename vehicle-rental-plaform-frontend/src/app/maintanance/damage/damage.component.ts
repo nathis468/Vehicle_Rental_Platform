@@ -97,7 +97,10 @@ export class DamageComponent {
       this.insertDetailsSubscription = this.maintananceService.sendDetails(formData).subscribe({
         next: (response) => {
           if (response.status === 200) {
-            Swal.fire("Inserted New Record");
+            Swal.fire({
+              text: "Inserted New Record",
+              confirmButtonColor: '#545ff0'
+            });
           }
         },
         complete: () => {

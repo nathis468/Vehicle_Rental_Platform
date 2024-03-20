@@ -2,7 +2,6 @@ package com.example.vehiclerentalplatform.security.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.vehiclerentalplatform.dto.UserCreate;
+import com.example.vehiclerentalplatform.dto.UserRoleUpdate;
 import com.example.vehiclerentalplatform.dto.UserUpdate;
 import com.example.vehiclerentalplatform.exception.ContactNumberAlreadyExistsException;
 import com.example.vehiclerentalplatform.exception.EmailAlreadyExistsException;
+// import com.example.vehiclerentalplatform.model.UserPermissions;
 import com.example.vehiclerentalplatform.model.Users;
 import com.example.vehiclerentalplatform.repository.UsersRepository;
 import com.example.vehiclerentalplatform.security.controller.Token;
@@ -41,12 +42,17 @@ public class AuthenticationService {
 
     private final PermissionUpdateService permissionUpdateService;
 
+    // private final UserPermissions userPermissions;
+
+    // private final UserPermissionsDAO userPermissionsDAO;
+
     public void register(UserCreate userCreate) {
 
         Users userData = new Users();
         userData.setUserName(userCreate.getUserName());
         userData.setEmail(userCreate.getEmail());
         userData.setContactNumber(userCreate.getContactNumber());
+        userData.setRole(Role.USER);
 
         UserEntity user = new UserEntity();
         user.setUserName(userData.getUserName());
@@ -92,12 +98,34 @@ public class AuthenticationService {
         existingUser.setUserName(user.getUserName());
         existingUser.setContactNumber(user.getContactNumber());
         existingUser.setBio(user.getBio());
-        existingUser.setProfilePic(user.getProfilePic());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setCity(user.getCity());
+        existingUser.setState(user.getState());
+        existingUser.setZipCode(user.getZipCode());
 
         UserEntity userEntity = userRepo.findByEmail(existingUser.getEmail()).get();
         userEntity.setUserName(user.getUserName());
 
+        if(user.getRole() != null){
+            existingUser.setRole(Role.FLEET_MANAGER);
+            userEntity.setRole(Role.FLEET_MANAGER); 
+        }
+
         userRepo.save(userEntity);
+        return usersRepo.save(existingUser);
+    }
+
+    public Users updateRole(UserRoleUpdate user) {
+        Users existingUser = usersRepo.findByEmail(user.getEmail());
+        existingUser.setRole(user.getRole());
+
+        UserEntity userEntity = userRepo.findByEmail(existingUser.getEmail()).get();
+        userEntity.setRole(user.getRole());
+
+        userRepo.save(userEntity);
+
+        permissionUpdateService.updateUserPermissionsFromUserEntity(userEntity);
+
         return usersRepo.save(existingUser);
     }
 

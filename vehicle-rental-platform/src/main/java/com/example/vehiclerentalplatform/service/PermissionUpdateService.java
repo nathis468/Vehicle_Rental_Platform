@@ -18,4 +18,5 @@ public interface PermissionUpdateService {
     UserPermissions addNewUserPermissions(UserPermissions newUserPermissions);
     void addNewUserPermissionsFromUserEntity(UserEntity newUserPermissions);
     List<String> getPermissions(UserEntity id);
+    void updateUserPermissionsFromUserEntity(UserEntity updatePermissions);
 }

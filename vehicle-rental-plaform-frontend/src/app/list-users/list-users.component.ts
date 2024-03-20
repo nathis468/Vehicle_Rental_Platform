@@ -5,6 +5,9 @@ import { Users } from '../interfaces/Users';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2'
+import { color } from 'highcharts';
+
 
 
 @Component({
@@ -60,7 +63,7 @@ export class ListUsersComponent {
     }
   }
 
-  displayedColumns: string[] = ["profilePic", "userName", "email", "contactNumber"];
+  displayedColumns: string[] = ["profilePic", "userName", "email", "contactNumber", "role", "permission"];
   dataSource = new MatTableDataSource<Users>();
 
   onPageChanges(event: PageEvent) {
@@ -82,6 +85,20 @@ export class ListUsersComponent {
     this.paginator.pageIndex = response.body.number;
     this.paginator.pageSize = response.body.size;
     this.paginator.length = response.body.totalElements;
+  }
+
+  assignAccess(user: Users) {
+    user.role = "FLEET_MANAGER";
+    console.log(user);
+    
+    this.usersService.updateUser(user).subscribe({
+      next: () => {
+        Swal.fire({
+          text: "Role Updated Successfully",
+          confirmButtonColor: '#545ff0'
+        });
+      }
+    })
   }
 
   ngOnDestroy() {

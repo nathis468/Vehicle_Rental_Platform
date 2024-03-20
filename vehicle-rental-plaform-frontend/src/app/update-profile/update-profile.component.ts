@@ -29,14 +29,17 @@ export class UpdateProfileComponent {
     address: '',
     city: '',
     state: '',
-    zipcode: ''
+    zipCode: ''
   };
 
   profile: FormGroup;
 
+  email: string = '';
+
   ngOnInit() {
     this.authService.email.subscribe({
       next: (email) => {
+        this.email = email;
         this.userProfileSubscription = this.usersService.getUserProfile(email).subscribe({
           next: (response) => {
             this.profileData = response.body;
@@ -47,7 +50,7 @@ export class UpdateProfileComponent {
               address: this.profileData.address,
               city: this.profileData.city,
               state: this.profileData.state,
-              zipcode: this.profileData.zipcode,
+              zipCode: this.profileData.zipCode,
             });
           }
         });
@@ -60,7 +63,7 @@ export class UpdateProfileComponent {
       address: new FormControl<string>(''),
       city: new FormControl<string>(''),
       state: new FormControl<string>(''),
-      zipCode: new FormControl<string>('', Validators.pattern(/^\d{5}$/)),
+      zipCode: new FormControl<string>('', Validators.pattern(/^\d{6}$/)),
     })
   }
 
@@ -86,7 +89,7 @@ export class UpdateProfileComponent {
     this.profileData.address = this.profile.value.address;
     this.profileData.city = this.profile.value.city;
     this.profileData.state = this.profile.value.state;
-    this.profileData.zipcode = this.profile.value.zipcode;
+    this.profileData.zipCode = this.profile.value.zipCode;
 
 
     const updateProfile = new FormData();
@@ -97,7 +100,7 @@ export class UpdateProfileComponent {
     updateProfile.append('address', this.profileData.address);
     updateProfile.append('city', this.profileData.city);
     updateProfile.append('state', this.profileData.state);
-    updateProfile.append('zipcode', this.profileData.zipcode);
+    updateProfile.append('zipCode', this.profileData.zipCode);
 
     if (this.profilePic) {
       updateProfile.append('file', this.profilePic);
@@ -115,7 +118,10 @@ export class UpdateProfileComponent {
           this.authService.profileInfo.next(response.body);
         },
         complete: () => {
-          Swal.fire("Profile updated Successfully");
+          Swal.fire({
+            text: "Profile updated Successfully",
+            confirmButtonColor: '#545ff0'
+          });
           this.route.navigate(['home']);
         }
       });

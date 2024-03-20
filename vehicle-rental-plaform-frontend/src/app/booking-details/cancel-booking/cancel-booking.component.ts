@@ -22,7 +22,10 @@ export class CancelBookingComponent {
     this.cancelBookingSubscription = this.bookingsService.cancelBooking(this.data).subscribe({
       next: (response) => {
         if (response.status === 200) {
-          Swal.fire("Cancelled Booking Successfully");
+          Swal.fire({
+            text: "Cancelled Booking Successfully",
+            confirmButtonColor: '#545ff0'
+          });
           this.data.status = 'cancelled';
         }
       },

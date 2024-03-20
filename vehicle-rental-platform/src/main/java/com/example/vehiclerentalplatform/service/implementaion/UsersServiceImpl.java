@@ -29,7 +29,7 @@ public class UsersServiceImpl implements UsersService{
         }
 
         else{
-            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc("bookingDate")));
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc("email")));
         }
         
         return usersRepo.findByEmailAndUserName (searchedValue, pageable);

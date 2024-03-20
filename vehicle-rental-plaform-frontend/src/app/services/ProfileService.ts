@@ -11,7 +11,7 @@ import { Users } from '../interfaces/Users';
 })
 export class ProfileService {
 
-  profileInfo = new BehaviorSubject<ProfileInfo>({ _id: '', userName: '', profilePic: '', contactNumber: '', bio: '', address: '', city: '', state: '', zipcode: '' });
+  profileInfo = new BehaviorSubject<ProfileInfo>({ _id: '', userName: '', profilePic: '', contactNumber: '', bio: '', address: '', city: '', state: '', zipCode: '' });
 
   constructor(private http: HttpClient) { }
 

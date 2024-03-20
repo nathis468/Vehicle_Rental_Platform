@@ -77,6 +77,14 @@ public class PermissionUpdateServiceImpl implements PermissionUpdateService{
     } 
 
     @Override
+    public void updateUserPermissionsFromUserEntity(UserEntity updatePermissions) {
+        List<Permissions> al = new ArrayList<>(rolePermissionsRepo.findByRole(updatePermissions.getRole()).getRolePermissions());
+        UserPermissions user = userPermissionsRepo.findByUser(updatePermissions);
+        user.setUserPermissions(al);
+        userPermissionsRepo.save(user);
+    }
+
+    @Override
     public List<String> getPermissions(UserEntity id){
         UserPermissions up1 = userPermissionsRepo.findByUser(id);
 

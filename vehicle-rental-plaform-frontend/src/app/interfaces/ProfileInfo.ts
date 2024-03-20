@@ -7,5 +7,5 @@ export interface ProfileInfo {
     address: string;
     city: string;
     state: string;
-    zipcode: string;
+    zipCode: string;
 }

@@ -26,16 +26,20 @@ export class DeleteVehicleComponent {
     this.removeVehicleSubscription = this.vehiclesService.removeVehicle(this.vehicle.vehicles).subscribe({
       next: (response) => {
         console.log(response);
-        
+
         if (response === true) {
-          Swal.fire("Deleted Vehicle Successfully");
+          Swal.fire({
+            text: "Deleted Vehicle Successfully",
+            confirmButtonColor: '#545ff0'
+          });
         }
-        else{
+        else {
           Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "The Vehicle has upcoming Rental Booking",
-          });  
+            confirmButtonColor: '#545ff0'
+          });
         }
       },
       error: () => {
@@ -43,6 +47,7 @@ export class DeleteVehicleComponent {
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
+          confirmButtonColor: '#545ff0'
         });
       },
     })

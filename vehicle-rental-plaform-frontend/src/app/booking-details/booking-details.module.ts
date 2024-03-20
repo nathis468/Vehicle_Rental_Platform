@@ -12,8 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
-
+import { CancelBookingComponent } from './cancel-booking/cancel-booking.component'
 
 @NgModule({
   declarations: [

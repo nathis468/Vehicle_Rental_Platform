@@ -84,7 +84,10 @@ export class VehiclesComponent {
       })
     }
     else {
-      Swal.fire("Please enter your current Location");
+      Swal.fire({
+        text: "Please enter your current Location",
+        confirmButtonColor: '#545ff0'
+      });
     }
   }
 
@@ -219,7 +222,9 @@ export class VehiclesComponent {
       this.currentPage++;
       this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
-          if (response.body) {
+          console.log(response);
+          
+          if (response.body.length === 0) {
             this.remainingData = true;
           }
           else {
