@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicles } from 'src/app/interfaces/Vehicles';
@@ -7,7 +8,19 @@ import { ViewVehicleComponent } from 'src/app/view-vehicle/view-vehicle.componen
 @Component({
   selector: 'app-vehicles-list',
   templateUrl: './vehicles-list.component.html',
-  styleUrls: ['./vehicles-list.component.css']
+  styleUrls: ['./vehicles-list.component.css'],
+  animations: [
+    trigger('imageFade', [
+      transition(':increment', [
+        style({ opacity: 0 }),
+        animate('0.3s', style({ opacity: 1 }))
+      ]),
+      transition(':decrement', [
+        style({ opacity: 0 }),
+        animate('0.3s', style({ opacity: 1 }))
+      ]),
+    ])
+  ]
 })
 export class VehiclesListComponent {
 
@@ -43,11 +56,19 @@ export class VehiclesListComponent {
 
   isLoading: boolean = false;
 
-  prevImage(event: Vehicles){
-    event.currentImage = --event.currentImage;
+  interval: any;
+  hoverImage(item: Vehicles) {
+    this.interval = setInterval(() => {
+      if(item.currentImage < item.vehicles.images.length-1){
+        item.currentImage++;
+      }
+      else{
+        item.currentImage = 0;
+      }
+    }, 3000)
   }
 
-  nextImage(event: Vehicles) {
-    event.currentImage = ++event.currentImage;
+  unhoverImage() {
+    clearInterval(this.interval);
   }
 }

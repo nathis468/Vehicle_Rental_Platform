@@ -29,7 +29,7 @@ export class VehiclesService {
   }
 
   updateVehicle(updateVehicle: FormData) {
-    return this.http.put(`${environment.vehiclesUrl}`, updateVehicle);
+    return this.http.put<Vehicles['vehicles']>(`${environment.vehiclesUrl}`, updateVehicle, {observe: 'response'});
   }
 
   removeVehicle(removeVehicle: Vehicles['vehicles']) {

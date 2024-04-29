@@ -20,7 +20,7 @@ export class UpdateVehicleComponent {
   updateVehicleSubscription: Subscription = new Subscription();
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: Vehicles, private updateVehicle: MatDialogRef<UpdateVehicleComponent>, private vehiclesService: VehiclesService, private snackBar: MatSnackBar, private route: Router) {
-    this.vehicle = data;
+    this.vehicle = this.data;
   }
 
   editVehicle: FormGroup;
@@ -55,10 +55,8 @@ export class UpdateVehicleComponent {
     }
   }
 
-  onSubmit() {
-
-    // this.vehicle.vehicles = { ...this.vehicle.vehicles, ...this.editVehicle.value };
-
+  onSubmit() {  
+    
     const formData = new FormData();
     formData.append('id', this.editVehicle.value._id);
     formData.append('carModel', this.editVehicle.value.carModel);
@@ -87,12 +85,12 @@ export class UpdateVehicleComponent {
 
 
     this.updateVehicleSubscription = this.vehiclesService.updateVehicle(formData).subscribe({
-      next: () => {
+      next: (response) => {
         Swal.fire({
           text: "Updated Vehicle Successfully",
           confirmButtonColor: '#545ff0'
         });
-        this.updateVehicle.close();
+        this.vehicle.vehicles = response.body;
       },
       error: () => {
         Swal.fire({
@@ -103,7 +101,7 @@ export class UpdateVehicleComponent {
         });
       },
       complete: () => {
-        this.route.navigate(['home/vehicles'])
+        this.updateVehicle.close();
       }
     })
 

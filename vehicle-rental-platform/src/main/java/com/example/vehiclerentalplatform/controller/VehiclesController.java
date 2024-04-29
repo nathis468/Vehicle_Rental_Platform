@@ -63,14 +63,13 @@ public class VehiclesController {
     }  
     
     @PutMapping("")
-    public ResponseEntity<Void> updateVehicleController(@ModelAttribute UpdateVehicle newVehicle,@RequestParam("file") MultipartFile[] imageFile) {
+    public ResponseEntity<Vehicles> updateVehicleController(@ModelAttribute UpdateVehicle newVehicle,@RequestParam("file") MultipartFile[] imageFile) {
         if(!imageFile[0].getOriginalFilename().equals("empty.txt")) {
             for(int i=0;i<imageFile.length;i++){
                 newVehicle.getImages().add(vehiclesService.imageConvet(imageFile[i]));
             }
         }
-        vehiclesService.updateVehicleService(newVehicle);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(vehiclesService.updateVehicleService(newVehicle), HttpStatus.OK);
     }
     
     @DeleteMapping("")
