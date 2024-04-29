@@ -50,7 +50,7 @@ export class CancelBookingComponent {
             longitude: 0,
             paymentId: '',
             currency: '',
-            rating: ''
+            rating: 0
           }
         };
 

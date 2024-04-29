@@ -79,7 +79,7 @@ public class VehiclesServiceImpl implements VehiclesService{
             if(result.size() < newFilter.getCurrentPage()*limit){
                 return new ArrayList<>();
             }
-            result2 = result.subList(0, Math.min((newFilter.getCurrentPage()*limit)+limit, result.size()));
+            result2 = result.subList(limit*newFilter.getCurrentPage(), Math.min((newFilter.getCurrentPage()*limit)+limit, result.size()));
             return result2;
         }
         return haversine(newFilter,filteredList2);
@@ -109,7 +109,7 @@ public class VehiclesServiceImpl implements VehiclesService{
         if(newList.size() <= newFilter.getCurrentPage()*limit){
             return new ArrayList<>();
         }
-        result2 = newList.subList(0, Math.min((newFilter.getCurrentPage()*limit)+limit, newList.size()));
+        result2 = newList.subList(limit*newFilter.getCurrentPage(), Math.min((newFilter.getCurrentPage()*limit)+limit, newList.size()));
         return result2;
     }
 
@@ -121,14 +121,10 @@ public class VehiclesServiceImpl implements VehiclesService{
     }
 
     @Override
-    public void updateVehicleService(UpdateVehicle updateVehicle) {
+    public Vehicles updateVehicleService(UpdateVehicle updateVehicle) {
         Vehicles existing = vehiclesRepo.findBy_id(updateVehicle.getId()).get();
-
-        System.out.println(updateVehicle);
-
         existing.updateVehicle(updateVehicle);
-
-        vehiclesRepo.save(existing);
+        return vehiclesRepo.save(existing);
     }
 
     @Override

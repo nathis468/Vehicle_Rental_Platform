@@ -65,7 +65,7 @@ export class VehiclesComponent {
     longitude: 0,
     paymentId: '',
     currency: '',
-    rating: ''
+    rating: 0
   };
 
   newEvent(event: Vehicles) {
@@ -76,7 +76,7 @@ export class VehiclesComponent {
       this.bookingDetails.vehcileDetails = event.vehicles._id;
       this.bookingDetails.cancellationPolicy = event.vehicles.cancellationPolicy;
       this.bookingDetails.paymentDate = new Date();
-      this.bookingDetails.rating = 'not-provided';
+      // this.bookingDetails.rating = event.vehicles.ratings.;
 
       this.paymentSubscription = this.paymentService.createPayment(event.vehicles.price * this.noOfDays).subscribe({
         next: (response) => {
@@ -157,7 +157,7 @@ export class VehiclesComponent {
         longitude: 0,
         paymentId: '',
         currency: '',
-        rating: ''
+        rating: 0
       }
     };
 
@@ -207,7 +207,14 @@ export class VehiclesComponent {
   }
 
   deleteVehicle(event: Vehicles) {
-    this.dialog.open(DeleteVehicleComponent, { data: event });
+    const deleteRef = this.dialog.open(DeleteVehicleComponent, { data: event });
+    deleteRef.afterClosed().subscribe({
+      next: (element) => {
+        if(element) {
+          this.vehiclesList = this.vehiclesList.filter(vehicle => vehicle.vehicles._id !== element.vehicles._id);
+        }
+      }
+    })
   }
 
   currentPage: number = 0;
@@ -222,13 +229,13 @@ export class VehiclesComponent {
       this.currentPage++;
       this.filteredVehiclesSubscription = this.vehiclesService.getFilteredVehicles(this.filter.value, this.currentPage).subscribe({
         next: (response) => {
-          console.log(response);
-          
           if (response.body.length === 0) {
             this.remainingData = true;
           }
           else {
-            this.vehiclesList = response.body;
+            response.body.forEach(element => {
+              this.vehiclesList.push(element);
+            });
           }
         }
       })

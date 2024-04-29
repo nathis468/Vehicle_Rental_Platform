@@ -28,7 +28,7 @@ export class RatingComponent {
   }
 
   sendRating() {
-    this.data.rating = 'provided';
+    this.data.rating = this.rating;
     this.bookingsService.provideRating(this.data, this.rating).subscribe();
   }
 

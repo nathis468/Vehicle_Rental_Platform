@@ -14,6 +14,7 @@ import { Subject, Subscription, TimeoutConfig, TimeoutError, TimeoutInfo, deboun
 import { CancelBookingComponent } from './cancel-booking/cancel-booking.component';
 import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
 import { AuthService } from '../services/auth.service';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class BookingDetailsComponent {
   direction: string = '';
   email: string = '';
 
+  faStar = faStar;
 
   displayedColumns: string[] = ["carModelName", "email", "fromDate", "toDate", "price", "status", "cancel", "rating", "view"];
   dataSource = new MatTableDataSource<BookingDetails>();
