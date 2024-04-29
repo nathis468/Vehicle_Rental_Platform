@@ -40,15 +40,13 @@ public class VehiclesDAO {
         AggregationOperation lookup = Aggregation.lookup("bookings", "booking_details", "booking_id", "bookings");
         AggregationOperation unwindBookingsResults = Aggregation.unwind("$bookings");
         AggregationOperation matchDate = Aggregation.match(Criteria.where("bookings.from_date").gte(new Date()));
-        AggregationOperation matchStatusNotCancelled = Aggregation.match(Criteria.where("bookings.status").ne("cancelled"));
 
         Aggregation aggregation = Aggregation.newAggregation(
                 matchVehicle,
                 unwindBookings,
                 lookup,
                 unwindBookingsResults,
-                matchDate,
-                matchStatusNotCancelled
+                matchDate
         );
 
         AggregationResults<Bookings> results = template.aggregate(aggregation, "vehicles", Bookings.class);

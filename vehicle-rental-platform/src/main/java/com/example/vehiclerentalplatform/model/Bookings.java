@@ -62,10 +62,10 @@ public class Bookings {
     private Date bookingDate;
 
     @Field("rating")
-    private Integer rating;
+    private String rating;
 
     public Bookings(){
         this.bookingDate = new Date();
-        this.rating = 0;
+        this.rating = "not-provided";
     }
 }

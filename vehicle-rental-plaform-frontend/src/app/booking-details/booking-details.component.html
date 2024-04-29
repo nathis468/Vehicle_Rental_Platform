@@ -50,40 +50,13 @@
       <ng-container matColumnDef="rating">
         <th mat-header-cell *matHeaderCellDef> Rating </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button (click)="provideRating(element)" *ngIf="element.rating === 0;else template1" style="background-color: #545ff0; color:white">Rating</button>
-          <ng-template #template1>
-            <div class="star-container">
-              <fa-icon
-                [class.rated]="element.rating >= 1"
-                [icon]="faStar"
-              ></fa-icon>
-              <fa-icon
-                [class.rated]="element.rating >= 2"
-                [icon]="faStar"
-              ></fa-icon>
-            
-              <fa-icon
-                [class.rated]="element.rating >= 3"
-                [icon]="faStar"
-              ></fa-icon>
-            
-              <fa-icon
-                [class.rated]="element.rating >= 4"
-                [icon]="faStar"
-              ></fa-icon> 
-            
-              <fa-icon
-                [class.rated]="element.rating >= 5"
-                [icon]="faStar"
-              ></fa-icon>
-            </div>
-          </ng-template>
+          <button mat-raised-button (click)="provideRating(element)" [disabled]="element.rating === 'provided'" [ngStyle]="{'background-color': (element.rating !== 'provided' ? '#545ff0' : '#e0e0e0'), 'color': (element.rating !== 'provided' ? 'white' : '#8b8b8b') }">Rating</button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="view">
         <th mat-header-cell *matHeaderCellDef> Vehicle Details </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element">
           <button mat-raised-button (click)="viewVehicle(element)" style="background-color: #545ff0; color:white">View</button>
         </td>
       </ng-container>

@@ -3,7 +3,7 @@
         <div *ngFor="let item of vehiclesList" class="vehicle-item">
             <div class="vechicle-box">
                 <div class="gallery">
-                    <img [src]="item.vehicles.images[item.currentImage]" alt="Car Image" class="vehicle-image" (click)="viewInfo(item)" [@imageFade]="item.currentImage" (mouseenter)="hoverImage(item)" (mouseleave)="unhoverImage()">
+                    <img [src]="item.vehicles.images[item.currentImage]" alt="Car Image" class="vehicle-image" (click)="viewInfo(item)">
                 </div>
                 <div class="vehicle-details" (click)="viewInfo(item)">
                     <div class="vehicle-model">{{item.vehicles.carModel}}</div>

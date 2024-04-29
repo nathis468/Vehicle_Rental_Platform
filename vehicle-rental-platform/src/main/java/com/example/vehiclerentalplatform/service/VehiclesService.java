@@ -14,7 +14,7 @@ public interface VehiclesService {
     NearestVehicles getVehicleById(String vehicleId);
     List<NearestVehicles> getFilteredVehicleService(Filters newFilter);
     Vehicles insertNewVehicleService(Vehicles newVehicle);
-    Vehicles updateVehicleService(UpdateVehicle updateVehicle);
+    void updateVehicleService(UpdateVehicle updateVehicle);
     List<NearestVehicles> haversine(Filters newFilter,List<Vehicles> filteredVehicles);
     String imageConvet(MultipartFile file);
     boolean deleteVehicleService(Vehicles deleteVehicle) throws ParseException;

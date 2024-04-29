@@ -13,7 +13,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CancelBookingComponent } from './cancel-booking/cancel-booking.component'
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -31,8 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatIconModule
+    MatInputModule
   ]
 })
 export class BookingDetailsModule { }

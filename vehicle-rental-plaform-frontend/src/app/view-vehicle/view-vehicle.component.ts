@@ -12,11 +12,7 @@ export class ViewVehicleComponent {
   vehicle: Vehicles;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: Vehicles, private viewVehicle: MatDialogRef<ViewVehicleComponent>, private elementRef: ElementRef) {
-    this.vehicle = { ...this.data };
-  }
-
-  ngOnInit() {
-    this.vehicle.currentImage = 0;
+    this.vehicle = this.data;
   }
 
   ngAfterViewInit() {
