@@ -1,4 +1,4 @@
-package com.example.vehiclerentalplatform.service.implementaion;
+package com.example.vehiclerentalplatform.service.implementation;
 
 import java.io.File;
 import java.io.IOException;

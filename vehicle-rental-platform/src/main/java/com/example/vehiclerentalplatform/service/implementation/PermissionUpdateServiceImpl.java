@@ -1,4 +1,4 @@
-package com.example.vehiclerentalplatform.service.implementaion;
+package com.example.vehiclerentalplatform.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;

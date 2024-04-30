@@ -1,4 +1,4 @@
-package com.example.vehiclerentalplatform.service.implementaion;
+package com.example.vehiclerentalplatform.service.implementation;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

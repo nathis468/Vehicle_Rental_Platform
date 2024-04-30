@@ -1,4 +1,4 @@
-package com.example.vehiclerentalplatform.service.implementaion;
+package com.example.vehiclerentalplatform.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

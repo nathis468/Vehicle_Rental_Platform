@@ -80,7 +80,6 @@ public class Vehicles {
         this.fuelCapacity = updateVehicle.getFuelCapacity();
         this.fuelType = updateVehicle.getFuelType();
         this.insuranceCoverage = updateVehicle.getInsuranceCoverage();
-        this.cancellationPolicy = updateVehicle.getInsuranceCoverage();
         this.cancellationPolicy = updateVehicle.getCancellationPolicy();
         this.price = updateVehicle.getPrice();
         this.latitude = updateVehicle.getLatitude();

@@ -1,0 +1,42 @@
+[
+  {
+    "carModel": "carModelName 1",
+    "seatingCapacity": "5",
+    "mileage": "20mpg",
+    "fuelCapacity": "50gallons",
+    "fuelType": "diesel",
+    "insuranceCoverage": "comprehensive",
+    "cancellationPolicy": "available",
+    "price": 43984.00,
+    "latitude": 43.655,
+    "longitude": 56.97,
+    "ratings": [],
+    "booking_details": [],
+    "images": [
+      "C:/Trustrace/Vehicle Rental Platform/vehicle-rental-platform/src/main/resources/static/images/image.png",
+      "C:/Trustrace/Vehicle Rental Platform/vehicle-rental-platform/src/main/resources/static/images/image2.png"
+    ],
+    "maintanance": [],
+    "deleted": false
+  },
+  {
+    "carModel": "carModelName 2",
+    "seatingCapacity": "5",
+    "mileage": "20mpg",
+    "fuelCapacity": "50gallons",
+    "fuelType": "diesel",
+    "insuranceCoverage": "comprehensive",
+    "cancellationPolicy": "available",
+    "price": 43984.00,
+    "latitude": 43.655,
+    "longitude": 56.97,
+    "ratings": [],
+    "booking_details": [],
+    "images": [
+      "C:/Trustrace/Vehicle Rental Platform/vehicle-rental-platform/src/main/resources/static/images/image.png",
+      "C:/Trustrace/Vehicle Rental Platform/vehicle-rental-platform/src/main/resources/static/images/image2.png"
+    ],
+    "maintanance": [],
+    "deleted": false
+  }
+]
