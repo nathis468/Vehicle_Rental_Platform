@@ -37,6 +37,11 @@ public class VehiclesController {
     @Autowired
     private VehiclesService vehiclesService;
 
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        return new ResponseEntity<>("All good", HttpStatus.OK);
+    }
+
     @GetMapping("")
     public ResponseEntity<List<NearestVehicles>> getFilteredController(@RequestParam String latitude,@RequestParam String longitude,@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate, @RequestParam int currentPage) {
         Filters newFilter = new Filters();
@@ -79,6 +84,6 @@ public class VehiclesController {
 
     @GetMapping("/getCarsName")
     public ResponseEntity<List<String>> getCarNameController() {
-        return new ResponseEntity<>(vehiclesService.getCarsName(),HttpStatus.OK);
-    }  
+        return new ResponseEntity<>(vehiclesService.getCarsName(), HttpStatus.OK);
+    }
 }

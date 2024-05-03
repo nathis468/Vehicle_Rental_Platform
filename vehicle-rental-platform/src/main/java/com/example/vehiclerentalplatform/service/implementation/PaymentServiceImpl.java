@@ -13,7 +13,7 @@ import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 
 @Service
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-dev.properties")
 public class PaymentServiceImpl implements PaymentService {
     @Value("${razorpay.api.key}")
     private String apiKey;

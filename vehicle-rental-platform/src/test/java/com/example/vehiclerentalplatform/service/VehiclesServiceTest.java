@@ -5,13 +5,11 @@ import com.example.vehiclerentalplatform.model.Vehicles;
 import com.example.vehiclerentalplatform.repository.VehiclesRepository;
 import com.example.vehiclerentalplatform.service.implementation.VehiclesServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;

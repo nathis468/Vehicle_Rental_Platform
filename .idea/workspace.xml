@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00bd85a1-a95f-4b4f-bd30-c3325315f03c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/vehicle-rental-platform/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-rental-platform/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-rental-platform/src/main/java/com/example/vehiclerentalplatform/controller/VehiclesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-rental-platform/src/main/java/com/example/vehiclerentalplatform/controller/VehiclesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-rental-platform/src/main/java/com/example/vehiclerentalplatform/service/implementation/AnalyticsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-rental-platform/src/main/java/com/example/vehiclerentalplatform/service/implementation/AnalyticsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-rental-platform/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-rental-platform/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vehicle-rental-platform/src/test/java/com/example/vehiclerentalplatform/service/VehiclesServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-rental-platform/src/test/java/com/example/vehiclerentalplatform/service/VehiclesServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +18,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "NathisSomasundharam"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/nathis468/Vehicle_Rental_Platform.git",
+    "accountId": "983a925e-5e28-4ee0-b3a4-87024e0ebb43"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -28,7 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/NathisSomasundharam/OneDrive - TrusTrace/Documents/Vehicle_Rental_Platform/vehicle-rental-platform"
+    "last_opened_file_path": "C:/Users/NathisSomasundharam/Trustrace/Vehicle_Rental_Platform"
   }
 }]]></component>
   <component name="RunManager">

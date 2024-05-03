@@ -20,7 +20,7 @@ import com.example.vehiclerentalplatform.service.PermissionUpdateService;
 
 @RestController
 @RequestMapping("/permissions")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class PermissionsUpdateController {
 
     @Autowired

@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ import com.example.vehiclerentalplatform.model.Vehicles;
 import com.example.vehiclerentalplatform.repository.VehiclesRepository;
 import com.example.vehiclerentalplatform.service.VehiclesService;
 
+@PropertySource("classpath:application-dev.properties")
 @Service
 public class VehiclesServiceImpl implements VehiclesService{
 
